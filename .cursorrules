@@ -1,0 +1,35 @@
+Project: Qytetaret Web Application (Next.js PWA)
+Tech Stack: Next.js 14, TypeScript, Tailwind CSS
+
+Rules:
+- Use Next.js App Router conventions
+- Implement SEO best practices
+- Follow React hooks best practices
+- Use Server Components by default
+- Use Client Components only when necessary
+- Implement proper loading states
+- Follow accessibility guidelines
+- Optimize images and media
+- Implement proper error boundaries
+- Use TypeScript strict mode
+
+Naming Conventions:
+- Components: PascalCase.tsx
+- Pages: page.tsx
+- Layouts: layout.tsx
+- Hooks: use-kebab-case.ts
+- Utils: kebab-case.ts
+
+File Organization:
+- Follow Next.js 14 App Router structure
+- Group by features in app directory
+- Keep components modular
+- Separate business logic from UI
+- Maximum component size: 300 lines
+
+Code Style:
+- Use Tailwind className patterns
+- Implement responsive design
+- Use semantic HTML
+- Keep components pure when possible
+- Document complex component logic

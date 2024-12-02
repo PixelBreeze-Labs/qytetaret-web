@@ -1,7 +1,9 @@
-export default function NewReportPage() {
- return (
-   <div>
-     <h1>Create New Report</h1>
-   </div>
- )
+import { ReportForm } from '@/components/shared/ReportForm';
+
+export default function CreateReportPage() {
+    return (
+        <div className="container mx-auto px-4 py-6">
+            <ReportForm />
+        </div>
+    );
 }

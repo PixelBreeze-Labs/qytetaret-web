@@ -67,12 +67,12 @@ const config: Config = {
 				black: "#0E172B",
 				body: "#64748B",
 				stroke: {
-					DEFAULT: "#E8E8E8",
-					dark: "#394152",
+					DEFAULT: "#F23030",
+					dark: "#666666",
 				},
 				primary: {
-					DEFAULT: "#635BFF",
-					dark: "#3E22E9",
+					DEFAULT: "#F23030",
+					dark: "#666666",
 				},
 				dark: {
 					DEFAULT: "#1C274C",

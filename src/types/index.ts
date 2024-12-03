@@ -1,3 +1,10 @@
+export enum ReportStatus {
+    PENDING = 'pending',
+    IN_PROGRESS = 'in_progress',
+    RESOLVED = 'resolved',
+    CLOSED = 'closed'
+}
+
 export enum Category {
     INFRASTRUCTURE = 'infrastructure',
     ENVIRONMENT = 'environment',
@@ -6,8 +13,9 @@ export enum Category {
     OTHER = 'other'
 }
 
-export interface Post {
+export interface Report {
     id: string;
+    title: string;
     content: string;
     media?: string[];
     location: {
@@ -18,5 +26,7 @@ export interface Post {
     isAnonymous: boolean;
     author?: string;
     category: Category;
-    timestamp: Date;
+    status: ReportStatus;
+    createdAt: Date;
+    updatedAt: Date;
 }

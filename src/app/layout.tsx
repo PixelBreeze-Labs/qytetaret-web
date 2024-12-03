@@ -22,7 +22,9 @@ const layout = ({ children }: { children: React.ReactNode }) => {
 		<body
 			className={`${inter.className} flex min-h-screen flex-col dark:bg-[#151F34]`}
 		>
-		{children}
+		<div className="pt-20"> {/* Add padding top */}
+			{children}
+		</div>
 		</body>
 		</html>
 	);

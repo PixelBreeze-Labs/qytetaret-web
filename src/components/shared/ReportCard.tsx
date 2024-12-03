@@ -24,7 +24,7 @@ export const ReportCard = ({ report }: ReportCardProps) => {
                     </p>
                 </div>
                 <span className={`px-2 py-1 rounded-full text-xs font-medium ${statusColors[report.status]}`}>
-                    {report.status.replace('_', ' ')}
+                    {report.status?.replace('_', ' ')}
                 </span>
             </div>
 

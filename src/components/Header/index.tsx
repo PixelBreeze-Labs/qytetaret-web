@@ -1,6 +1,6 @@
 "use client";
 
-import logo from "@/../public/images/logo/logo.svg";
+import logo from "@/../public/images/logo/logo-new.png";
 import Image from "next/image";
 import Link from "next/link";
 import ThemeSwitcher from "./ThemeSwitcher";
@@ -10,7 +10,7 @@ const Header = () => {
 		<header className="fixed left-0 top-0 z-999 w-full bg-white py-4 shadow dark:bg-[#151F34]">
 			<div className="mx-auto max-w-[1170px] flex items-center justify-between px-4">
 				<Link href="/">
-					<Image src={logo} alt="Qytetaret" className="w-[120px]" />
+					<Image src={logo} alt="Qytetaret" className="w-[60px]" />
 				</Link>
 
 				<nav className="hidden md:block">
@@ -27,7 +27,7 @@ const Header = () => {
 						</li>
 						<li>
 							<Link href="/reports/new" className="text-black hover:text-primary dark:text-white">
-								Create Report
+								Submit Report
 							</Link>
 						</li>
 					</ul>

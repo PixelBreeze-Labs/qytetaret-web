@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import logo from "@/../public/images/logo/logo.svg";
+import logo from "@/../public/images/logo/logo-new.png";
 
 
 const Footer = () => {
@@ -10,7 +10,7 @@ const Footer = () => {
 			<div className="mx-auto max-w-[1170px] px-4 py-8">
 				<div className="grid grid-cols-1 md:grid-cols-4 gap-8">
 					<div className="col-span-2">
-						<Image src={logo} alt="Qytetaret" className="w-[120px] mb-4" />
+						<Image src={logo} alt="Qytetaret" className="w-[60px] mb-4" />
 						<p className="text-gray-600 dark:text-gray-400">
 							Community reporting platform enabling anonymous reporting and tracking of local issues.
 						</p>

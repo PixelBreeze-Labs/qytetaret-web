@@ -3,6 +3,7 @@ import { Providers } from "./providers";
 import NextTopLoader from "nextjs-toploader";
 import { HeaderWrapper } from "@/components/Header/HeaderWrapper";
 import { FooterWrapper } from "@/components/Footer/FooterWrapper";
+import PWAInstallPrompt  from "@/components/PWAInstallPrompt";
 
 export default function RootLayout({
 									   children,
@@ -18,6 +19,7 @@ export default function RootLayout({
 					shadow='none'
 				/>
 				<HeaderWrapper />
+				<PWAInstallPrompt /> {/* Add this component */}
 				{children}
 				<FooterWrapper />
 			</Providers>

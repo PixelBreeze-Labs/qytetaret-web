@@ -51,7 +51,10 @@ const Header = () => {
 							</Link>
 						</li>
 						<li>
-							<Link href="/reports/new" className="text-black hover:text-primary dark:text-white">
+							<Link
+								href="/reports/new"
+								className="px-4 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors font-medium"
+							>
 								Submit Report
 							</Link>
 						</li>
@@ -62,7 +65,7 @@ const Header = () => {
 					<ThemeSwitcher />
 					<Link
 						href="/auth/signin"
-						className="px-4 py-2 rounded-full bg-primary text-white hover:bg-primary/90 transition-colors"
+						className="px-4 py-2 rounded-full bg-body text-white hover:bg-body/90 transition-colors"
 					>
 						Sign In
 					</Link>
@@ -94,7 +97,7 @@ const Header = () => {
 								<li>
 									<Link
 										href="/reports/new"
-										className="text-black hover:text-primary dark:text-white block py-2"
+										className="block text-center px-4 py-3 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors font-medium"
 										onClick={() => setIsMenuOpen(false)}
 									>
 										Submit Report
@@ -104,7 +107,7 @@ const Header = () => {
 									<ThemeSwitcher />
 									<Link
 										href="/auth/signin"
-										className="px-4 py-2 rounded-full bg-primary text-white hover:bg-primary/90 transition-colors"
+										className="px-4 py-2 rounded-full bg-body text-white hover:bg-body/90 transition-colors"
 										onClick={() => setIsMenuOpen(false)}
 									>
 										Sign In

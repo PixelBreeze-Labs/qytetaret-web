@@ -1,9 +1,9 @@
-// components/ReportForm.tsx
 "use client";
 
 import { useState } from 'react';
 import { Category } from '@/types';
 import { useRouter } from 'next/navigation';
+import { Mic, Square } from 'lucide-react';
 
 export const ReportForm = () => {
     const router = useRouter();
@@ -14,6 +14,7 @@ export const ReportForm = () => {
         category: '',
         isAnonymous: false,
         media: [] as File[],
+        audio: null as Blob | null,
         location: {
             lat: 0,
             lng: 0,
@@ -23,16 +24,47 @@ export const ReportForm = () => {
 
     const [error, setError] = useState<string | null>(null);
     const [mediaPreview, setMediaPreview] = useState<string[]>([]);
+    const [isRecording, setIsRecording] = useState(false);
+    const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
+    const [audioUrl, setAudioUrl] = useState<string | null>(null);
 
     const handleMediaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
         if (files) {
             const newFiles = Array.from(files);
             setForm(prev => ({ ...prev, media: [...prev.media, ...newFiles] }));
-
-            // Create preview URLs
             const newPreviews = newFiles.map(file => URL.createObjectURL(file));
             setMediaPreview(prev => [...prev, ...newPreviews]);
+        }
+    };
+
+    const startRecording = async () => {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            const recorder = new MediaRecorder(stream);
+            const chunks: BlobPart[] = [];
+
+            recorder.ondataavailable = e => chunks.push(e.data);
+            recorder.onstop = () => {
+                const blob = new Blob(chunks, { type: 'audio/webm' });
+                setForm(prev => ({ ...prev, audio: blob }));
+                setAudioUrl(URL.createObjectURL(blob));
+            };
+
+            setMediaRecorder(recorder);
+            recorder.start();
+            setIsRecording(true);
+        } catch (err) {
+            console.error("Error accessing microphone:", err);
+            setError("Failed to access microphone. Please check permissions.");
+        }
+    };
+
+    const stopRecording = () => {
+        if (mediaRecorder) {
+            mediaRecorder.stop();
+            mediaRecorder.stream.getTracks().forEach(track => track.stop());
+            setIsRecording(false);
         }
     };
 
@@ -41,8 +73,20 @@ export const ReportForm = () => {
         setLoading(true);
         setError(null);
 
+        const formData = new FormData();
+        formData.append('title', form.title);
+        formData.append('content', form.content);
+        formData.append('category', form.category);
+        formData.append('isAnonymous', String(form.isAnonymous));
+        form.media.forEach((file, index) => {
+            formData.append(`media_${index}`, file);
+        });
+        if (form.audio) {
+            formData.append('audio', form.audio);
+        }
+
         try {
-            // TODO: Add API call
+            // TODO: Add API call with formData
             router.push('/reports');
         } catch (err) {
             setError('Failed to submit report. Please try again.');
@@ -140,6 +184,28 @@ export const ReportForm = () => {
                         </div>
                     </div>
 
+                    <div>
+                        <label className="block mb-2 font-medium">Voice Recording</label>
+                        <div className="flex items-center gap-4">
+                            <button
+                                type="button"
+                                onClick={isRecording ? stopRecording : startRecording}
+                                className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
+                                    isRecording
+                                        ? 'bg-red-500 hover:bg-red-600'
+                                        : 'bg-primary hover:bg-primary/90'
+                                } text-white transition-colors`}
+                            >
+                                {isRecording ? <Square className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+                                {isRecording ? 'Stop Recording' : 'Start Recording'}
+                            </button>
+
+                            {audioUrl && (
+                                <audio controls src={audioUrl} className="flex-1" />
+                            )}
+                        </div>
+                    </div>
+
                     <div className="flex items-center">
                         <input
                             type="checkbox"
@@ -158,7 +224,7 @@ export const ReportForm = () => {
                             type="submit"
                             disabled={loading}
                             className={`w-full px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors
-                                ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                               ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                         >
                             {loading ? 'Submitting...' : 'Submit Report'}
                         </button>

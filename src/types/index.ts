@@ -5,6 +5,20 @@ export enum ReportStatus {
     CLOSED = 'closed'
 }
 
+export interface Post {
+    id: string;
+    content: string;
+    category: Category;
+    isAnonymous: boolean;
+    location: {
+        lat: number;
+        lng: number;
+        accuracy: number;
+    };
+    timestamp: Date;
+    media?: string[];
+}
+
 export enum Category {
     INFRASTRUCTURE = 'infrastructure',
     ENVIRONMENT = 'environment',

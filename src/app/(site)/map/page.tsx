@@ -9,7 +9,7 @@ import { ReportCard } from '@/components/shared/ReportCard';
 
 const mapContainerStyle = {
     width: '100%',
-    height: '100%',
+        height: '600px',
     borderRadius: '0.5rem'
 };
 
@@ -73,7 +73,7 @@ export default function MapPage() {
                 <h1 className="text-3xl font-bold dark:text-white">Report Map</h1>
             </div>
 
-            <div className="flex gap-6">
+            <div className="flex flex-col gap-6 lg:flex-row">
                 {/* Filters panel */}
                 <div className="w-64 space-y-4">
                     <select

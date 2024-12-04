@@ -1,119 +1,170 @@
-// src/components/reports/ReportForm.tsx
+// components/ReportForm.tsx
 "use client";
+
 import { useState } from 'react';
 import { Category } from '@/types';
-import { MapPin, Camera, FileText } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
-export function ReportForm() {
-    const [isAnonymous, setIsAnonymous] = useState(true);
-    const [category, setCategory] = useState<Category>(Category.OTHER);
-    const [content, setContent] = useState('');
-    const [media, setMedia] = useState<File[]>([]);
+export const ReportForm = () => {
+    const router = useRouter();
+    const [loading, setLoading] = useState(false);
+    const [form, setForm] = useState({
+        title: '',
+        content: '',
+        category: '',
+        isAnonymous: false,
+        media: [] as File[],
+        location: {
+            lat: 0,
+            lng: 0,
+            accuracy: 0
+        }
+    });
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const [error, setError] = useState<string | null>(null);
+    const [mediaPreview, setMediaPreview] = useState<string[]>([]);
+
+    const handleMediaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const files = e.target.files;
+        if (files) {
+            const newFiles = Array.from(files);
+            setForm(prev => ({ ...prev, media: [...prev.media, ...newFiles] }));
+
+            // Create preview URLs
+            const newPreviews = newFiles.map(file => URL.createObjectURL(file));
+            setMediaPreview(prev => [...prev, ...newPreviews]);
+        }
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Implement submission logic
+        setLoading(true);
+        setError(null);
+
+        try {
+            // TODO: Add API call
+            router.push('/reports');
+        } catch (err) {
+            setError('Failed to submit report. Please try again.');
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
-        <div className="max-w-xl mx-auto bg-white shadow-md rounded-lg p-6">
-            <h2 className="text-2xl font-bold mb-6 text-center text-red-600">
-                Create a New Report
-            </h2>
-
-            <form onSubmit={handleSubmit}>
-                <div className="mb-4">
-                    <label className="flex items-center mb-2">
-                        <input
-                            type="checkbox"
-                            checked={isAnonymous}
-                            onChange={() => setIsAnonymous(!isAnonymous)}
-                            className="mr-2"
-                        />
-                        <span>Post Anonymously</span>
-                    </label>
+        <div className="container mx-auto px-4 py-6">
+            <div className="max-w-2xl mx-auto">
+                <div className="mb-6">
+                    <h1 className="text-3xl font-bold">Submit New Report</h1>
+                    <p className="text-gray-600 dark:text-gray-400">Report an issue in your community</p>
                 </div>
 
-                {!isAnonymous && (
-                    <div className="mb-4">
+                {error && (
+                    <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-6">
+                        {error}
+                    </div>
+                )}
+
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    <div>
+                        <label className="block mb-2 font-medium">Title</label>
                         <input
                             type="text"
-                            placeholder="Your Name (Optional)"
-                            className="w-full px-3 py-2 border rounded-md"
+                            value={form.title}
+                            onChange={(e) => setForm(prev => ({ ...prev, title: e.target.value }))}
+                            className="w-full px-4 py-2 rounded-lg border dark:bg-gray-800 dark:border-gray-700"
+                            required
                         />
                     </div>
-                )}
 
-                <div className="mb-4">
-                    <select
-                        value={category}
-                        onChange={(e) => setCategory(e.target.value as Category)}
-                        className="w-full px-3 py-2 border rounded-md"
-                    >
-                        {Object.values(Category).map((cat) => (
-                            <option key={cat} value={cat}>
-                                {cat.charAt(0).toUpperCase() + cat.slice(1)}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+                    <div>
+                        <label className="block mb-2 font-medium">Description</label>
+                        <textarea
+                            value={form.content}
+                            onChange={(e) => setForm(prev => ({ ...prev, content: e.target.value }))}
+                            className="w-full px-4 py-2 rounded-lg border dark:bg-gray-800 dark:border-gray-700 min-h-[150px]"
+                            required
+                        />
+                    </div>
 
-                <div className="mb-4">
-          <textarea
-              placeholder="Describe your report..."
-              rows={4}
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              className="w-full px-3 py-2 border rounded-md"
-          />
-                </div>
+                    <div>
+                        <label className="block mb-2 font-medium">Category</label>
+                        <select
+                            value={form.category}
+                            onChange={(e) => setForm(prev => ({ ...prev, category: e.target.value }))}
+                            className="w-full px-4 py-2 rounded-lg border dark:bg-gray-800 dark:border-gray-700"
+                            required
+                        >
+                            <option value="">Select a category</option>
+                            {Object.values(Category).map(cat => (
+                                <option key={cat} value={cat}>{cat}</option>
+                            ))}
+                        </select>
+                    </div>
 
-                <div className="mb-4 flex space-x-4">
-                    <label className="flex-grow flex items-center justify-center border-2 border-dashed rounded-md p-4 cursor-pointer">
-                        <Camera className="mr-2" />
-                        <span>Upload Media</span>
+                    <div>
+                        <label className="block mb-2 font-medium">Media</label>
+                        <div className="border-2 border-dashed rounded-lg p-4">
+                            <input
+                                type="file"
+                                multiple
+                                accept="image/*"
+                                onChange={handleMediaChange}
+                                className="hidden"
+                                id="media-upload"
+                            />
+                            <label
+                                htmlFor="media-upload"
+                                className="cursor-pointer flex flex-col items-center justify-center"
+                            >
+                                <div className="text-gray-500">
+                                    Click to upload or drag and drop
+                                </div>
+                                <div className="text-sm text-gray-400">
+                                    PNG, JPG up to 10MB each
+                                </div>
+                            </label>
+
+                            {mediaPreview.length > 0 && (
+                                <div className="mt-4 grid grid-cols-3 gap-4">
+                                    {mediaPreview.map((url, index) => (
+                                        <img
+                                            key={index}
+                                            src={url}
+                                            alt="Preview"
+                                            className="w-full h-24 object-cover rounded"
+                                        />
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    <div className="flex items-center">
                         <input
-                            type="file"
-                            multiple
-                            accept="image/*,video/*"
-                            className="hidden"
-                            onChange={(e) => {
-                                if (e.target.files) {
-                                    setMedia(Array.from(e.target.files));
-                                }
-                            }}
+                            type="checkbox"
+                            id="anonymous"
+                            checked={form.isAnonymous}
+                            onChange={(e) => setForm(prev => ({ ...prev, isAnonymous: e.target.checked }))}
+                            className="rounded border-gray-300"
                         />
-                    </label>
-                </div>
-
-                {media.length > 0 && (
-                    <div className="mb-4 grid grid-cols-3 gap-2">
-                        {media.map((file, index) => (
-                            <div key={index} className="relative">
-                                <img
-                                    src={URL.createObjectURL(file)}
-                                    alt={`Media preview ${index + 1}`}
-                                    className="w-full h-24 object-cover rounded-md"
-                                />
-                            </div>
-                        ))}
+                        <label htmlFor="anonymous" className="ml-2">
+                            Submit anonymously
+                        </label>
                     </div>
-                )}
 
-                <div className="flex items-center mb-4">
-                    <MapPin className="mr-2 text-gray-500" />
-                    <span className="text-sm text-gray-600">
-            Location will be automatically detected
-          </span>
-                </div>
-
-                <button
-                    type="submit"
-                    className="w-full bg-red-600 text-white py-3 rounded-md hover:bg-red-700 transition"
-                >
-                    Submit Report
-                </button>
-            </form>
+                    <div>
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className={`w-full px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors
+                                ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        >
+                            {loading ? 'Submitting...' : 'Submit Report'}
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     );
-}
+};

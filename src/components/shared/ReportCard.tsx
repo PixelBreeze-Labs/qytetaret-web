@@ -1,6 +1,8 @@
+"use client";
+
 import { Report } from '@/types';
 import Image from 'next/image';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 interface ReportCardProps {
     report: Report;
@@ -14,8 +16,12 @@ export const ReportCard = ({ report }: ReportCardProps) => {
         closed: 'bg-gray-100 text-gray-800'
     };
 
+    const router = useRouter();
+
     return (
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow">
+        <div className="bg-white cursor-pointer dark:bg-gray-800 rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow"
+             onClick={() => router.push(`/reports/${report.id}`)}
+        >
             <div className="flex justify-between items-start mb-3">
                 <div>
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{report.title}</h3>

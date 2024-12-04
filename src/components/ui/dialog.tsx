@@ -10,7 +10,7 @@ interface DialogProps {
 }
 
 export const Dialog: React.FC<DialogProps> = ({ open, onOpenChange, children }) => (
-    <Transition appear show={open} as={Fragment}>
+    <Transition show={open} as={Fragment}>
         <HeadlessDialog onClose={() => onOpenChange(false)} className="relative z-50">
             <Transition.Child
                 as={Fragment}
@@ -21,7 +21,7 @@ export const Dialog: React.FC<DialogProps> = ({ open, onOpenChange, children }) 
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
             >
-                <div className="fixed inset-0 bg-black bg-opacity-25" />
+                <div className="fixed inset-0 bg-black/50" />
             </Transition.Child>
 
             <div className="fixed inset-0 overflow-y-auto">
@@ -35,7 +35,7 @@ export const Dialog: React.FC<DialogProps> = ({ open, onOpenChange, children }) 
                         leaveFrom="opacity-100 scale-100"
                         leaveTo="opacity-0 scale-95"
                     >
-                        <HeadlessDialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                        <HeadlessDialog.Panel className="w-full max-w-md transform rounded-lg bg-white dark:bg-[#151F34] p-6 shadow-xl transition-all">
                             {children}
                         </HeadlessDialog.Panel>
                     </Transition.Child>
@@ -50,21 +50,21 @@ export const DialogContent = ({ children }: { children: React.ReactNode }) => (
 );
 
 export const DialogHeader = ({ children }: { children: React.ReactNode }) => (
-    <div className="border-b pb-2 mb-4">{children}</div>
+    <div className="border-b border-gray-200 dark:border-gray-700 pb-4 mb-4">{children}</div>
 );
 
 export const DialogTitle = ({ children }: { children: React.ReactNode }) => (
-    <HeadlessDialog.Title className="text-xl font-bold text-gray-900">
+    <HeadlessDialog.Title className="text-xl font-bold text-gray-900 dark:text-white">
         {children}
     </HeadlessDialog.Title>
 );
 
 export const DialogDescription = ({ children }: { children: React.ReactNode }) => (
-    <HeadlessDialog.Description className="text-sm text-gray-600">
+    <HeadlessDialog.Description className="text-sm text-gray-600 dark:text-gray-400">
         {children}
     </HeadlessDialog.Description>
 );
 
 export const DialogFooter = ({ children }: { children: React.ReactNode }) => (
-    <div className="flex justify-end gap-2 mt-4">{children}</div>
+    <div className="flex justify-end gap-3 mt-6">{children}</div>
 );

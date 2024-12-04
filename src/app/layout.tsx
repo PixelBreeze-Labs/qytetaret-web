@@ -1,4 +1,5 @@
 import { Inter } from "next/font/google";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -6,9 +7,9 @@ export const metadata = {
 	description: 'Community reporting platform',
 };
 
-const layout = ({ children }: { children: React.ReactNode }) => {
+const RootLayout = ({ children }: { children: React.ReactNode }) => {
 	return (
-		<html lang='en' suppressHydrationWarning={true}>
+		<html lang='en' suppressHydrationWarning>
 		<head>
 			<meta name="application-name" content="Qytetaret" />
 			<meta name="apple-mobile-web-app-capable" content="yes" />
@@ -20,14 +21,15 @@ const layout = ({ children }: { children: React.ReactNode }) => {
 			<link rel="shortcut icon" href="/images/img.png" />
 		</head>
 		<body
+			suppressHydrationWarning
 			className={`${inter.className} flex min-h-screen flex-col dark:bg-[#151F34]`}
 		>
-		<div className="pt-20"> {/* Add padding top */}
+		<main className="pt-20">
 			{children}
-		</div>
+		</main>
 		</body>
 		</html>
 	);
 };
 
-export default layout;
+export default RootLayout;

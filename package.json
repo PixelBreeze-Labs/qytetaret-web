@@ -54,6 +54,7 @@
 		"stripe": "^14.13.0"
 	},
 	"devDependencies": {
+		"@netlify/plugin-nextjs": "^5.8.1",
 		"@testing-library/jest-dom": "^6.1.0",
 		"@testing-library/react": "^14.0.0",
 		"@types/node": "^22.10.1",

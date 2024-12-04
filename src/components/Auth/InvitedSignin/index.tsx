@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import InputGroup from "@/components/Common/Dashboard/InputGroup";
 import FormButton from "@/components/Common/Dashboard/FormButton";
 import Loader from "@/components/Common/Loader";
@@ -7,10 +7,10 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { useSearchParams, useRouter } from "next/navigation";
 
-const InvitedSignin = () => {
+// Create a separate component for the form content
+const InvitedSigninForm = () => {
 	const [password, setPassword] = useState("");
 	const [loading, setLoading] = useState(false);
-
 	const router = useRouter();
 	const searchParams = useSearchParams();
 	const token = searchParams.get("token");
@@ -21,7 +21,6 @@ const InvitedSignin = () => {
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-
 		setLoading(true);
 		if (!password) {
 			return toast.error("Please enter your password.");
@@ -48,6 +47,36 @@ const InvitedSignin = () => {
 	};
 
 	return (
+		<form onSubmit={handleSubmit}>
+			<div className='mb-5 space-y-4'>
+				<InputGroup
+					label='Password'
+					placeholder='Enter your password'
+					type='password'
+					name='password'
+					required
+					height='50px'
+					value={password}
+					handleChange={handleChange}
+				/>
+
+				<FormButton height='50px'>
+					{loading ? (
+						<>
+							Sign in <Loader style='border-white dark:border-dark' />
+						</>
+					) : (
+						"Sign in"
+					)}
+				</FormButton>
+			</div>
+		</form>
+	);
+};
+
+// Main component with Suspense boundary
+const InvitedSignin = () => {
+	return (
 		<div className='mx-auto w-full max-w-[400px] px-4 py-10'>
 			<div className='mb-7.5 text-center'>
 				<h3 className='mb-4 font-satoshi text-heading-5 font-bold text-dark dark:text-white'>
@@ -58,30 +87,9 @@ const InvitedSignin = () => {
 				</p>
 			</div>
 
-			<form onSubmit={handleSubmit}>
-				<div className='mb-5 space-y-4'>
-					<InputGroup
-						label='Password'
-						placeholder='Enter your password'
-						type='password'
-						name='password'
-						required
-						height='50px'
-						value={password}
-						handleChange={handleChange}
-					/>
-
-					<FormButton height='50px'>
-						{loading ? (
-							<>
-								Sign in <Loader style='border-white dark:border-dark' />
-							</>
-						) : (
-							"Sign in"
-						)}
-					</FormButton>
-				</div>
-			</form>
+			<Suspense fallback={<div className="text-center"><Loader  style={'dark'}/></div>}>
+				<InvitedSigninForm />
+			</Suspense>
 		</div>
 	);
 };

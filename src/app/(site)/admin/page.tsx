@@ -10,6 +10,13 @@ export const metadata: Metadata = {
 };
 
 export default function AdminDashboard() {
+	// Convert overviewData to an array for mapping
+	const overviewCards = [
+		{ id: 1, title: 'Weekly', ...overviewData.weekly },
+		{ id: 2, title: 'Monthly', ...overviewData.monthly },
+		{ id: 3, title: 'Yearly', ...overviewData.yearly }
+	];
+
 	return (
 		<>
 			<Breadcrumb pageTitle='Dashboard' />
@@ -26,15 +33,14 @@ export default function AdminDashboard() {
 						Overview
 					</h3>
 					<p className='font-satoshi font-medium tracking-[-.2px] text-body dark:text-gray-4'>
-						An overview of your organization’s activity and performance across
+						An overview of your organization's activity and performance across
 						all your projects.
 					</p>
 				</div>
 
 				<div className='grid gap-7.5 md:grid-cols-2 xl:grid-cols-3'>
-					{/*// @ts-ignore -- next-line*/}
-					{overviewData.map((data) => (
-						<GraphCard key={data?.id} data={data} />
+					{overviewCards.map((data) => (
+						<GraphCard key={data.id} data={data} />
 					))}
 				</div>
 			</div>

@@ -1,12 +1,12 @@
-// src/app/(site)/providers.tsx
 "use client";
 
+import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
 
 export function Providers({ children }: { children: React.ReactNode }) {
 	return (
-		<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-			{children}
+		<ThemeProvider attribute='class' enableSystem={false} defaultTheme='light'>
+			<SessionProvider>{children}</SessionProvider>
 		</ThemeProvider>
 	);
 }

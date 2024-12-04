@@ -36,7 +36,7 @@ const Header = () => {
 				<div className="flex items-center gap-4">
 					<ThemeSwitcher />
 					<Link
-						href="/auth/login"
+						href="/auth/signin"
 						className="px-4 py-2 rounded-full bg-primary text-white hover:bg-primary/90 transition-colors"
 					>
 						Sign In

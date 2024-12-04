@@ -17,7 +17,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
 			<meta name="mobile-web-app-capable" content="yes" />
 			<meta name="theme-color" content="#FF0000" />
 			<link rel="manifest" href="/manifest.json" />
-			<link rel="shortcut icon" href="/favicon.ico" />
+			<link rel="shortcut icon" href="/images/img.png" />
 		</head>
 		<body
 			className={`${inter.className} flex min-h-screen flex-col dark:bg-[#151F34]`}

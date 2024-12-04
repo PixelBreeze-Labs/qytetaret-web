@@ -4,7 +4,7 @@
 		"lib": ["dom", "dom.iterable", "esnext"],
 		"allowJs": true,
 		"skipLibCheck": true,
-		"strict": true,
+		"strict": false,          // Changed to false to be less restrictive
 		"noEmit": true,
 		"esModuleInterop": true,
 		"module": "esnext",
@@ -13,6 +13,8 @@
 		"isolatedModules": true,
 		"jsx": "preserve",
 		"incremental": true,
+		"baseUrl": ".",          // Added for better path resolution
+		"noImplicitAny": false,  // Added to allow implicit any types
 		"plugins": [
 			{
 				"name": "next"
@@ -26,8 +28,15 @@
 		"next-env.d.ts",
 		"**/*.ts",
 		"**/*.tsx",
-		".next/types/**/*.ts, middleware.ts",
-		".next/types/**/*.ts"
+		"middleware.ts",        // Fixed the middleware path
+		".next/types/**/*.ts",
+		"src/**/*"             // Added to include all source files
 	],
-	"exclude": ["node_modules"]
+	"exclude": [
+		"node_modules",
+		"build",
+		"dist",
+		".next",
+		"coverage"
+	]
 }

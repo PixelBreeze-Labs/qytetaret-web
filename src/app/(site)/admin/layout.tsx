@@ -6,7 +6,6 @@ import Header from "@/components/Common/Dashboard/Header";
 import {
 	adminSidebarData,
 	adminSidebarOtherData,
-	// @ts-ignore
 } from "@/staticData/sidebarData";
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {

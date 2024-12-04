@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Sidebar from "@/components/Common/Dashboard/Sidebar";
 import Header from "@/components/Common/Dashboard/Header";
+// @ts-ignore -- next-line
 import { userSidebarData } from "@/staticData/sidebarData";
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {

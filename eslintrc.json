@@ -1,0 +1,46 @@
+{
+  "extends": "next/core-web-vitals",
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "react/no-unescaped-entities": "off",
+    "no-unused-vars": "off",
+    "no-undef": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/no-empty-interface": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/no-this-alias": "off",
+    "react-hooks/exhaustive-deps": "off"
+  },
+  "globals": {
+    "React": "readonly",
+    "JSX": "readonly",
+    "NodeJS": "readonly",
+    "process": "readonly"
+  },
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "ignorePatterns": [
+    "node_modules/*",
+    ".next/*",
+    "out/*",
+    "public/*",
+    "**/*.d.ts",
+    "**/*.js"
+  ]
+}

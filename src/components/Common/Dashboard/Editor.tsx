@@ -1,7 +1,7 @@
 "use client";
 import dynamic from "next/dynamic";
 import { LegacyRef, useRef } from "react";
-// @ts-ignore
+
 import type ReactQuill from "react-quill";
 
 interface IWrappedComponent extends React.ComponentProps<typeof ReactQuill> {

@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 
 const ForgotPasswordPage = () => {
 	return (
-		<main className='pt-[150px]'>
-			<ForgotPassword />
+		<main className='pt-[50px] pb-[50px]'>
+			<ForgotPassword/>
 		</main>
 	);
 };

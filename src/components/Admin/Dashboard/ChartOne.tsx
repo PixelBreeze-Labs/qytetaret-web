@@ -3,7 +3,7 @@
 import { ApexOptions } from "apexcharts";
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
-// @ts-ignore
+
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
 	ssr: false,
 });

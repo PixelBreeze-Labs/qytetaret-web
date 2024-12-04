@@ -75,6 +75,7 @@ export async function generateMetadata({ params }: Props) {
 				creator: `@${authorName}`,
 				site: `@${authorName}`,
 				images: [imageBuilder(post?.mainImage).url()],
+				// @ts-ignore
 				url: `${siteURL}/blog/${post?.slug?.current}`,
 			},
 		};

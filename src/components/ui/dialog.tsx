@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
-import { Dialog as ReachDialog } from '@reach/dialog';
-import '@reach/dialog/styles.css'; // You can replace this with your styles or framework (e.g., TailwindCSS).
+import { Dialog as HeadlessDialog, Transition } from '@headlessui/react';
+import { Fragment } from 'react';
 
 interface DialogProps {
     open: boolean;
@@ -9,54 +9,62 @@ interface DialogProps {
     children: React.ReactNode;
 }
 
-export const Dialog: React.FC<DialogProps> = ({ open, onOpenChange, children }) => {
-    return (
-        <ReachDialog
-            isOpen={open}
-            onDismiss={() => onOpenChange(false)}
-            className="rounded-lg shadow-lg p-6 bg-white max-w-md mx-auto"
-        >
-            {children}
-        </ReachDialog>
-    );
-};
+export const Dialog: React.FC<DialogProps> = ({ open, onOpenChange, children }) => (
+    <Transition appear show={open} as={Fragment}>
+        <HeadlessDialog onClose={() => onOpenChange(false)} className="relative z-50">
+            <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+            >
+                <div className="fixed inset-0 bg-black bg-opacity-25" />
+            </Transition.Child>
 
-interface DialogContentProps {
-    children: React.ReactNode;
-}
+            <div className="fixed inset-0 overflow-y-auto">
+                <div className="flex min-h-full items-center justify-center p-4">
+                    <Transition.Child
+                        as={Fragment}
+                        enter="ease-out duration-300"
+                        enterFrom="opacity-0 scale-95"
+                        enterTo="opacity-100 scale-100"
+                        leave="ease-in duration-200"
+                        leaveFrom="opacity-100 scale-100"
+                        leaveTo="opacity-0 scale-95"
+                    >
+                        <HeadlessDialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                            {children}
+                        </HeadlessDialog.Panel>
+                    </Transition.Child>
+                </div>
+            </div>
+        </HeadlessDialog>
+    </Transition>
+);
 
-export const DialogContent: React.FC<DialogContentProps> = ({ children }) => {
-    return <div className="space-y-4">{children}</div>;
-};
+export const DialogContent = ({ children }: { children: React.ReactNode }) => (
+    <div className="space-y-4">{children}</div>
+);
 
-interface DialogHeaderProps {
-    children: React.ReactNode;
-}
+export const DialogHeader = ({ children }: { children: React.ReactNode }) => (
+    <div className="border-b pb-2 mb-4">{children}</div>
+);
 
-export const DialogHeader: React.FC<DialogHeaderProps> = ({ children }) => {
-    return <div className="border-b pb-2 mb-4">{children}</div>;
-};
+export const DialogTitle = ({ children }: { children: React.ReactNode }) => (
+    <HeadlessDialog.Title className="text-xl font-bold text-gray-900">
+        {children}
+    </HeadlessDialog.Title>
+);
 
-interface DialogTitleProps {
-    children: React.ReactNode;
-}
+export const DialogDescription = ({ children }: { children: React.ReactNode }) => (
+    <HeadlessDialog.Description className="text-sm text-gray-600">
+        {children}
+    </HeadlessDialog.Description>
+);
 
-export const DialogTitle: React.FC<DialogTitleProps> = ({ children }) => {
-    return <h2 className="text-xl font-bold text-gray-900">{children}</h2>;
-};
-
-interface DialogDescriptionProps {
-    children: React.ReactNode;
-}
-
-export const DialogDescription: React.FC<DialogDescriptionProps> = ({ children }) => {
-    return <p className="text-sm text-gray-600">{children}</p>;
-};
-
-interface DialogFooterProps {
-    children: React.ReactNode;
-}
-
-export const DialogFooter: React.FC<DialogFooterProps> = ({ children }) => {
-    return <div className="flex justify-end gap-2 mt-4">{children}</div>;
-};
+export const DialogFooter = ({ children }: { children: React.ReactNode }) => (
+    <div className="flex justify-end gap-2 mt-4">{children}</div>
+);

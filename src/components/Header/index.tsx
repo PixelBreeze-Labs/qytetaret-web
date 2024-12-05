@@ -14,7 +14,7 @@ const Header = () => {
 	};
 
 	return (
-		<header className="fixed left-0 top-0 z-999 w-full bg-white py-4 shadow dark:bg-[#151F34]">
+		<header className="fixed left-0 top-0 z-999 w-full bg-white py-4 shadow dark:bg-dark">
 			<div className="mx-auto max-w-[1170px] flex items-center justify-between px-4">
 				<Link href="/">
 					<Image src={logo} alt="Qytetaret" className="w-[60px]" />
@@ -73,7 +73,7 @@ const Header = () => {
 
 				{/* Mobile Navigation */}
 				{isMenuOpen && (
-					<div className="absolute top-full left-0 right-0 bg-white dark:bg-[#151F34] shadow-lg md:hidden">
+					<div className="absolute top-full left-0 right-0 bg-white dark:bg-dark shadow-lg md:hidden">
 						<nav className="px-4 py-3">
 							<ul className="flex flex-col gap-4">
 								<li>

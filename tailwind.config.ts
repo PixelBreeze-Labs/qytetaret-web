@@ -30,56 +30,26 @@ const config: Config = {
 			...defaultTheme.screens,
 		},
 		extend: {
-			// colors: {
-			// 	current: "currentColor",
-			// 	transparent: "transparent",
-			// 	white: "#FFFFFF",
-			// 	black: "#0E172B",
-			// 	body: "#64748B",
-			// 	stroke: "#E8E8E8",
-			// 	primary: {
-			// 		DEFAULT: "#573CFF",
-			// 		dark: "#3E22E9",
-			// 	},
-			// 	dark: {
-			// 		DEFAULT: "#1C274C",
-			// 		2: "#495270",
-			// 		3: "#606882",
-			// 		4: "#8D93A5",
-			// 		5: "#BBBEC9",
-			// 	},
-			// 	gray: {
-			// 		DEFAULT: "#F3F5F6",
-			// 		1: "#F9FAFB",
-			// 		2: "#F3F4F6",
-			// 		3: "#E5E7EB",
-			// 		4: "#D1D5DB",
-			// 		5: "#9CA3AF",
-			// 		6: "#6B7280",
-			// 		7: "#374151",
-			// 	},
-			// },
-
 			colors: {
 				current: "currentColor",
 				transparent: "transparent",
 				white: "#FFFFFF",
-				black: "#0E172B",
+				black: "#000000",
 				body: "#64748B",
 				stroke: {
-					DEFAULT: "#F23030",
+					DEFAULT: "#ff0000",
 					dark: "#666666",
 				},
 				primary: {
-					DEFAULT: "#F23030",
-					dark: "#666666",
+					DEFAULT: "#ff0000",
+					dark: "#ff0000",
 				},
 				dark: {
-					DEFAULT: "#1C274C",
-					2: "#495270",
-					3: "#606882",
-					4: "#8D93A5",
-					5: "#BBBEC9",
+					DEFAULT: "#1A1A1A",
+					2: "#242424",
+					3: "#2A2A2A",
+					4: "#333333",
+					5: "#404040",
 				},
 				gray: {
 					DEFAULT: "#F3F5F6",
@@ -90,11 +60,11 @@ const config: Config = {
 					5: "#9CA3AF",
 					6: "#6B7280",
 					7: "#374151",
-					dark: "#272E40",
+					dark: "#1A1A1A",
 				},
 				red: {
 					...colors.red,
-					DEFAULT: "#F23030",
+					DEFAULT: "#ff0000",
 					light: "#F56060",
 					"light-5": "#FEEBEB",
 					"light-6": "#FEF3F3",
@@ -229,9 +199,9 @@ const config: Config = {
 			boxShadow: {
 				1: "0px 1px 2px 0px rgba(84, 87, 118, 0.10)",
 				error: "0px 12px 34px 0px rgba(13, 10, 44, 0.05)",
-				input: "inset 0 0 0 2px #573CFF",
+				input: "inset 0 0 0 2px #ff0000",
 				dropdown: "0px 4px 12px 0px rgba(15, 23, 42, 0.10)",
-				darkdropdown: "0px 4px 12px 0px rgba(255, 255, 255, 0.05)",
+				darkdropdown: "0px 4px 12px 0px rgba(0, 0, 0, 0.2)",
 				features: "0px 8px 20px 0px rgba(113, 116, 152, 0.05)",
 				testimonial: "0px 8px 10px -6px rgba(15, 23, 42, 0.06)",
 				"testimonial-2": "0px 15px 50px -6px rgba(15, 23, 42, 0.08)",
@@ -240,4 +210,5 @@ const config: Config = {
 	},
 	plugins: [],
 };
+
 export default config;

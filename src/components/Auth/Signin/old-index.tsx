@@ -20,7 +20,7 @@ export default function Signin() {
 				</div>
 				<div className='mb-7.5 flex items-center justify-center'>
 					<span className='block h-px w-full bg-stroke dark:bg-stroke-dark'></span>
-					<div className='inline-block bg-white px-3 text-base text-body dark:bg-[#151F34] dark:text-gray-5'>
+					<div className='inline-block bg-white px-3 text-base text-body dark:bg-dark dark:text-gray-5'>
 						OR
 					</div>
 					<span className='block h-px w-full bg-stroke dark:bg-stroke-dark'></span>

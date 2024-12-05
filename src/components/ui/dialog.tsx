@@ -35,7 +35,7 @@ export const Dialog: React.FC<DialogProps> = ({ open, onOpenChange, children }) 
                         leaveFrom="opacity-100 scale-100"
                         leaveTo="opacity-0 scale-95"
                     >
-                        <HeadlessDialog.Panel className="w-full max-w-md transform rounded-lg bg-white dark:bg-[#151F34] p-6 shadow-xl transition-all">
+                        <HeadlessDialog.Panel className="w-full max-w-md transform rounded-lg bg-white dark:bg-dark p-6 shadow-xl transition-all">
                             {children}
                         </HeadlessDialog.Panel>
                     </Transition.Child>

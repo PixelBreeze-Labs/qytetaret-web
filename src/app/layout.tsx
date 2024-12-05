@@ -22,7 +22,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 		</head>
 		<body
 			suppressHydrationWarning
-			className={`${inter.className} flex min-h-screen flex-col dark:bg-[#151F34]`}
+			className={`${inter.className} flex min-h-screen flex-col dark:bg-dark`}
 		>
 		<main className="pt-20">
 			{children}

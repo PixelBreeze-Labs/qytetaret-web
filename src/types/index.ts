@@ -8,7 +8,7 @@ export enum ReportStatus {
 export interface Post {
     id: string;
     content: string;
-    category: Category;
+    category: CategoryReport;
     isAnonymous: boolean;
     location: {
         lat: number;
@@ -19,7 +19,7 @@ export interface Post {
     media?: string[];
 }
 
-export enum Category {
+export enum CategoryReport {
     INFRASTRUCTURE = 'infrastructure',
     ENVIRONMENT = 'environment',
     COMMUNITY = 'community',
@@ -39,7 +39,7 @@ export interface Report {
     };
     isAnonymous: boolean;
     author?: string;
-    category: Category;
+    category: CategoryReport;
     status: ReportStatus;
     createdAt: Date;
     updatedAt: Date;

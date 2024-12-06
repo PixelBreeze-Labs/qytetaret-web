@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ThemeSwitcher from "./ThemeSwitcher";
 import { useState } from "react";
+import LocaleSwitcher from "../LocaleSwitcher";
 
 const Header = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -62,6 +63,7 @@ const Header = () => {
 				</nav>
 
 				<div className="hidden md:flex items-center gap-4">
+					<LocaleSwitcher />
 					<ThemeSwitcher />
 					<Link
 						href="/auth/signin"
@@ -104,6 +106,7 @@ const Header = () => {
 									</Link>
 								</li>
 								<li className="flex items-center justify-between py-2">
+									<LocaleSwitcher />
 									<ThemeSwitcher />
 									<Link
 										href="/auth/signin"

@@ -1,0 +1,83 @@
+{
+  "LocaleSwitcher": {
+    "sq": "Shqip",
+    "en": "English",
+    "label": "Language"
+  },
+  "reports": {
+    "title": "Probleme Komunitare, Zgjidhur Së Bashku",
+    "description": "Raportoni çështje lokale në mënyrë anonime, ndiqni progresin e tyre dhe ndihmoni në përmirësimin e komunitetit tuaj",
+    "form": {
+      "title": "Dërgo Raport të Ri",
+      "description": "Raporto një problem në komunitetin tënd",
+      "fields": {
+        "title": {
+          "label": "Titulli",
+          "placeholder": "Përshkrim i shkurtër i problemit"
+        },
+        "category": {
+          "label": "Kategoria",
+          "placeholder": "Zgjidhni një kategori"
+        },
+        "description": {
+          "label": "Përshkrimi",
+          "placeholder": "Jepni informacion të detajuar për problemin"
+        },
+        "evidence": {
+          "label": "Evidenca",
+          "upload": {
+            "text": "Klikoni për të ngarkuar ose tërhiqni imazhe",
+            "specs": "PNG, JPG deri në 10MB secila"
+          },
+          "voice": {
+            "start": "Fillo Regjistrimin",
+            "stop": "Ndalo Regjistrimin"
+          }
+        },
+        "anonymous": "Dërgo në mënyrë anonime"
+      },
+      "submit": "Dërgo Raportin",
+      "submitting": "Duke dërguar...",
+      "error": "Dërgimi i raportit dështoi. Ju lutemi provoni përsëri."
+    }
+  },
+  "emergency": {
+    "title": "Emergjencë?",
+    "call": "Telefono 129"
+  },
+  "account": {
+    "benefits": {
+      "title": "Ndiq Raportet Tuaja",
+      "description": "Krijo një llogari për të:",
+      "features": {
+        "tracking": "Ndjekur progresin e raporteve",
+        "updates": "Marrë përditësime të statusit"
+      },
+      "cta": "Krijo një llogari →"
+    }
+  },
+  "privacy": {
+    "title": "Raportim Anonim",
+    "description": "Privatësia juaj është prioriteti ynë. Kur raportoni në mënyrë anonime:",
+    "features": {
+      "noInfo": "Nuk mblidhet asnjë informacion personal",
+      "noIp": "Adresat IP nuk ruhen",
+      "location": "Të dhënat e vendndodhjes janë opsionale",
+      "metadata": "Metadata e mediave hiqet"
+    }
+  },
+  "recentReports": {
+    "title": "Raportet e Fundit",
+    "timeAgo": "2 orë më parë",
+    "sample": "Nevojitet mirëmbajtje rruge",
+    "viewAll": "Shiko të gjitha raportet →"
+  },
+  "impact": {
+    "title": "Impakti",
+    "stats": {
+      "monthly": "Raporte këtë muaj",
+      "resolved": "Çështje të zgjidhura",
+      "response": "Koha mesatare e përgjigjes"
+    }
+  }
+}

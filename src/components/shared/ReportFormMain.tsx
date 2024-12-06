@@ -1,10 +1,12 @@
 "use client";
 import { useState } from 'react';
-import { Category } from '@/types';
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { Mic, Square, Camera, X } from 'lucide-react';
+import { CategoryReport } from '@/types';
 
 export const ReportFormMain = () => {
+    const t = useTranslations('reports.form');
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [form, setForm] = useState({
@@ -63,7 +65,7 @@ export const ReportFormMain = () => {
             setIsRecording(true);
         } catch (err) {
             console.error("Error accessing microphone:", err);
-            setError("Failed to access microphone. Please check permissions.");
+            setError(t('error'));
         }
     };
 
@@ -96,7 +98,7 @@ export const ReportFormMain = () => {
             // TODO: Add API call with formData
             router.push('/reports');
         } catch (err) {
-            setError('Failed to submit report. Please try again.');
+            setError(t('error'));
         } finally {
             setLoading(false);
         }
@@ -105,8 +107,8 @@ export const ReportFormMain = () => {
     return (
         <div className="bg-white dark:bg-[#1E1E1E] rounded-lg shadow-dropdown">
             <div className="p-6 border-b dark:border-gray-800">
-                <h1 className="text-2xl font-bold">Submit New Report</h1>
-                <p className="text-gray-600 dark:text-gray-400">Report an issue in your community</p>
+                <h1 className="text-2xl font-bold">{t('title')}</h1>
+                <p className="text-gray-600 dark:text-gray-400">{t('description')}</p>
             </div>
 
             {error && (
@@ -117,45 +119,46 @@ export const ReportFormMain = () => {
 
             <form onSubmit={handleSubmit} className="p-6 space-y-6">
                 <div>
-                    <label className="block mb-2 font-medium">Title</label>
+                    <label className="block mb-2 font-medium">{t('fields.title.label')}</label>
                     <input
                         type="text"
                         value={form.title}
                         onChange={(e) => setForm(prev => ({ ...prev, title: e.target.value }))}
                         className="w-full px-4 py-2 rounded-lg border dark:bg-gray-800 dark:border-gray-700 focus:ring-2 focus:ring-primary/50"
                         required
-                        placeholder="Brief description of the issue"
+                        placeholder={t('fields.title.placeholder')}
                     />
                 </div>
 
                 <div>
-                    <label className="block mb-2 font-medium">Category</label>
+                    <label className="block mb-2 font-medium">{t('fields.category.label')}</label>
                     <select
                         value={form.category}
                         onChange={(e) => setForm(prev => ({ ...prev, category: e.target.value }))}
                         className="w-full px-4 py-2 rounded-lg border dark:bg-gray-800 dark:border-gray-700 focus:ring-2 focus:ring-primary/50"
                         required
                     >
-                        <option value="">Select a category</option>
-                        {Object.values(Category).map(cat => (
+                        <option value="">{t('fields.category.placeholder')}</option>
+                        {/* Assuming Category is an enum imported from types */}
+                        {Object.values(CategoryReport).map(cat => (
                             <option key={cat} value={cat}>{cat}</option>
                         ))}
                     </select>
                 </div>
 
                 <div>
-                    <label className="block mb-2 font-medium">Description</label>
+                    <label className="block mb-2 font-medium">{t('fields.description.label')}</label>
                     <textarea
                         value={form.content}
                         onChange={(e) => setForm(prev => ({ ...prev, content: e.target.value }))}
                         className="w-full px-4 py-2 rounded-lg border dark:bg-gray-800 dark:border-gray-700 min-h-[150px] focus:ring-2 focus:ring-primary/50"
                         required
-                        placeholder="Provide detailed information about the issue"
+                        placeholder={t('fields.description.placeholder')}
                     />
                 </div>
 
                 <div>
-                    <label className="block mb-2 font-medium">Evidence</label>
+                    <label className="block mb-2 font-medium">{t('fields.evidence.label')}</label>
                     <div className="space-y-4">
                         <div className="border-2 border-dashed dark:border-gray-700 rounded-lg p-4">
                             <input
@@ -171,8 +174,8 @@ export const ReportFormMain = () => {
                                 className="cursor-pointer flex flex-col items-center justify-center gap-2"
                             >
                                 <Camera className="w-8 h-8 text-gray-400" />
-                                <div className="text-gray-500">Click to upload or drag images</div>
-                                <div className="text-sm text-gray-400">PNG, JPG up to 10MB each</div>
+                                <div className="text-gray-500">{t('fields.evidence.upload.text')}</div>
+                                <div className="text-sm text-gray-400">{t('fields.evidence.upload.specs')}</div>
                             </label>
 
                             {mediaPreview.length > 0 && (
@@ -208,7 +211,10 @@ export const ReportFormMain = () => {
                                 } text-white transition-colors`}
                             >
                                 {isRecording ? <Square className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
-                                {isRecording ? 'Stop Recording' : 'Start Recording'}
+                                {isRecording
+                                    ? t('fields.evidence.voice.stop')
+                                    : t('fields.evidence.voice.start')
+                                }
                             </button>
 
                             {audioUrl && (
@@ -227,7 +233,7 @@ export const ReportFormMain = () => {
                         className="rounded border-gray-300 text-primary focus:ring-primary"
                     />
                     <label htmlFor="anonymous" className="ml-2 text-gray-700 dark:text-gray-300">
-                        Submit anonymously
+                        {t('fields.anonymous')}
                     </label>
                 </div>
 
@@ -237,7 +243,7 @@ export const ReportFormMain = () => {
                     className={`w-full px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors
                         ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
-                    {loading ? 'Submitting...' : 'Submit Report'}
+                    {loading ? t('submitting') : t('submit')}
                 </button>
             </form>
         </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from 'react';
-import { Report, Category, ReportStatus } from '@/types';
+import { Report, CategoryReport, ReportStatus } from '@/types';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import { ReportCard } from '@/components/shared/ReportCard';
 import { Hero } from '@/components/shared/Hero';
@@ -10,7 +10,7 @@ const dummyReports = Array.from({ length: 100 }, (_, i) => ({
     id: `${i}`,
     title: `Report #${i}`,
     content: `This is a sample report about ${['roads', 'parks', 'lighting', 'trash'][i % 4]} that needs attention...`,
-    category: Object.values(Category)[i % 4],
+    category: Object.values(CategoryReport)[i % 4],
     isAnonymous: i % 3 === 0,
     author: i % 3 === 0 ? undefined : `User ${i}`,
     location: {
@@ -54,7 +54,7 @@ export default function HomePage() {
                         className="rounded-lg border p-2 dark:bg-gray-800 dark:border-gray-700"
                     >
                         <option value="all">All Categories</option>
-                        {Object.values(Category).map(cat => (
+                        {Object.values(CategoryReport).map(cat => (
                             <option key={cat} value={cat}>{cat}</option>
                         ))}
                     </select>

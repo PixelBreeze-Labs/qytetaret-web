@@ -4,7 +4,7 @@
 import { useEffect, useState, useMemo, useCallback } from 'react';
 import { GoogleMap, useLoadScript, MarkerF, InfoWindowF } from '@react-google-maps/api';
 import { dummyReports } from '@/utils/dummyReports';
-import { Report, Category, ReportStatus } from '@/types';
+import { Report, CategoryReport, ReportStatus } from '@/types';
 import { ReportCard } from '@/components/shared/ReportCard';
 
 const mapContainerStyle = {
@@ -14,11 +14,11 @@ const mapContainerStyle = {
 };
 
 const markerIcons = {
-    [Category.INFRASTRUCTURE]: '/icons/marker-infrastructure.svg',
-    [Category.ENVIRONMENT]: '/icons/marker-environment.svg',
-    [Category.COMMUNITY]: '/icons/marker-community.svg',
-    [Category.SAFETY]: '/icons/marker-safety.svg',
-    [Category.OTHER]: '/icons/marker-other.svg',
+    [CategoryReport.INFRASTRUCTURE]: '/icons/marker-infrastructure.svg',
+    [CategoryReport.ENVIRONMENT]: '/icons/marker-environment.svg',
+    [CategoryReport.COMMUNITY]: '/icons/marker-community.svg',
+    [CategoryReport.SAFETY]: '/icons/marker-safety.svg',
+    [CategoryReport.OTHER]: '/icons/marker-other.svg',
 };
 
 const statusColors = {

@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useMemo } from 'react';
-import { Report, Category, ReportStatus } from '@/types';
+import { Report, CategoryReport, ReportStatus } from '@/types';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import { ReportCard } from '@/components/shared/ReportCard';
 import Link from 'next/link';
@@ -46,7 +46,7 @@ export default function ReportsPage() {
                     className="rounded-lg border p-2 dark:bg-gray-800 dark:border-gray-700"
                 >
                     <option value="all">All Categories</option>
-                    {Object.values(Category).map(cat => (
+                    {Object.values(CategoryReport).map(cat => (
                         <option key={cat} value={cat}>{cat}</option>
                     ))}
                 </select>

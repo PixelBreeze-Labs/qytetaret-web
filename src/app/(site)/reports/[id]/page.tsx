@@ -1,5 +1,5 @@
 import React from 'react';
-import { Post, Category } from '@/types';
+import { Post, CategoryReport } from '@/types';
 import { ReportCard } from '@/components/shared/ReportCard';
 import { RelatedReports } from '@/components/shared/RelatedReports';
 
@@ -11,7 +11,7 @@ const ReportDetailPage = () => {
         id: id as string,
         content:
             'Detailed report about a community issue that needs to be addressed. The report includes information about the problem and its impact on the local area.',
-        category: Category.INFRASTRUCTURE,
+        category: CategoryReport.INFRASTRUCTURE,
         isAnonymous: true,
         location: { lat: 42.3601, lng: -71.0589, accuracy: 10 },
         timestamp: new Date(),
@@ -25,7 +25,7 @@ const ReportDetailPage = () => {
         {
             id: '1',
             content: 'Another report about a similar infrastructure issue',
-            category: Category.INFRASTRUCTURE,
+            category: CategoryReport.INFRASTRUCTURE,
             isAnonymous: false,
             location: {lat: 42.3602, lng: -71.0590, accuracy: 12},
             timestamp: new Date('2024-03-15'),
@@ -36,7 +36,7 @@ const ReportDetailPage = () => {
         {
             id: '2',
             content: 'Report about a community event',
-            category: Category.COMMUNITY,
+            category: CategoryReport.COMMUNITY,
             isAnonymous: true,
             location: { lat: 42.3603, lng: -71.0591, accuracy: 8 },
             timestamp: new Date('2024-02-28'),

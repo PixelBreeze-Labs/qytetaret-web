@@ -1,0 +1,83 @@
+{
+  "LocaleSwitcher": {
+    "sq": "Shqip",
+    "en": "English",
+    "label": "Language"
+  },
+  "reports": {
+    "title": "Community Issues, Solved Together",
+    "description": "Report local issues anonymously, track their progress, and help make your community better",
+    "form": {
+      "title": "Submit New Report",
+      "description": "Report an issue in your community",
+      "fields": {
+        "title": {
+          "label": "Title",
+          "placeholder": "Brief description of the issue"
+        },
+        "category": {
+          "label": "Category",
+          "placeholder": "Select a category"
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Provide detailed information about the issue"
+        },
+        "evidence": {
+          "label": "Evidence",
+          "upload": {
+            "text": "Click to upload or drag images",
+            "specs": "PNG, JPG up to 10MB each"
+          },
+          "voice": {
+            "start": "Start Recording",
+            "stop": "Stop Recording"
+          }
+        },
+        "anonymous": "Submit anonymously"
+      },
+      "submit": "Submit Report",
+      "submitting": "Submitting...",
+      "error": "Failed to submit report. Please try again."
+    }
+  },
+  "emergency": {
+    "title": "Emergency?",
+    "call": "Call 129"
+  },
+  "account": {
+    "benefits": {
+      "title": "Track Your Reports",
+      "description": "Create an account to:",
+      "features": {
+        "tracking": "Track report progress",
+        "updates": "Get status updates"
+      },
+      "cta": "Create an account →"
+    }
+  },
+  "privacy": {
+    "title": "Anonymous Reporting",
+    "description": "Your privacy is our priority. When reporting anonymously:",
+    "features": {
+      "noInfo": "No personal information is collected",
+      "noIp": "IP addresses are not stored",
+      "location": "Location data is optional",
+      "metadata": "Media is stripped of metadata"
+    }
+  },
+  "recentReports": {
+    "title": "Recent Reports",
+    "timeAgo": "2 hours ago",
+    "sample": "Road maintenance needed",
+    "viewAll": "View all reports →"
+  },
+  "impact": {
+    "title": "Impact",
+    "stats": {
+      "monthly": "Reports this month",
+      "resolved": "Resolved issues",
+      "response": "Avg. response time"
+    }
+  }
+}

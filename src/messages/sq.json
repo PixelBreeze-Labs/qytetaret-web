@@ -38,7 +38,30 @@
       },
       "submit": "Dërgo Raportin",
       "submitting": "Duke dërguar...",
-      "error": "Dërgimi i raportit dështoi. Ju lutemi provoni përsëri."
+      "error": "Dërgimi i raportit dështoi. Ju lutemi provoni përsëri.",
+      "errors": {
+        "submit": "Dërgimi i raportit dështoi",
+        "successSubmit": "Raporti u dërgua me sukses",
+        "validation": {
+          "title": "Titulli është i detyrueshëm",
+          "content": "Përshkrimi është i detyrueshëm",
+          "category": "Ju lutem zgjidhni një kategori",
+          "location": "Vendndodhja është e detyrueshme",
+          "media": {
+            "size": "Madhësia e imazhit duhet të jetë më pak se 5MB",
+            "type": "Lejohen vetëm skedarë imazhi",
+            "count": "Lejohen maksimumi 5 imazhe"
+          },
+          "audio": {
+            "size": "Skedari audio duhet të jetë më pak se 10MB"
+          }
+        },
+        "server": {
+          "UNAUTHORIZED": "Ju lutem identifikohuni për të dërguar një raport",
+          "BAD_REQUEST": "Ju lutem kontrolloni të dhënat e futura",
+          "INTERNAL_ERROR": "Diçka shkoi keq. Ju lutem provoni përsëri"
+        }
+      }
     }
   },
   "emergency": {

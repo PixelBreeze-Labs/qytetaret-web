@@ -1,6 +1,6 @@
 // services/api/api.ts
-// const BASE_URL = 'https://v1.api.qytetaret.al';
-const BASE_URL = 'http://127.0.0.1:3000';
+const BASE_URL = 'https://v1.api.qytetaret.al';
+// const BASE_URL = 'http://127.0.0.1:3000';
 
 interface ApiError {
     message: string;

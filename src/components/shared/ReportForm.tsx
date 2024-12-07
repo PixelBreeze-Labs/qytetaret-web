@@ -13,7 +13,7 @@ export const ReportForm = () => {
     const tImpact = useTranslations('impact');
 
     return (
-        <div className="container mx-auto px-4 py-6">
+        <div className="pt-[50px] pb-[50px]">
             {/* Title Section */}
             <div className="mb-8 text-center">
                 <h1 className="text-3xl font-bold text-gray-900 dark:text-white">

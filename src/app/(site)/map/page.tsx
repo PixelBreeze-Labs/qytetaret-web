@@ -82,7 +82,7 @@ export default function MapPage() {
                         className="w-full rounded-lg border p-2 dark:bg-gray-800 dark:border-gray-700"
                     >
                         <option value="all">All Categories</option>
-                        {Object.values(Category).map(cat => (
+                        {Object.values(CategoryReport).map(cat => (
                             <option key={cat} value={cat}>{cat}</option>
                         ))}
                     </select>

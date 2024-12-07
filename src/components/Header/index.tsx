@@ -1,18 +1,15 @@
 "use client";
-
 import logo from "@/../public/images/logo/logo-new.png";
 import Image from "next/image";
 import Link from "next/link";
 import ThemeSwitcher from "./ThemeSwitcher";
 import { useState } from "react";
 import LocaleSwitcher from "../LocaleSwitcher";
+import { useTranslations } from 'next-intl';
 
 const Header = () => {
+	const t = useTranslations('navigation');
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-	const toggleMenu = () => {
-		setIsMenuOpen(!isMenuOpen);
-	};
 
 	return (
 		<header className="fixed left-0 top-0 z-999 w-full bg-white py-4 shadow dark:bg-dark">
@@ -24,7 +21,7 @@ const Header = () => {
 				{/* Mobile Menu Button */}
 				<button
 					className="md:hidden text-black dark:text-white p-2"
-					onClick={toggleMenu}
+					onClick={() => setIsMenuOpen(!isMenuOpen)}
 					aria-label="Toggle menu"
 				>
 					{!isMenuOpen ? (
@@ -43,12 +40,12 @@ const Header = () => {
 					<ul className="flex items-center gap-6">
 						<li>
 							<Link href="/reports" className="text-black hover:text-primary dark:text-white">
-								Reports
+								{t('reports')}
 							</Link>
 						</li>
 						<li>
 							<Link href="/map" className="text-black hover:text-primary dark:text-white">
-								Map
+								{t('map')}
 							</Link>
 						</li>
 						<li>
@@ -56,7 +53,7 @@ const Header = () => {
 								href="/reports/new"
 								className="px-4 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors font-medium"
 							>
-								Submit Report
+								{t('submitReport')}
 							</Link>
 						</li>
 					</ul>
@@ -69,7 +66,7 @@ const Header = () => {
 						href="/auth/signin"
 						className="px-4 py-2 rounded-full bg-body text-white hover:bg-body/90 transition-colors"
 					>
-						Sign In
+						{t('signIn')}
 					</Link>
 				</div>
 
@@ -84,7 +81,7 @@ const Header = () => {
 										className="text-black hover:text-primary dark:text-white block py-2"
 										onClick={() => setIsMenuOpen(false)}
 									>
-										Reports
+										{t('reports')}
 									</Link>
 								</li>
 								<li>
@@ -93,7 +90,7 @@ const Header = () => {
 										className="text-black hover:text-primary dark:text-white block py-2"
 										onClick={() => setIsMenuOpen(false)}
 									>
-										Map
+										{t('map')}
 									</Link>
 								</li>
 								<li>
@@ -102,7 +99,7 @@ const Header = () => {
 										className="block text-center px-4 py-3 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors font-medium"
 										onClick={() => setIsMenuOpen(false)}
 									>
-										Submit Report
+										{t('submitReport')}
 									</Link>
 								</li>
 								<li className="flex items-center justify-between py-2">
@@ -113,7 +110,7 @@ const Header = () => {
 										className="px-4 py-2 rounded-full bg-body text-white hover:bg-body/90 transition-colors"
 										onClick={() => setIsMenuOpen(false)}
 									>
-										Sign In
+										{t('signIn')}
 									</Link>
 								</li>
 							</ul>

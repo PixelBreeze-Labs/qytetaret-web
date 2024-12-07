@@ -79,5 +79,97 @@
       "resolved": "Resolved issues",
       "response": "Avg. response time"
     }
+  },
+  "navigation": {
+    "reports": "Reports",
+    "map": "Map",
+    "submitReport": "Submit Report",
+    "signIn": "Sign In"
+  },
+  "footer": {
+    "description": "Community reporting platform enabling anonymous reporting and tracking of local issues.",
+    "platform": {
+      "title": "Platform",
+      "about": "About",
+      "howItWorks": "How it Works",
+      "privacy": "Privacy",
+      "terms": "Terms"
+    },
+    "contact": {
+      "title": "Contact",
+      "contactUs": "Contact Us",
+      "faq": "FAQ"
+    },
+    "copyright": "© 2024 Qytetaret. All rights reserved.",
+    "disclaimer": "Disclaimer: User-generated reports are not verified by Qytetaret"
+  },
+  "auth": {
+    "magicLink": {
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter your email"
+      },
+      "submit": "Send magic link",
+      "sending": "Sending",
+      "success": "Email sent",
+      "errors": {
+        "emailRequired": "Please enter your email address.",
+        "emailInvalid": "Please enter a valid email address."
+      }
+    },
+    "common": {
+      "or": "OR",
+      "magicLink": "Magic Link",
+      "password": "Password",
+      "email": "Email"
+    },
+    "signin": {
+      "title": "Welcome Back",
+      "description": "Sign in to your account or continue anonymously",
+      "googleButton": "Sign in",
+      "noAccount": "Don't have an account yet?",
+      "createAccount": "Create account →",
+      "anonymousReport": "Want to report anonymously?",
+      "continueAsGuest": "Continue as guest →"
+    },
+    "signup": {
+      "title": "Create Account",
+      "description": "Join our community or report anonymously",
+      "googleButton": "Sign up",
+      "hasAccount": "Already have an account?",
+      "signIn": "Sign In →"
+    },
+    "resetPassword": {
+      "title": "Create New Password",
+      "description": "Create new password to save your account",
+      "newPassword": {
+        "label": "New password",
+        "placeholder": "Password"
+      },
+      "confirmPassword": {
+        "label": "Re-type new password",
+        "placeholder": "Password"
+      },
+      "submit": "Create Password",
+      "hasAccount": "Already have an account?",
+      "signIn": "Sign In →"
+    },
+    "forgotPassword": {
+      "title": "Forgot Password?",
+      "description": "Enter your email address we'll send you a link to reset your password.",
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter your email"
+      },
+      "submit": "Send Reset Link",
+      "sending": "Sending",
+      "hasAccount": "Already have an account?",
+      "signIn": "Sign In →",
+      "errors": {
+        "emailRequired": "Please enter your email address.",
+        "emailInvalid": "Please enter a valid email address.",
+        "userNotFound": "User not found."
+      }
+    }
   }
 }

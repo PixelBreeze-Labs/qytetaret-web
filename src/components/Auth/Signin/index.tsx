@@ -1,31 +1,35 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import { useTranslations } from 'next-intl';
 import GoogleSigninButton from "../GoogleSigninButton";
 import SigninWithMagicLink from "../SigninWithMagicLink";
 import SigninWithPassword from "../SigninWithPassword";
 
 export default function Signin() {
+	const t = useTranslations('auth');
 	const [signinOption, setSigninOption] = useState("magic-link");
 
 	return (
 		<div className="w-full max-w-md mx-auto p-6">
 			<div className="text-center mb-8">
-				<h1 className="text-2xl font-bold mb-2">Welcome Back</h1>
+				<h1 className="text-2xl font-bold mb-2">{t('signin.title')}</h1>
 				<p className="text-gray-600 dark:text-gray-400">
-					Sign in to your account or continue anonymously
+					{t('signin.description')}
 				</p>
 			</div>
 
 			<div className="space-y-6">
-				<GoogleSigninButton text='Sign in' />
+				<GoogleSigninButton text={t('signin.googleButton')} />
 
 				<div className="relative">
 					<div className="absolute inset-0 flex items-center">
 						<div className="w-full border-t border-gray-300"></div>
 					</div>
 					<div className="relative flex justify-center text-sm">
-						<span className="px-2 bg-white dark:bg-gray-900 text-gray-500">OR</span>
+                        <span className="px-2 bg-white dark:bg-gray-900 text-gray-500">
+                            {t('common.or')}
+                        </span>
 					</div>
 				</div>
 
@@ -38,7 +42,7 @@ export default function Signin() {
 								: "text-dark dark:text-white"
 						}`}
 					>
-						Magic Link
+						{t('common.magicLink')}
 					</button>
 					<button
 						onClick={() => setSigninOption("password")}
@@ -48,7 +52,7 @@ export default function Signin() {
 								: "text-dark dark:text-white"
 						}`}
 					>
-						Password
+						{t('common.password')}
 					</button>
 				</div>
 
@@ -60,16 +64,16 @@ export default function Signin() {
 
 				<div className="text-center space-y-4">
 					<p className="text-sm text-gray-600 dark:text-gray-400">
-						Don't have an account yet?{" "}
+						{t('signin.noAccount')}{" "}
 						<Link href="/auth/signup" className="text-primary hover:underline">
-							Create account →
+							{t('signin.createAccount')}
 						</Link>
 					</p>
 
 					<p className="text-sm text-gray-600 dark:text-gray-400">
-						Want to report anonymously?{" "}
+						{t('signin.anonymousReport')}{" "}
 						<Link href="/reports/new" className="text-primary hover:underline">
-							Continue as guest →
+							{t('signin.continueAsGuest')}
 						</Link>
 					</p>
 				</div>

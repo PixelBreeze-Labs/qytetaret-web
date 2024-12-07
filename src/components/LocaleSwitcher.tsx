@@ -12,11 +12,13 @@ export default function LocaleSwitcher() {
                 {
                     value: 'en',
                     label: t('en'),
+                    // @ts-ignore
                     icon: ''
                 },
                 {
                     value: 'sq',
                     label: t('sq'),
+                    // @ts-ignore
                     icon: ''
                 }
             ]}

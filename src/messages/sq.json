@@ -79,5 +79,97 @@
       "resolved": "Çështje të zgjidhura",
       "response": "Koha mesatare e përgjigjes"
     }
+  },
+  "navigation": {
+    "reports": "Raportet",
+    "map": "Harta",
+    "submitReport": "Dërgo Raport",
+    "signIn": "Hyr"
+  },
+  "footer": {
+    "description": "Platforma e raportimit të komunitetit që mundëson raportimin anonim dhe ndjekjen e çështjeve lokale.",
+    "platform": {
+      "title": "Platforma",
+      "about": "Rreth Nesh",
+      "howItWorks": "Si Funksionon",
+      "privacy": "Privatësia",
+      "terms": "Kushtet"
+    },
+    "contact": {
+      "title": "Kontakt",
+      "contactUs": "Na Kontaktoni",
+      "faq": "FAQ"
+    },
+    "copyright": "© 2024 Qytetaret. Të gjitha të drejtat të rezervuara.",
+    "disclaimer": "Kujdes: Raportet e krijuara nga përdoruesit nuk verifikohen nga Qytetaret"
+  },
+  "auth": {
+    "magicLink": {
+      "email": {
+        "label": "Email",
+        "placeholder": "Vendosni emailin tuaj"
+      },
+      "submit": "Dërgo magic link",
+      "sending": "Duke dërguar",
+      "success": "Emaili u dërgua",
+      "errors": {
+        "emailRequired": "Ju lutemi vendosni adresën tuaj të emailit.",
+        "emailInvalid": "Ju lutemi vendosni një adresë emaili të vlefshme."
+      }
+    },
+    "common": {
+      "or": "OSE",
+      "magicLink": "Magic Link",
+      "password": "Fjalëkalimi",
+      "email": "Email"
+    },
+    "signin": {
+      "title": "Mirë se u kthyet",
+      "description": "Hyni në llogarinë tuaj ose vazhdoni në mënyrë anonime",
+      "googleButton": "Hyr",
+      "noAccount": "Nuk keni ende llogari?",
+      "createAccount": "Krijo llogari →",
+      "anonymousReport": "Dëshironi të raportoni në mënyrë anonime?",
+      "continueAsGuest": "Vazhdo si mysafir →"
+    },
+    "signup": {
+      "title": "Krijo Llogari",
+      "description": "Bashkohuni me komunitetin tonë ose raportoni në mënyrë anonime",
+      "googleButton": "Regjistrohu",
+      "hasAccount": "Tashmë keni një llogari?",
+      "signIn": "Hyr →"
+    },
+    "resetPassword": {
+      "title": "Krijo Fjalëkalim të Ri",
+      "description": "Krijo një fjalëkalim të ri për të ruajtur llogarinë tënde",
+      "newPassword": {
+        "label": "Fjalëkalimi i ri",
+        "placeholder": "Fjalëkalimi"
+      },
+      "confirmPassword": {
+        "label": "Rivendos fjalëkalimin e ri",
+        "placeholder": "Fjalëkalimi"
+      },
+      "submit": "Krijo Fjalëkalimin",
+      "hasAccount": "Tashmë keni një llogari?",
+      "signIn": "Hyr →"
+    },
+    "forgotPassword": {
+      "title": "Keni harruar fjalëkalimin?",
+      "description": "Vendosni adresën tuaj të emailit dhe ne do t'ju dërgojmë një link për të rivendosur fjalëkalimin.",
+      "email": {
+        "label": "Email",
+        "placeholder": "Vendosni emailin tuaj"
+      },
+      "submit": "Dërgo Linkun e Rivendosjes",
+      "sending": "Duke dërguar",
+      "hasAccount": "Tashmë keni një llogari?",
+      "signIn": "Hyr →",
+      "errors": {
+        "emailRequired": "Ju lutemi vendosni adresën tuaj të emailit.",
+        "emailInvalid": "Ju lutemi vendosni një adresë emaili të vlefshme.",
+        "userNotFound": "Përdoruesi nuk u gjet."
+      }
+    }
   }
 }

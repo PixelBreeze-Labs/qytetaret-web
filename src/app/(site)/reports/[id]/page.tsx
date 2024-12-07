@@ -33,7 +33,7 @@ const mapContainerStyle = {
 const ReportDetailPage = () => {
     const t = useTranslations('reportDetailScreen');
     const { isLoaded } = useLoadScript({
-        googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "YOUR_API_KEY",
+        googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "AIzaSyAEe-vcJ-r8w9FQdVEskAozi1v9cWy6YAA",
     });
 
     // Mock data - replace with actual data fetching

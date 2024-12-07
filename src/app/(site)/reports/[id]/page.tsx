@@ -56,7 +56,7 @@ const ReportDetailPage = () => {
     };
 
     return (
-        <div className="container mx-auto px-4 sm:px-6 py-6 pt-[50px] pb-[50px]">
+        <div className="container mx-auto px-4 py-6 pt-[50px] pb-[50px]">
             <div className="max-w-7xl mx-auto">
                 {/* Header with Status */}
                 <div className="bg-white dark:bg-[#1E1E1E] rounded-lg shadow-dropdown p-4 mb-4">

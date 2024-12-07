@@ -214,14 +214,19 @@
   "reportsSingleScreen": {
     "title": "Raportet e Komunitetit",
     "submitReport": "Dërgo Raport",
+    "viewMap": "Shiko Hartën",
+    "exploreMap": "Eksploro Raportet në Hartë",
+    "createFirstReport": "Krijo Raportin e Parë",
     "filters": {
       "allCategories": "Të Gjitha Kategoritë",
       "allStatuses": "Të Gjitha Statuset",
-      "sortNewest": "Më të Rejat",
-      "sortOldest": "Më të Vjetrat"
+      "sortNewest": "Më të Rejat Fillimisht",
+      "sortOldest": "Më të Vjetrat Fillimisht"
     },
-    "loading": "Nuk ka më raporte për të ngarkuar",
-    "noReports": "Nuk u gjet asnjë raport"
+    "loading": "Duke ngarkuar më shumë raporte...",
+    "endOfReports": "Keni arritur në fund të raporteve",
+    "noReports": "Nuk u gjetën raporte",
+    "noReportsDescription": "Provoni të ndryshoni filtrat ose bëhuni i pari që dërgoni një raport"
   },
   "reportDetailScreen": {
     "title": "Detajet e Raportit",
@@ -284,19 +289,55 @@
     }
   },
   "home": {
-    "filters": {
-      "categories": {
-        "all": "Të gjitha Kategoritë"
-      },
-      "statuses": {
-        "all": "Të gjitha Statuset"
-      },
-      "sort": {
-        "newest": "Më të Rinjtë Fillimisht",
-        "oldest": "Më të Vjetrit Fillimisht"
+    "featured": {
+      "title": "Raportet e Veçanta",
+      "subtitle": "Shikoni disa nga raportet më të fundit dhe më të rëndësishme nga komuniteti ynë",
+      "viewAll": "Shiko të gjitha",
+      "exploreAll": "Eksploro të gjitha raportet",
+      "feedDescription": "Qasuni në feed-in tonë të plotë me opsione filtrimi, kategori dhe përditësime në kohë reale"
+    },
+    "stats": {
+      "reportsSubmitted": "Raporte të Dorëzuara",
+      "activeUsers": "Anëtarë Aktivë të Komunitetit",
+      "resolutionRate": "Shkalla e Zgjidhjes"
+    },
+    "howItWorks": {
+      "title": "Si Funksionon",
+      "steps": {
+        "report": {
+          "title": "Dërgo një Raport",
+          "description": "Raportoni lehtësisht problemet në komunitetin tuaj duke përdorur platformën tonë"
+        },
+        "verify": {
+          "title": "Procesi i Verifikimit",
+          "description": "Ekipi ynë shqyrton dhe verifikon raportet për të siguruar saktësi dhe prioritet"
+        },
+        "resolve": {
+          "title": "Zgjidhja e Çështjes",
+          "description": "Ndiqni progresin ndërsa autoritetet lokale punojnë për të zgjidhur çështjet e raportuara"
+        }
       }
     },
-    "loading": "Po ngarkohen me shumë raporte..."
+
+    "faq": {
+      "title": "Pyetjet më të Shpeshta",
+      "howToReport": {
+        "question": "Si të dërgoj një raport?",
+        "answer": "Ju mund të dërgoni një raport duke klikuar butonin 'Raport i Ri' dhe duke plotësuar formularin me detaje për çështjen, vendndodhjen dhe foto opsionale."
+      },
+      "timeToResolve": {
+        "question": "Sa kohë duhet për të zgjidhur një çështje?",
+        "answer": "Koha e zgjidhjes ndryshon në varësi të llojit dhe kompleksitetit të çështjes. Shumica e raporteve marrin një përgjigje fillestare brenda 24-48 orëve."
+      },
+      "anonymous": {
+        "question": "A mund të raportoj në mënyrë anonime?",
+        "answer": "Po, ju mund të zgjidhni të dërgoni raporte në mënyrë anonime. Megjithatë, dhënia e informacionit të kontaktit na ndihmon të ndjekim nëse na duhet më shumë informacion."
+      },
+      "tracking": {
+        "question": "Si mund të ndjek progresin e raportit tim?",
+        "answer": "Çdo raport ka një ID unike dhe status që mund ta ndiqni përmes llogarisë suaj ose duke përdorur veçorinë e gjurmimit publik."
+      }
+    }
   },
   "hero": {
     "title": {

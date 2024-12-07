@@ -214,14 +214,19 @@
   "reportsSingleScreen": {
     "title": "Community Reports",
     "submitReport": "Submit Report",
+    "viewMap": "View Map",
+    "exploreMap": "Explore Reports on Map",
+    "createFirstReport": "Create First Report",
     "filters": {
       "allCategories": "All Categories",
       "allStatuses": "All Statuses",
       "sortNewest": "Newest First",
       "sortOldest": "Oldest First"
     },
-    "loading": "No more reports to load",
-    "noReports": "No reports found"
+    "loading": "Loading more reports...",
+    "endOfReports": "You've reached the end of the reports",
+    "noReports": "No reports found",
+    "noReportsDescription": "Try adjusting your filters or be the first to submit a report"
   },
   "reportDetailScreen": {
     "title": "Report Details",
@@ -264,19 +269,54 @@
     }
   },
   "home": {
-    "filters": {
-      "categories": {
-        "all": "All Categories"
-      },
-      "statuses": {
-        "all": "All Statuses"
-      },
-      "sort": {
-        "newest": "Newest First",
-        "oldest": "Oldest First"
+    "featured": {
+      "title": "Featured Reports",
+      "subtitle": "Check out some of the most recent and important reports from our community",
+      "viewAll": "View all reports",
+      "exploreAll": "Explore all reports",
+      "feedDescription": "Access our complete feed with filtering options, categories, and real-time updates"
+    },
+    "stats": {
+      "reportsSubmitted": "Reports Submitted",
+      "activeUsers": "Active Community Members",
+      "resolutionRate": "Resolution Rate"
+    },
+    "howItWorks": {
+      "title": "How It Works",
+      "steps": {
+        "report": {
+          "title": "Submit a Report",
+          "description": "Easily report issues in your community using our mobile-friendly platform"
+        },
+        "verify": {
+          "title": "Verification Process",
+          "description": "Our team reviews and verifies reports to ensure accuracy and priority"
+        },
+        "resolve": {
+          "title": "Issue Resolution",
+          "description": "Track progress as local authorities work to resolve the reported issues"
+        }
       }
     },
-    "loading": "Loading more reports..."
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "howToReport": {
+        "question": "How do I submit a report?",
+        "answer": "You can submit a report by clicking the 'New Report' button and filling out the form with details about the issue, location, and optional photos."
+      },
+      "timeToResolve": {
+        "question": "How long does it take to resolve an issue?",
+        "answer": "Resolution times vary depending on the type and complexity of the issue. Most reports receive an initial response within 24-48 hours."
+      },
+      "anonymous": {
+        "question": "Can I report anonymously?",
+        "answer": "Yes, you can choose to submit reports anonymously. However, providing contact information helps us follow up if we need more information."
+      },
+      "tracking": {
+        "question": "How can I track my report's progress?",
+        "answer": "Each report has a unique ID and status that you can track through your account or using the public tracking feature."
+      }
+    }
   },
   "hero": {
     "title": {

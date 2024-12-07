@@ -1,18 +1,19 @@
-"use client";
+'use client';
 import { useState } from "react";
 import Sidebar from "@/components/Common/Dashboard/Sidebar";
 import Header from "@/components/Common/Dashboard/Header";
-
+import { useTranslations } from 'next-intl';
 import {
 	adminSidebarData,
 	adminSidebarOtherData,
 } from "@/staticData/sidebarData";
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
+	const t = useTranslations();
 	const [openSidebar, setOpenSidebar] = useState(false);
+
 	return (
-		<>
-			<main className='min-h-screen bg-gray-2 dark:bg-dark'>
+		<main className='min-h-screen bg-gray-2 dark:bg-dark'>
 				<aside
 					className={`fixed left-0 top-0 z-[999] h-screen w-[290px] overflow-y-auto bg-white duration-300 dark:bg-gray-dark ${
 						openSidebar ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
@@ -33,8 +34,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
 					<Header openSidebar={openSidebar} setOpenSidebar={setOpenSidebar} />
 					<div className='p-5 pt-12 md:p-10'>{children}</div>
 				</section>
-			</main>
-		</>
+		</main>
 	);
 };
 

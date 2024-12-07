@@ -1,0 +1,353 @@
+{
+  "LocaleSwitcher": {
+    "sq": "Shqip",
+    "en": "English",
+    "label": "Language"
+  },
+  "reports": {
+    "title": "Probleme Komunitare, Zgjidhur Së Bashku",
+    "description": "Raportoni çështje lokale në mënyrë anonime, ndiqni progresin e tyre dhe ndihmoni në përmirësimin e komunitetit tuaj",
+    "form": {
+      "title": "Dërgo Raport të Ri",
+      "description": "Raporto një problem në komunitetin tënd",
+      "fields": {
+        "title": {
+          "label": "Titulli",
+          "placeholder": "Përshkrim i shkurtër i problemit"
+        },
+        "category": {
+          "label": "Kategoria",
+          "placeholder": "Zgjidhni një kategori"
+        },
+        "description": {
+          "label": "Përshkrimi",
+          "placeholder": "Jepni informacion të detajuar për problemin"
+        },
+        "evidence": {
+          "label": "Evidenca",
+          "upload": {
+            "text": "Klikoni për të ngarkuar ose tërhiqni imazhe",
+            "specs": "PNG, JPG deri në 10MB secila"
+          },
+          "voice": {
+            "start": "Fillo Regjistrimin",
+            "stop": "Ndalo Regjistrimin"
+          }
+        },
+        "anonymous": "Dërgo në mënyrë anonime"
+      },
+      "submit": "Dërgo Raportin",
+      "submitting": "Duke dërguar...",
+      "error": "Dërgimi i raportit dështoi. Ju lutemi provoni përsëri."
+    }
+  },
+  "emergency": {
+    "title": "Emergjencë?",
+    "call": "Telefono 129"
+  },
+  "account": {
+    "benefits": {
+      "title": "Ndiq Raportet Tuaja",
+      "description": "Krijo një llogari për të:",
+      "features": {
+        "tracking": "Ndjekur progresin e raporteve",
+        "updates": "Marrë përditësime të statusit"
+      },
+      "cta": "Krijo një llogari →"
+    }
+  },
+  "privacy": {
+    "title": "Raportim Anonim",
+    "description": "Privatësia juaj është prioriteti ynë. Kur raportoni në mënyrë anonime:",
+    "features": {
+      "noInfo": "Nuk mblidhet asnjë informacion personal",
+      "noIp": "Adresat IP nuk ruhen",
+      "location": "Të dhënat e vendndodhjes janë opsionale",
+      "metadata": "Metadata e mediave hiqet"
+    }
+  },
+  "recentReports": {
+    "title": "Raportet e Fundit",
+    "timeAgo": "2 orë më parë",
+    "sample": "Nevojitet mirëmbajtje rruge",
+    "viewAll": "Shiko të gjitha raportet →"
+  },
+  "impact": {
+    "title": "Impakti",
+    "stats": {
+      "monthly": "Raporte këtë muaj",
+      "resolved": "Çështje të zgjidhura",
+      "response": "Koha mesatare e përgjigjes"
+    }
+  },
+  "navigation": {
+    "reports": "Raportet",
+    "map": "Harta",
+    "submitReport": "Dërgo Raport",
+    "signIn": "Hyr"
+  },
+  "footer": {
+    "description": "Platforma e raportimit të komunitetit që mundëson raportimin anonim dhe ndjekjen e çështjeve lokale.",
+    "platform": {
+      "title": "Platforma",
+      "about": "Rreth Nesh",
+      "howItWorks": "Si Funksionon",
+      "privacy": "Privatësia",
+      "terms": "Kushtet"
+    },
+    "contact": {
+      "title": "Kontakt",
+      "contactUs": "Na Kontaktoni",
+      "faq": "FAQ"
+    },
+    "copyright": "© 2024 Qytetaret. Të gjitha të drejtat të rezervuara.",
+    "disclaimer": "Kujdes: Raportet e krijuara nga përdoruesit nuk verifikohen nga Qytetaret"
+  },
+  "auth": {
+    "magicLink": {
+      "email": {
+        "label": "Email",
+        "placeholder": "Vendosni emailin tuaj"
+      },
+      "submit": "Dërgo magic link",
+      "sending": "Duke dërguar",
+      "success": "Emaili u dërgua",
+      "errors": {
+        "emailRequired": "Ju lutemi vendosni adresën tuaj të emailit.",
+        "emailInvalid": "Ju lutemi vendosni një adresë emaili të vlefshme."
+      }
+    },
+    "common": {
+      "or": "OSE",
+      "magicLink": "Magic Link",
+      "password": "Fjalëkalimi",
+      "email": "Email"
+    },
+    "signin": {
+      "title": "Mirë se u kthyet",
+      "description": "Hyni në llogarinë tuaj ose vazhdoni në mënyrë anonime",
+      "googleButton": "Hyr",
+      "noAccount": "Nuk keni ende llogari?",
+      "createAccount": "Krijo llogari →",
+      "anonymousReport": "Dëshironi të raportoni në mënyrë anonime?",
+      "continueAsGuest": "Vazhdo si mysafir →"
+    },
+    "signup": {
+      "title": "Krijo Llogari",
+      "description": "Bashkohuni me komunitetin tonë ose raportoni në mënyrë anonime",
+      "googleButton": "Regjistrohu",
+      "hasAccount": "Tashmë keni një llogari?",
+      "signIn": "Hyr →"
+    },
+    "resetPassword": {
+      "title": "Krijo Fjalëkalim të Ri",
+      "description": "Krijo një fjalëkalim të ri për të ruajtur llogarinë tënde",
+      "newPassword": {
+        "label": "Fjalëkalimi i ri",
+        "placeholder": "Fjalëkalimi"
+      },
+      "confirmPassword": {
+        "label": "Rivendos fjalëkalimin e ri",
+        "placeholder": "Fjalëkalimi"
+      },
+      "submit": "Krijo Fjalëkalimin",
+      "hasAccount": "Tashmë keni një llogari?",
+      "signIn": "Hyr →"
+    },
+    "forgotPassword": {
+      "title": "Keni harruar fjalëkalimin?",
+      "description": "Vendosni adresën tuaj të emailit dhe ne do t'ju dërgojmë një link për të rivendosur fjalëkalimin.",
+      "email": {
+        "label": "Email",
+        "placeholder": "Vendosni emailin tuaj"
+      },
+      "submit": "Dërgo Linkun e Rivendosjes",
+      "sending": "Duke dërguar",
+      "hasAccount": "Tashmë keni një llogari?",
+      "signIn": "Hyr →",
+      "errors": {
+        "emailRequired": "Ju lutemi vendosni adresën tuaj të emailit.",
+        "emailInvalid": "Ju lutemi vendosni një adresë emaili të vlefshme.",
+        "userNotFound": "Përdoruesi nuk u gjet."
+      }
+    }
+},
+  "map": {
+    "title": "Harta e Raporteve të Komunitetit",
+    "description": "Eksploroni dhe gjurmoni çështjet e raportuara në komunitetin tuaj",
+    "loading": "Duke ngarkuar hartën...",
+    "viewModes": {
+      "map": "Pamja e Hartës",
+      "list": "Pamja e Listës"
+    },
+    "filters": {
+      "allCategories": "Të Gjitha Kategoritë",
+      "allStatuses": "Të Gjitha Statuset",
+      "allTime": "Gjithë Koha",
+      "today": "Sot",
+      "thisWeek": "Këtë Javë",
+      "thisMonth": "Këtë Muaj"
+    },
+    "statuses": {
+      "pending": "Në Pritje",
+      "inprogress": "Në Proces",
+      "resolved": "E Zgjidhur",
+      "closed": "E Mbyllur"
+    },
+    "overview": {
+      "title": "Përmbledhja e Raporteve",
+      "totalReports": "Raportet Totale",
+      "active": "Aktive",
+      "resolved": "Të Zgjidhura"
+    },
+    "selectedReport": {
+      "title": "Raporti i Zgjedhur"
+    },
+    "legend": {
+      "title": "Legjenda e Hartës"
+    },
+    "emergency": {
+      "title": "Emergjencë?",
+      "call": "Telefononi 129"
+    }
+  },
+  "reportsSingleScreen": {
+    "title": "Raportet e Komunitetit",
+    "submitReport": "Dërgo Raport",
+    "viewMap": "Shiko Hartën",
+    "exploreMap": "Eksploro Raportet në Hartë",
+    "createFirstReport": "Krijo Raportin e Parë",
+    "filters": {
+      "allCategories": "Të Gjitha Kategoritë",
+      "allStatuses": "Të Gjitha Statuset",
+      "sortNewest": "Më të Rejat Fillimisht",
+      "sortOldest": "Më të Vjetrat Fillimisht"
+    },
+    "loading": "Duke ngarkuar më shumë raporte...",
+    "endOfReports": "Keni arritur në fund të raporteve",
+    "noReports": "Nuk u gjetën raporte",
+    "noReportsDescription": "Provoni të ndryshoni filtrat ose bëhuni i pari që dërgoni një raport"
+  },
+  "reportDetailScreen": {
+    "title": "Detajet e Raportit",
+    "reportDetailsDescription": "Informacion i detajuar për këtë raport komunitar",
+    "category": "Kategoria",
+    "reportContent": "Përmbajtja e Raportit",
+    "reportMetadata": "Informacioni i Raportit",
+    "evidence": "Evidenca",
+    "submitted": "Dorëzuar",
+    "location": "Vendndodhja",
+    "accuracy": "Saktësia",
+    "anonymous": "Raport Anonim",
+    "anonymousYes": "Po",
+    "anonymousNo": "Jo",
+    "relatedReports": "Raporte të Ngjashme",
+    "reportId": "ID e Raportit",
+    "status": {
+      "title": "Statusi",
+      "timeline": "Historia e Progresit",
+      "pending": "Në Pritje",
+      "inProgress": "Në Proces",
+      "resolved": "Zgjidhur",
+      "closed": "Mbyllur"
+    },
+    "actions": {
+      "share": "Shpërnda",
+      "report": "Raporto Problem",
+      "follow": "Ndjek Përditësimet"
+    },
+    "faq": {
+      "title": "Pyetjet më të Shpeshta",
+      "description": "Pyetjet e zakonshme rreth raporteve komunitare",
+      "faq1": {
+        "question": "Si trajtohen raportet?",
+        "answer": "Raportet shqyrtohen dhe i përcillen autoriteteve përkatëse. Çdo raport merret seriozisht dhe ndiqet deri në zgjidhjen e problemit."
+      },
+      "faq2": {
+        "question": "Sa kohë duhet për të marrë një përgjigje?",
+        "answer": "Koha e përgjigjes ndryshon në varësi të ashpërsisë së çështjes. Çështjet urgjente trajtohen me prioritet të lartë."
+      },
+      "faq3": {
+        "question": "A mund ta përditësoj raportin tim?",
+        "answer": "Po, mund të shtoni informacion shtesë në raportin tuaj në çdo kohë. Thjesht identifikohuni dhe zgjidhni raportin që dëshironi të përditësoni."
+      }
+    },
+    "timelineEvents": {
+      "reportSubmitted": "Raporti u dorëzua",
+      "underReview": "Nën shqyrtim",
+      "inProgress": "Puna në proces",
+      "resolved": "Problem i zgjidhur",
+      "closed": "Rasti u mbyll"
+    },
+    "locationInfo": {
+      "coordinates": "Koordinatat",
+      "accuracyMeter": "metra"
+    },
+    "media": {
+      "noMedia": "Nuk ka media të bashkangjitur",
+      "clickToEnlarge": "Kliko për të zmadhuar"
+    }
+  },
+  "home": {
+    "featured": {
+      "title": "Raportet e Veçanta",
+      "subtitle": "Shikoni disa nga raportet më të fundit dhe më të rëndësishme nga komuniteti ynë",
+      "viewAll": "Shiko të gjitha",
+      "exploreAll": "Eksploro të gjitha raportet",
+      "feedDescription": "Qasuni në feed-in tonë të plotë me opsione filtrimi, kategori dhe përditësime në kohë reale"
+    },
+    "stats": {
+      "reportsSubmitted": "Raporte të Dorëzuara",
+      "activeUsers": "Anëtarë Aktivë të Komunitetit",
+      "resolutionRate": "Shkalla e Zgjidhjes"
+    },
+    "howItWorks": {
+      "title": "Si Funksionon",
+      "steps": {
+        "report": {
+          "title": "Dërgo një Raport",
+          "description": "Raportoni lehtësisht problemet në komunitetin tuaj duke përdorur platformën tonë"
+        },
+        "verify": {
+          "title": "Procesi i Verifikimit",
+          "description": "Ekipi ynë shqyrton dhe verifikon raportet për të siguruar saktësi dhe prioritet"
+        },
+        "resolve": {
+          "title": "Zgjidhja e Çështjes",
+          "description": "Ndiqni progresin ndërsa autoritetet lokale punojnë për të zgjidhur çështjet e raportuara"
+        }
+      }
+    },
+
+    "faq": {
+      "title": "Pyetjet më të Shpeshta",
+      "howToReport": {
+        "question": "Si të dërgoj një raport?",
+        "answer": "Ju mund të dërgoni një raport duke klikuar butonin 'Raport i Ri' dhe duke plotësuar formularin me detaje për çështjen, vendndodhjen dhe foto opsionale."
+      },
+      "timeToResolve": {
+        "question": "Sa kohë duhet për të zgjidhur një çështje?",
+        "answer": "Koha e zgjidhjes ndryshon në varësi të llojit dhe kompleksitetit të çështjes. Shumica e raporteve marrin një përgjigje fillestare brenda 24-48 orëve."
+      },
+      "anonymous": {
+        "question": "A mund të raportoj në mënyrë anonime?",
+        "answer": "Po, ju mund të zgjidhni të dërgoni raporte në mënyrë anonime. Megjithatë, dhënia e informacionit të kontaktit na ndihmon të ndjekim nëse na duhet më shumë informacion."
+      },
+      "tracking": {
+        "question": "Si mund të ndjek progresin e raportit tim?",
+        "answer": "Çdo raport ka një ID unike dhe status që mund ta ndiqni përmes llogarisë suaj ose duke përdorur veçorinë e gjurmimit publik."
+      }
+    }
+  },
+  "hero": {
+    "title": {
+      "main": "Çështjet e Komunitetit,",
+      "highlight": "Zgjidhur Bashkë"
+    },
+    "description": "Raporto problemet lokale në mënyrë anonime, ndiq progresin e tyre dhe ndihmo në përmirësimin e komunitetit tënd.",
+    "buttons": {
+      "submit": "Paraqit një Raport",
+      "browse": "Shfleto Raportet"
+    }
+  }
+}

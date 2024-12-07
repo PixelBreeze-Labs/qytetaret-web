@@ -53,6 +53,8 @@ const withPWA = require('next-pwa')({
 	],
 });
 
+const createNextIntlPlugin = require('next-intl/plugin');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	output: 'standalone',
@@ -94,4 +96,4 @@ const nextConfig = {
 	},
 };
 
-module.exports = withPWA(nextConfig);
+module.exports = createNextIntlPlugin()(withPWA(nextConfig));

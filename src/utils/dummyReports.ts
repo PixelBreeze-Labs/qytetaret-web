@@ -1,11 +1,11 @@
 // src/utils/dummyReports.ts
-import { Report, Category, ReportStatus } from '@/types';
+import { Report, CategoryReport, ReportStatus } from '@/types';
 
 export const dummyReports = Array.from({ length: 100 }, (_, i) => ({
     id: `${i}`,
     title: `Report #${i}`,
     content: `This is a sample report about ${['roads', 'parks', 'lighting', 'trash'][i % 4]} that needs attention...`,
-    category: Object.values(Category)[i % 4],
+    category: Object.values(CategoryReport)[i % 4],
     isAnonymous: i % 3 === 0,
     author: i % 3 === 0 ? undefined : `User ${i}`,
     location: {

@@ -1,4 +1,6 @@
 import { Inter } from "next/font/google";
+import {NextIntlClientProvider} from 'next-intl';
+import {getLocale, getMessages} from 'next-intl/server';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -7,9 +9,19 @@ export const metadata = {
 	description: 'Community reporting platform',
 };
 
-const RootLayout = ({ children }: { children: React.ReactNode }) => {
+export default async function RootLayout({
+											 children
+										 }: {
+	children: React.ReactNode;
+}) {
+	const locale = await getLocale();
+
+	// Providing all messages to the client
+	// side is the easiest way to get started
+	const messages = await getMessages();
+
 	return (
-		<html lang='en' suppressHydrationWarning>
+		<html lang={locale} suppressHydrationWarning>
 		<head>
 			<meta name="application-name" content="Qytetaret" />
 			<meta name="apple-mobile-web-app-capable" content="yes" />
@@ -25,11 +37,11 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 			className={`${inter.className} flex min-h-screen flex-col dark:bg-dark`}
 		>
 		<main className="pt-20">
-			{children}
+			<NextIntlClientProvider messages={messages}>
+				{children}
+			</NextIntlClientProvider>
 		</main>
 		</body>
 		</html>
 	);
 };
-
-export default RootLayout;

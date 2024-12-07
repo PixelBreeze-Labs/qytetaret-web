@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslations } from 'next-intl';
 import FormButton from "../Common/Dashboard/FormButton";
 import InputGroup from "../Common/Dashboard/InputGroup";
 import toast from "react-hot-toast";
@@ -8,6 +9,7 @@ import Loader from "../Common/Loader";
 import { integrations, messages } from "../../../integrations.config";
 
 export default function SigninWithMagicLink() {
+	const t = useTranslations('auth.magicLink');
 	const [email, setEmail] = useState("");
 	const [loading, setLoading] = useState(false);
 
@@ -25,12 +27,12 @@ export default function SigninWithMagicLink() {
 		}
 
 		if (!email) {
-			return toast.error("Please enter your email address.");
+			return toast.error(t('errors.emailRequired'));
 		}
 
 		if (!validateEmail(email)) {
 			setLoading(false);
-			return toast.error("Please enter a valid email address.");
+			return toast.error(t('errors.emailInvalid'));
 		} else {
 			signIn("email", {
 				redirect: false,
@@ -38,7 +40,7 @@ export default function SigninWithMagicLink() {
 			})
 				.then((callback) => {
 					if (callback?.ok) {
-						toast.success("Email sent");
+						toast.success(t('success'));
 						setEmail("");
 						setLoading(false);
 					}
@@ -54,8 +56,8 @@ export default function SigninWithMagicLink() {
 		<form onSubmit={handleSubmit}>
 			<div className='mb-5 space-y-4'>
 				<InputGroup
-					label='Email'
-					placeholder='Enter your email'
+					label={t('email.label')}
+					placeholder={t('email.placeholder')}
 					type='email'
 					name='email'
 					required
@@ -67,10 +69,10 @@ export default function SigninWithMagicLink() {
 				<FormButton height='50px'>
 					{loading ? (
 						<>
-							Sending <Loader style='border-white dark:border-dark' />
+							{t('sending')} <Loader style='border-white dark:border-dark' />
 						</>
 					) : (
-						"Send magic link"
+						t('submit')
 					)}
 				</FormButton>
 			</div>

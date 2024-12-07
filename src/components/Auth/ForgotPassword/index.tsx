@@ -2,6 +2,7 @@
 import { toast } from "react-hot-toast";
 import { useState } from "react";
 import Link from "next/link";
+import { useTranslations } from 'next-intl';
 import FormButton from "@/components/Common/Dashboard/FormButton";
 import InputGroup from "@/components/Common/Dashboard/InputGroup";
 import axios from "axios";
@@ -10,6 +11,7 @@ import validateEmail from "@/libs/validateEmail";
 import { integrations, messages } from "../../../../integrations.config";
 
 export default function ForgotPassword() {
+	const t = useTranslations('auth.forgotPassword');
 	const [email, setEmail] = useState("");
 	const [loading, setLoading] = useState(false);
 
@@ -25,13 +27,12 @@ export default function ForgotPassword() {
 		}
 
 		if (!email) {
-			toast.error("Please enter your email address.");
-
+			toast.error(t('errors.emailRequired'));
 			return;
 		}
 
 		if (!validateEmail(email)) {
-			toast.error("Please enter a valid email address.");
+			toast.error(t('errors.emailInvalid'));
 			return;
 		}
 
@@ -42,7 +43,7 @@ export default function ForgotPassword() {
 			});
 
 			if (res.status === 404) {
-				toast.error("User not found.");
+				toast.error(t('errors.userNotFound'));
 				setEmail("");
 				setLoading(false);
 				return;
@@ -53,62 +54,57 @@ export default function ForgotPassword() {
 				setLoading(false);
 				setEmail("");
 			}
-
-			setEmail("");
 		} catch (error: any) {
 			setLoading(false);
 			toast.error(error.response.data);
 		}
 	};
+
 	return (
-		<>
-			<div className='mx-auto w-full max-w-[400px] py-10'>
-				<div className='mb-7.5 text-center'>
-					<h3 className='mb-4 font-satoshi text-heading-5 font-bold text-dark dark:text-white'>
-						Forgot Password?
-					</h3>
-					<p className='text-base dark:text-gray-5'>
-						Enter your email address we&#39;ll send you a link to reset your
-						password.
-					</p>
+		<div className='mx-auto w-full max-w-[400px] py-10'>
+			<div className='mb-7.5 text-center'>
+				<h3 className='mb-4 font-satoshi text-heading-5 font-bold text-dark dark:text-white'>
+					{t('title')}
+				</h3>
+				<p className='text-base dark:text-gray-5'>
+					{t('description')}
+				</p>
+			</div>
+
+			<form onSubmit={handleSubmit}>
+				<div className='mb-5 space-y-4.5'>
+					<InputGroup
+						label={t('email.label')}
+						placeholder={t('email.placeholder')}
+						type='email'
+						name='email'
+						height='50px'
+						handleChange={handleChange}
+						value={email}
+					/>
+
+					<FormButton height='50px'>
+						{loading ? (
+							<>
+								{t('sending')}
+								<Loader style='border-white dark:border-dark' />
+							</>
+						) : (
+							t('submit')
+						)}
+					</FormButton>
 				</div>
 
-				<form onSubmit={handleSubmit}>
-					<div className='mb-5 space-y-4.5'>
-						<InputGroup
-							label='Email'
-							placeholder='Enter your email'
-							type='email'
-							name='email'
-							height='50px'
-							handleChange={handleChange}
-							value={email}
-						/>
-
-						<FormButton height='50px'>
-							{" "}
-							{loading ? (
-								<>
-									Sending
-									<Loader style='border-white dark:border-dark' />
-								</>
-							) : (
-								"Send Reset Link"
-							)}
-						</FormButton>
-					</div>
-
-					<p className='text-center font-satoshi text-base font-medium text-dark dark:text-white'>
-						Already have an account?{" "}
-						<Link
-							href='/auth/signin'
-							className='ml-1 inline-block text-primary'
-						>
-							Sign In →
-						</Link>
-					</p>
-				</form>
-			</div>
-		</>
+				<p className='text-center font-satoshi text-base font-medium text-dark dark:text-white'>
+					{t('hasAccount')}{" "}
+					<Link
+						href='/auth/signin'
+						className='ml-1 inline-block text-primary'
+					>
+						{t('signIn')}
+					</Link>
+				</p>
+			</form>
+		</div>
 	);
 }

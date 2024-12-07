@@ -1,24 +1,24 @@
-// src/app/(site)/map/page.tsx
 "use client";
-
 import { useEffect, useState, useMemo, useCallback } from 'react';
 import { GoogleMap, useLoadScript, MarkerF, InfoWindowF } from '@react-google-maps/api';
 import { dummyReports } from '@/utils/dummyReports';
-import { Report, Category, ReportStatus } from '@/types';
+import { Report, CategoryReport, ReportStatus } from '@/types';
 import { ReportCard } from '@/components/shared/ReportCard';
+import { useTranslations } from 'next-intl';
+import { Filter, MapPin, Info, AlertTriangle, Map as MapIcon, List } from 'lucide-react';
 
 const mapContainerStyle = {
     width: '100%',
-        height: '600px',
-    borderRadius: '0.5rem'
+    height: 'calc(100vh - 200px)', // Taller map
+    borderRadius: '0.75rem'
 };
 
 const markerIcons = {
-    [Category.INFRASTRUCTURE]: '/icons/marker-infrastructure.svg',
-    [Category.ENVIRONMENT]: '/icons/marker-environment.svg',
-    [Category.COMMUNITY]: '/icons/marker-community.svg',
-    [Category.SAFETY]: '/icons/marker-safety.svg',
-    [Category.OTHER]: '/icons/marker-other.svg',
+    [CategoryReport.INFRASTRUCTURE]: '/icons/marker-infrastructure.svg',
+    [CategoryReport.ENVIRONMENT]: '/icons/marker-environment.svg',
+    [CategoryReport.COMMUNITY]: '/icons/marker-community.svg',
+    [CategoryReport.SAFETY]: '/icons/marker-safety.svg',
+    [CategoryReport.OTHER]: '/icons/marker-other.svg',
 };
 
 const statusColors = {
@@ -43,150 +43,231 @@ const center = {
 };
 
 export default function MapPage() {
+    const t = useTranslations('map');
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "AIzaSyAEe-vcJ-r8w9FQdVEskAozi1v9cWy6YAA",
         libraries: ['places']
     });
 
     const [selectedReport, setSelectedReport] = useState<Report | null>(null);
+    const [viewMode, setViewMode] = useState<'map' | 'list'>('map');
     const [filter, setFilter] = useState({
         category: 'all',
-        status: 'all'
+        status: 'all',
+        timeframe: 'all'
     });
 
     const filteredReports = useMemo(() =>
             dummyReports
                 .filter(report => filter.category === 'all' || report.category === filter.category)
-                .filter(report => filter.status === 'all' || report.status === filter.status),
+                .filter(report => filter.status === 'all' || report.status === filter.status)
+                .filter(report => {
+                    if (filter.timeframe === 'all') return true;
+                    const reportDate = new Date(report.createdAt);
+                    const now = new Date();
+
+                    switch (filter.timeframe) {
+                        case 'today':
+                            return reportDate.toDateString() === now.toDateString();
+                        case 'week':
+                            const oneWeekAgo = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
+                            return reportDate >= oneWeekAgo;
+                        case 'month':
+                            return reportDate.getMonth() === now.getMonth() &&
+                                reportDate.getFullYear() === now.getFullYear();
+                        default:
+                            return true;
+                    }
+                }),
         [filter]
     );
 
-    const onMarkerClick = useCallback((report: Report) => {
-        setSelectedReport(report);
-    }, []);
-
-    if (!isLoaded) return <div>Loading maps...</div>;
+    if (!isLoaded) return <div className="flex items-center justify-center h-[60vh]">{t('loading')}</div>;
 
     return (
-        <div className="container mx-auto px-4 py-6">
-            <div className="flex justify-between items-center mb-6">
-                <h1 className="text-3xl font-bold dark:text-white">Report Map</h1>
-            </div>
-
-            <div className="flex flex-col gap-6 lg:flex-row">
-                {/* Filters panel */}
-                <div className="w-64 space-y-4">
-                    <select
-                        value={filter.category}
-                        onChange={(e) => setFilter(f => ({...f, category: e.target.value}))}
-                        className="w-full rounded-lg border p-2 dark:bg-gray-800 dark:border-gray-700"
-                    >
-                        <option value="all">All Categories</option>
-                        {Object.values(Category).map(cat => (
-                            <option key={cat} value={cat}>{cat}</option>
-                        ))}
-                    </select>
-
-                    <select
-                        value={filter.status}
-                        onChange={(e) => setFilter(f => ({...f, status: e.target.value}))}
-                        className="w-full rounded-lg border p-2 dark:bg-gray-800 dark:border-gray-700"
-                    >
-                        <option value="all">All Statuses</option>
-                        {Object.values(ReportStatus).map(status => (
-                            <option key={status} value={status}>{status.replace('_', ' ')}</option>
-                        ))}
-                    </select>
-
-                    {/* Report count */}
-                    <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
-                        <h3 className="font-bold mb-2 dark:text-white">Reports Found</h3>
-                        <p className="text-gray-600 dark:text-gray-400">
-                            {filteredReports.length} reports in this area
-                        </p>
+        <div className="container mx-auto pt-[50px] pb-[50px] px-4 py-6">
+            {/* Header Section */}
+            <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
+                {/* Main Content - Left Side */}
+                <div className="xl:col-span-9">
+                    {/* Title and View Toggle */}
+                    <div className="flex justify-between items-center mb-6">
+                        <div>
+                            <h1 className="text-3xl font-bold dark:text-white mb-2">{t('title')}</h1>
+                            <p className="text-gray-600 dark:text-gray-400">
+                                {t('description')}
+                            </p>
+                        </div>
+                        <div className="flex gap-2">
+                            {/*<button*/}
+                            {/*    onClick={() => setViewMode('map')}*/}
+                            {/*    className={`p-2 rounded-lg flex items-center gap-2 ${*/}
+                            {/*        viewMode === 'map'*/}
+                            {/*            ? 'bg-primary text-white'*/}
+                            {/*            : 'bg-gray-100 dark:bg-gray-800'*/}
+                            {/*    }`}*/}
+                            {/*>*/}
+                            {/*    <MapIcon size={20} />*/}
+                            {/*    {t('viewModes.map')}*/}
+                            {/*</button>*/}
+                            {/*<button*/}
+                            {/*    onClick={() => setViewMode('list')}*/}
+                            {/*    className={`p-2 rounded-lg flex items-center gap-2 ${*/}
+                            {/*        viewMode === 'list'*/}
+                            {/*            ? 'bg-primary text-white'*/}
+                            {/*            : 'bg-gray-100 dark:bg-gray-800'*/}
+                            {/*    }`}*/}
+                            {/*>*/}
+                            {/*    <List size={20} />*/}
+                            {/*    {t('viewModes.list')}*/}
+                            {/*</button>*/}
+                        </div>
                     </div>
 
-                    {/* Selected report details */}
+                    {/* Filters Bar */}
+                    <div className="bg-white dark:bg-[#1E1E1E] rounded-lg shadow-dropdown p-4 mb-6">
+                        <div className="flex flex-wrap gap-4">
+                            <select
+                                value={filter.category}
+                                onChange={(e) => setFilter(f => ({...f, category: e.target.value}))}
+                                className="w-full md:w-auto rounded-lg border px-4 py-2 dark:bg-gray-800 dark:border-gray-700 min-w-[200px]"
+                            >
+                                <option value="all">{t('filters.allCategories')}</option>
+                                {Object.values(CategoryReport).map(cat => (
+                                    <option key={cat} value={cat}>{cat}</option>
+                                ))}
+                            </select>
+
+                            <select
+                                value={filter.status}
+                                onChange={(e) => setFilter(f => ({...f, status: e.target.value}))}
+                                className="w-full md:w-auto rounded-lg border px-4 py-2 dark:bg-gray-800 dark:border-gray-700 min-w-[200px]"
+                            >
+                                <option value="all">{t('filters.allStatuses')}</option>
+                                {Object.values(ReportStatus).map(status => (
+                                    <option key={status} value={status}>
+                                        {t(`statuses.${status.toLowerCase().replace('_', '')}`)}
+                                    </option>
+                                ))}
+                            </select>
+
+                            <select
+                                value={filter.timeframe}
+                                onChange={(e) => setFilter(f => ({...f, timeframe: e.target.value}))}
+                                className="w-full md:w-auto rounded-lg border px-4 py-2 dark:bg-gray-800 dark:border-gray-700 min-w-[200px]"
+                            >
+                                <option value="all">{t('filters.allTime')}</option>
+                                <option value="today">{t('filters.today')}</option>
+                                <option value="week">{t('filters.thisWeek')}</option>
+                                <option value="month">{t('filters.thisMonth')}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    {/* Map Container */}
+                    <div className="bg-white dark:bg-[#1E1E1E] rounded-lg shadow-dropdown p-4">
+                        <GoogleMap
+                            mapContainerStyle={mapContainerStyle}
+                            zoom={13}
+                            center={center}
+                            options={mapOptions}
+                        >
+                            {filteredReports.map(report => (
+                                <MarkerF
+                                    key={report.id}
+                                    position={{
+                                        lat: report.location.lat,
+                                        lng: report.location.lng
+                                    }}
+                                    onClick={() => setSelectedReport(report)}
+                                    icon={{
+                                        url: markerIcons[report.category],
+                                        scaledSize: new google.maps.Size(30, 30)
+                                    }}
+                                    animation={google.maps.Animation.DROP}
+                                />
+                            ))}
+
+                            {selectedReport && (
+                                <InfoWindowF
+                                    position={{
+                                        lat: selectedReport.location.lat,
+                                        lng: selectedReport.location.lng
+                                    }}
+                                    onCloseClick={() => setSelectedReport(null)}
+                                >
+                                    <ReportCard report={selectedReport} />
+                                </InfoWindowF>
+                            )}
+                        </GoogleMap>
+                    </div>
+                </div>
+
+                {/* Sidebar - Right Side */}
+                <div className="xl:col-span-3 space-y-6">
+                    {/* Statistics Card */}
+                    <div className="bg-white dark:bg-[#1E1E1E] rounded-lg shadow-dropdown p-4">
+                        <h3 className="font-bold mb-4 flex items-center gap-2">
+                            <Info size={20} />
+                            {t('overview.title')}
+                        </h3>
+                        <div className="space-y-3">
+                            <div className="flex justify-between items-center">
+                                <span className="text-gray-600 dark:text-gray-400">{t('overview.totalReports')}</span>
+                                <span className="font-bold">{filteredReports.length}</span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <span className="text-gray-600 dark:text-gray-400">{t('overview.active')}</span>
+                                <span className="font-bold">{
+                                    filteredReports.filter(r => r.status === ReportStatus.IN_PROGRESS).length
+                                }</span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <span className="text-gray-600 dark:text-gray-400">{t('overview.resolved')}</span>
+                                <span className="font-bold">{
+                                    filteredReports.filter(r => r.status === ReportStatus.RESOLVED).length
+                                }</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Selected Report Details */}
                     {selectedReport && (
-                        <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
+                        <div className="bg-white dark:bg-[#1E1E1E] rounded-lg shadow-dropdown p-4">
+                            <h3 className="font-bold mb-4 flex items-center gap-2">
+                                <MapPin size={20} />
+                                {t('selectedReport.title')}
+                            </h3>
                             <ReportCard report={selectedReport} />
                         </div>
                     )}
-                </div>
 
-                {/* Map */}
-                <div className="flex-1 bg-gray-100 dark:bg-gray-800 rounded-lg h-[600px]">
-                    <GoogleMap
-                        mapContainerStyle={mapContainerStyle}
-                        zoom={13}
-                        center={center}
-                        options={mapOptions}
-                    >
-                        {filteredReports.map(report => (
-                            <MarkerF
-                                key={report.id}
-                                position={{
-                                    lat: report.location.lat,
-                                    lng: report.location.lng
-                                }}
-                                onClick={() => onMarkerClick(report)}
-                                icon={{
-                                    url: markerIcons[report.category],
-                                    scaledSize: new google.maps.Size(30, 30)
-                                }}
-                                animation={google.maps.Animation.DROP}
-                            />
-                        ))}
-
-                        {selectedReport && (
-                            <InfoWindowF
-                                position={{
-                                    lat: selectedReport.location.lat,
-                                    lng: selectedReport.location.lng
-                                }}
-                                onCloseClick={() => setSelectedReport(null)}
-                                options={{
-                                    pixelOffset: new google.maps.Size(0, -30)
-                                }}
-                            >
-                                <div className="p-2 max-w-sm">
-                                    <div className="flex items-center justify-between mb-2">
-                                        <h3 className="font-bold text-lg">{selectedReport.title}</h3>
-                                        <span className={`px-2 py-1 rounded-full text-xs ${statusColors[selectedReport.status]}`}>
-                    {selectedReport.status.replace('_', ' ')}
-                </span>
-                                    </div>
-
-                                    <p className="text-sm text-gray-600 mb-2">{selectedReport.content}</p>
-
-                                    <div className="flex items-center justify-between text-xs text-gray-500">
-                                        <span>{new Date(selectedReport.createdAt).toLocaleDateString()}</span>
-                                        <span>{selectedReport.isAnonymous ? 'Anonymous' : selectedReport.author}</span>
-                                    </div>
-
-                                    {selectedReport.media && selectedReport.media.length > 0 && (
-                                        <div className="mt-2 flex gap-1">
-                                            {selectedReport.media.slice(0, 3).map((url, i) => (
-                                                <img
-                                                    key={i}
-                                                    src={url}
-                                                    alt=""
-                                                    className="w-16 h-16 object-cover rounded"
-                                                />
-                                            ))}
-                                        </div>
-                                    )}
-
-                                    <button
-                                        onClick={() => {/* Add view details handler */}}
-                                        className="mt-2 w-full text-center text-sm text-primary hover:text-primary/80"
-                                    >
-                                        View Full Report
-                                    </button>
+                    {/* Category Legend */}
+                    <div className="bg-white dark:bg-[#1E1E1E] rounded-lg shadow-dropdown p-4">
+                        <h3 className="font-bold mb-4 flex items-center gap-2">
+                            <Filter size={20} />
+                            {t('legend.title')}
+                        </h3>
+                        <div className="space-y-3">
+                            {Object.entries(markerIcons).map(([category, icon]) => (
+                                <div key={category} className="flex items-center gap-2">
+                                    <img src={icon} alt={category} className="w-6 h-6" />
+                                    <span className="text-gray-600 dark:text-gray-400">{category}</span>
                                 </div>
-                            </InfoWindowF>
-                        )}
-                    </GoogleMap>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Emergency Contact */}
+                    <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg p-4">
+                        <h3 className="font-bold mb-2 flex items-center gap-2 text-red-700 dark:text-red-300">
+                            <AlertTriangle size={20} />
+                            {t('emergency.title')}
+                        </h3>
+                        <a href="tel:129" className="text-2xl font-bold text-red-700 dark:text-red-300">
+                            {t('emergency.call')}
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

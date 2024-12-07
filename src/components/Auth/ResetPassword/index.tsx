@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useTranslations } from 'next-intl';
 import FormButton from "@/components/Common/Dashboard/FormButton";
 import InputGroup from "@/components/Common/Dashboard/InputGroup";
 import toast from "react-hot-toast";
@@ -9,6 +10,7 @@ import axios from "axios";
 import { integrations, messages } from "../../../../integrations.config";
 
 export default function ResetPassword({ token }: { token: string }) {
+	const t = useTranslations('auth.resetPassword');
 	const [data, setData] = useState({
 		newPassword: "",
 		ReNewPassword: "",
@@ -41,9 +43,7 @@ export default function ResetPassword({ token }: { token: string }) {
 		if (integrations.isAuthEnabled) {
 			verifyToken();
 		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [token]);
+	}, [token, router]);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setData({
@@ -60,7 +60,7 @@ export default function ResetPassword({ token }: { token: string }) {
 		}
 
 		if (data.newPassword === "") {
-			toast.error("Please enter your password.");
+			toast.error(t('errors.passwordRequired'));
 			return;
 		}
 
@@ -81,52 +81,50 @@ export default function ResetPassword({ token }: { token: string }) {
 	};
 
 	return (
-		<>
-			<div className='mx-auto w-full max-w-[400px] pb-20 pt-40'>
-				<div className='mb-7.5 text-center'>
-					<h3 className='mb-4 font-satoshi text-heading-5 font-bold text-dark dark:text-white'>
-						Create New Password
-					</h3>
-					<p className='text-base dark:text-gray-5'>
-						Create new password to save your account
-					</p>
+		<div className='mx-auto w-full max-w-[400px] pb-20 pt-40'>
+			<div className='mb-7.5 text-center'>
+				<h3 className='mb-4 font-satoshi text-heading-5 font-bold text-dark dark:text-white'>
+					{t('title')}
+				</h3>
+				<p className='text-base dark:text-gray-5'>
+					{t('description')}
+				</p>
+			</div>
+
+			<form onSubmit={handleSubmit}>
+				<div className='mb-5 space-y-4.5'>
+					<InputGroup
+						label={t('newPassword.label')}
+						placeholder={t('newPassword.placeholder')}
+						type='password'
+						name='newPassword'
+						height='50px'
+						handleChange={handleChange}
+						value={data.newPassword}
+					/>
+					<InputGroup
+						label={t('confirmPassword.label')}
+						placeholder={t('confirmPassword.placeholder')}
+						type='password'
+						name='ReNewPassword'
+						height='50px'
+						handleChange={handleChange}
+						value={data.ReNewPassword}
+					/>
+
+					<FormButton height='50px'>{t('submit')}</FormButton>
 				</div>
 
-				<form onSubmit={handleSubmit}>
-					<div className='mb-5 space-y-4.5'>
-						<InputGroup
-							label='New password'
-							placeholder='Password'
-							type='password'
-							name='newPassword'
-							height='50px'
-							handleChange={handleChange}
-							value={data.newPassword}
-						/>
-						<InputGroup
-							label='Re-type new password'
-							placeholder='Password'
-							type='password'
-							name='ReNewPassword'
-							height='50px'
-							handleChange={handleChange}
-							value={data.ReNewPassword}
-						/>
-
-						<FormButton height='50px'>Create Password</FormButton>
-					</div>
-
-					<p className='text-center font-satoshi text-base font-medium text-dark dark:text-white'>
-						Already have an account?{" "}
-						<Link
-							href='/auth/signin'
-							className='ml-1 inline-block text-primary'
-						>
-							Sign In →
-						</Link>
-					</p>
-				</form>
-			</div>
-		</>
+				<p className='text-center font-satoshi text-base font-medium text-dark dark:text-white'>
+					{t('hasAccount')}{" "}
+					<Link
+						href='/auth/signin'
+						className='ml-1 inline-block text-primary'
+					>
+						{t('signIn')}
+					</Link>
+				</p>
+			</form>
+		</div>
 	);
 }

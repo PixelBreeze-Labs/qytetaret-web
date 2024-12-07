@@ -1,0 +1,333 @@
+{
+  "LocaleSwitcher": {
+    "sq": "Shqip",
+    "en": "English",
+    "label": "Language"
+  },
+  "reports": {
+    "title": "Community Issues, Solved Together",
+    "description": "Report local issues anonymously, track their progress, and help make your community better",
+    "form": {
+      "title": "Submit New Report",
+      "description": "Report an issue in your community",
+      "fields": {
+        "title": {
+          "label": "Title",
+          "placeholder": "Brief description of the issue"
+        },
+        "category": {
+          "label": "Category",
+          "placeholder": "Select a category"
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Provide detailed information about the issue"
+        },
+        "evidence": {
+          "label": "Evidence",
+          "upload": {
+            "text": "Click to upload or drag images",
+            "specs": "PNG, JPG up to 10MB each"
+          },
+          "voice": {
+            "start": "Start Recording",
+            "stop": "Stop Recording"
+          }
+        },
+        "anonymous": "Submit anonymously"
+      },
+      "submit": "Submit Report",
+      "submitting": "Submitting...",
+      "error": "Failed to submit report. Please try again."
+    }
+  },
+  "emergency": {
+    "title": "Emergency?",
+    "call": "Call 129"
+  },
+  "account": {
+    "benefits": {
+      "title": "Track Your Reports",
+      "description": "Create an account to:",
+      "features": {
+        "tracking": "Track report progress",
+        "updates": "Get status updates"
+      },
+      "cta": "Create an account →"
+    }
+  },
+  "privacy": {
+    "title": "Anonymous Reporting",
+    "description": "Your privacy is our priority. When reporting anonymously:",
+    "features": {
+      "noInfo": "No personal information is collected",
+      "noIp": "IP addresses are not stored",
+      "location": "Location data is optional",
+      "metadata": "Media is stripped of metadata"
+    }
+  },
+  "recentReports": {
+    "title": "Recent Reports",
+    "timeAgo": "2 hours ago",
+    "sample": "Road maintenance needed",
+    "viewAll": "View all reports →"
+  },
+  "impact": {
+    "title": "Impact",
+    "stats": {
+      "monthly": "Reports this month",
+      "resolved": "Resolved issues",
+      "response": "Avg. response time"
+    }
+  },
+  "navigation": {
+    "reports": "Reports",
+    "map": "Map",
+    "submitReport": "Submit Report",
+    "signIn": "Sign In"
+  },
+  "footer": {
+    "description": "Community reporting platform enabling anonymous reporting and tracking of local issues.",
+    "platform": {
+      "title": "Platform",
+      "about": "About",
+      "howItWorks": "How it Works",
+      "privacy": "Privacy",
+      "terms": "Terms"
+    },
+    "contact": {
+      "title": "Contact",
+      "contactUs": "Contact Us",
+      "faq": "FAQ"
+    },
+    "copyright": "© 2024 Qytetaret. All rights reserved.",
+    "disclaimer": "Disclaimer: User-generated reports are not verified by Qytetaret"
+  },
+  "auth": {
+    "magicLink": {
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter your email"
+      },
+      "submit": "Send magic link",
+      "sending": "Sending",
+      "success": "Email sent",
+      "errors": {
+        "emailRequired": "Please enter your email address.",
+        "emailInvalid": "Please enter a valid email address."
+      }
+    },
+    "common": {
+      "or": "OR",
+      "magicLink": "Magic Link",
+      "password": "Password",
+      "email": "Email"
+    },
+    "signin": {
+      "title": "Welcome Back",
+      "description": "Sign in to your account or continue anonymously",
+      "googleButton": "Sign in",
+      "noAccount": "Don't have an account yet?",
+      "createAccount": "Create account →",
+      "anonymousReport": "Want to report anonymously?",
+      "continueAsGuest": "Continue as guest →"
+    },
+    "signup": {
+      "title": "Create Account",
+      "description": "Join our community or report anonymously",
+      "googleButton": "Sign up",
+      "hasAccount": "Already have an account?",
+      "signIn": "Sign In →"
+    },
+    "resetPassword": {
+      "title": "Create New Password",
+      "description": "Create new password to save your account",
+      "newPassword": {
+        "label": "New password",
+        "placeholder": "Password"
+      },
+      "confirmPassword": {
+        "label": "Re-type new password",
+        "placeholder": "Password"
+      },
+      "submit": "Create Password",
+      "hasAccount": "Already have an account?",
+      "signIn": "Sign In →"
+    },
+    "forgotPassword": {
+      "title": "Forgot Password?",
+      "description": "Enter your email address we'll send you a link to reset your password.",
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter your email"
+      },
+      "submit": "Send Reset Link",
+      "sending": "Sending",
+      "hasAccount": "Already have an account?",
+      "signIn": "Sign In →",
+      "errors": {
+        "emailRequired": "Please enter your email address.",
+        "emailInvalid": "Please enter a valid email address.",
+        "userNotFound": "User not found."
+      }
+    }
+  },
+  "map": {
+    "title": "Community Report Map",
+    "description": "Explore and track reported issues in your community",
+    "loading": "Loading maps...",
+    "viewModes": {
+      "map": "Map View",
+      "list": "List View"
+    },
+    "filters": {
+      "allCategories": "All Categories",
+      "allStatuses": "All Statuses",
+      "allTime": "All Time",
+      "today": "Today",
+      "thisWeek": "This Week",
+      "thisMonth": "This Month"
+    },
+    "statuses": {
+      "pending": "Pending",
+      "inprogress": "In Progress",
+      "resolved": "Resolved",
+      "closed": "Closed"
+    },
+    "overview": {
+      "title": "Reports Overview",
+      "totalReports": "Total Reports",
+      "active": "Active",
+      "resolved": "Resolved"
+    },
+    "selectedReport": {
+      "title": "Selected Report"
+    },
+    "legend": {
+      "title": "Map Legend"
+    },
+    "emergency": {
+      "title": "Emergency?",
+      "call": "Call 129"
+    }
+  },
+  "reportsSingleScreen": {
+    "title": "Community Reports",
+    "submitReport": "Submit Report",
+    "viewMap": "View Map",
+    "exploreMap": "Explore Reports on Map",
+    "createFirstReport": "Create First Report",
+    "filters": {
+      "allCategories": "All Categories",
+      "allStatuses": "All Statuses",
+      "sortNewest": "Newest First",
+      "sortOldest": "Oldest First"
+    },
+    "loading": "Loading more reports...",
+    "endOfReports": "You've reached the end of the reports",
+    "noReports": "No reports found",
+    "noReportsDescription": "Try adjusting your filters or be the first to submit a report"
+  },
+  "reportDetailScreen": {
+    "title": "Report Details",
+    "reportDetailsDescription": "Detailed information about this community report",
+    "category": "Category",
+    "reportContent": "Report Content",
+    "reportMetadata": "Report Information",
+    "evidence": "Evidence",
+    "submitted": "Submitted",
+    "location": "Location",
+    "accuracy": "Accuracy",
+    "anonymous": "Anonymous Report",
+    "anonymousYes": "Yes",
+    "anonymousNo": "No",
+    "relatedReports": "Similar Reports",
+    "status": {
+      "title": "Status",
+      "timeline": "Progress Timeline"
+    },
+    "actions": {
+      "share": "Share Report",
+      "report": "Report Issue",
+      "follow": "Follow Updates"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "description": "Common questions about community reports",
+      "faq1": {
+        "question": "How are reports handled?",
+        "answer": "Reports are reviewed and forwarded to relevant authorities..."
+      },
+      "faq2": {
+        "question": "How long until I get a response?",
+        "answer": "Response times vary depending on the issue severity..."
+      },
+      "faq3": {
+        "question": "Can I update my report?",
+        "answer": "Yes, you can add additional information..."
+      }
+    },
+    "reportId": "Report ID"
+  },
+  "home": {
+    "featured": {
+      "title": "Featured Reports",
+      "subtitle": "Check out some of the most recent and important reports from our community",
+      "viewAll": "View all reports",
+      "exploreAll": "Explore all reports",
+      "feedDescription": "Access our complete feed with filtering options, categories, and real-time updates"
+    },
+    "stats": {
+      "reportsSubmitted": "Reports Submitted",
+      "activeUsers": "Active Community Members",
+      "resolutionRate": "Resolution Rate"
+    },
+    "howItWorks": {
+      "title": "How It Works",
+      "steps": {
+        "report": {
+          "title": "Submit a Report",
+          "description": "Easily report issues in your community using our mobile-friendly platform"
+        },
+        "verify": {
+          "title": "Verification Process",
+          "description": "Our team reviews and verifies reports to ensure accuracy and priority"
+        },
+        "resolve": {
+          "title": "Issue Resolution",
+          "description": "Track progress as local authorities work to resolve the reported issues"
+        }
+      }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "howToReport": {
+        "question": "How do I submit a report?",
+        "answer": "You can submit a report by clicking the 'New Report' button and filling out the form with details about the issue, location, and optional photos."
+      },
+      "timeToResolve": {
+        "question": "How long does it take to resolve an issue?",
+        "answer": "Resolution times vary depending on the type and complexity of the issue. Most reports receive an initial response within 24-48 hours."
+      },
+      "anonymous": {
+        "question": "Can I report anonymously?",
+        "answer": "Yes, you can choose to submit reports anonymously. However, providing contact information helps us follow up if we need more information."
+      },
+      "tracking": {
+        "question": "How can I track my report's progress?",
+        "answer": "Each report has a unique ID and status that you can track through your account or using the public tracking feature."
+      }
+    }
+  },
+  "hero": {
+    "title": {
+      "main": "Community Issues,",
+      "highlight": "Solved Together"
+    },
+    "description": "Report local issues anonymously, track their progress, and help make your community better.",
+    "buttons": {
+      "submit": "Submit a Report",
+      "browse": "Browse Reports"
+    }
+  }
+}

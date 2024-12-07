@@ -1,235 +1,138 @@
 "use client";
-
-import { useState } from 'react';
-import { Category } from '@/types';
-import { useRouter } from 'next/navigation';
-import { Mic, Square } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { ReportFormMain } from './ReportFormMain';
+import { Phone, Shield, User, Clock, LockKeyhole } from 'lucide-react';
+import Link from 'next/link';
 
 export const ReportForm = () => {
-    const router = useRouter();
-    const [loading, setLoading] = useState(false);
-    const [form, setForm] = useState({
-        title: '',
-        content: '',
-        category: '',
-        isAnonymous: false,
-        media: [] as File[],
-        audio: null as Blob | null,
-        location: {
-            lat: 0,
-            lng: 0,
-            accuracy: 0
-        }
-    });
-
-    const [error, setError] = useState<string | null>(null);
-    const [mediaPreview, setMediaPreview] = useState<string[]>([]);
-    const [isRecording, setIsRecording] = useState(false);
-    const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
-    const [audioUrl, setAudioUrl] = useState<string | null>(null);
-
-    const handleMediaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const files = e.target.files;
-        if (files) {
-            const newFiles = Array.from(files);
-            setForm(prev => ({ ...prev, media: [...prev.media, ...newFiles] }));
-            const newPreviews = newFiles.map(file => URL.createObjectURL(file));
-            setMediaPreview(prev => [...prev, ...newPreviews]);
-        }
-    };
-
-    const startRecording = async () => {
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            const recorder = new MediaRecorder(stream);
-            const chunks: BlobPart[] = [];
-
-            recorder.ondataavailable = e => chunks.push(e.data);
-            recorder.onstop = () => {
-                const blob = new Blob(chunks, { type: 'audio/webm' });
-                setForm(prev => ({ ...prev, audio: blob }));
-                setAudioUrl(URL.createObjectURL(blob));
-            };
-
-            setMediaRecorder(recorder);
-            recorder.start();
-            setIsRecording(true);
-        } catch (err) {
-            console.error("Error accessing microphone:", err);
-            setError("Failed to access microphone. Please check permissions.");
-        }
-    };
-
-    const stopRecording = () => {
-        if (mediaRecorder) {
-            mediaRecorder.stop();
-            mediaRecorder.stream.getTracks().forEach(track => track.stop());
-            setIsRecording(false);
-        }
-    };
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setLoading(true);
-        setError(null);
-
-        const formData = new FormData();
-        formData.append('title', form.title);
-        formData.append('content', form.content);
-        formData.append('category', form.category);
-        formData.append('isAnonymous', String(form.isAnonymous));
-        form.media.forEach((file, index) => {
-            formData.append(`media_${index}`, file);
-        });
-        if (form.audio) {
-            formData.append('audio', form.audio);
-        }
-
-        try {
-            // TODO: Add API call with formData
-            router.push('/reports');
-        } catch (err) {
-            setError('Failed to submit report. Please try again.');
-        } finally {
-            setLoading(false);
-        }
-    };
+    const tReports = useTranslations('reports');
+    const tEmergency = useTranslations('emergency');
+    const tAccount = useTranslations('account.benefits');
+    const tPrivacy = useTranslations('privacy');
+    const tRecentReports = useTranslations('recentReports');
+    const tImpact = useTranslations('impact');
 
     return (
         <div className="container mx-auto px-4 py-6">
-            <div className="max-w-2xl mx-auto">
-                <div className="mb-6">
-                    <h1 className="text-3xl font-bold">Submit New Report</h1>
-                    <p className="text-gray-600 dark:text-gray-400">Report an issue in your community</p>
+            {/* Title Section */}
+            <div className="mb-8 text-center">
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+                    {tReports('title')}
+                </h1>
+                <p className="mt-2 text-gray-600 dark:text-gray-400">
+                    {tReports('description')}
+                </p>
+            </div>
+            <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
+                {/* Left Sidebar */}
+                <div className="xl:col-span-3 space-y-6">
+                    {/* Emergency Contact */}
+                    <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg p-4">
+                        <div className="flex items-center gap-3 text-red-700 dark:text-red-300">
+                            <Phone className="w-5 h-5" />
+                            <h2 className="font-semibold">{tEmergency('title')}</h2>
+                        </div>
+                        <a href="tel:129" className="mt-2 inline-block text-2xl font-bold text-red-700 dark:text-red-300">
+                            {tEmergency('call')}
+                        </a>
+                    </div>
+
+                    {/* Account Benefits */}
+                    <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                        <div className="flex items-center gap-3 text-blue-700 dark:text-blue-300">
+                            <Shield className="w-5 h-5" />
+                            <h2 className="font-semibold">{tAccount('title')}</h2>
+                        </div>
+                        <p className="mt-2 text-sm text-blue-600 dark:text-blue-300">
+                            {tAccount('description')}
+                        </p>
+                        <ul className="mt-2 space-y-2 text-sm text-blue-600 dark:text-blue-300">
+                            <li className="flex items-center gap-2">
+                                <Clock className="w-4 h-4" />
+                                {tAccount('features.tracking')}
+                            </li>
+                            <li className="flex items-center gap-2">
+                                <User className="w-4 h-4" />
+                                {tAccount('features.updates')}
+                            </li>
+                        </ul>
+                        <Link
+                            href="/auth/signup"
+                            className="mt-4 inline-block text-blue-600 dark:text-blue-300 hover:underline"
+                        >
+                            {tAccount('cta')}
+                        </Link>
+                    </div>
+
+                    {/* Anonymous Reporting Info */}
+                    <div className="bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                        <div className="flex items-center gap-3">
+                            <LockKeyhole className="w-5 h-5" />
+                            <h2 className="font-semibold">{tPrivacy('title')}</h2>
+                        </div>
+                        <div className="mt-2 text-sm space-y-2">
+                            <p>{tPrivacy('description')}</p>
+                            <ul className="list-disc list-inside space-y-1 pl-2">
+                                <li>{tPrivacy('features.noInfo')}</li>
+                                <li>{tPrivacy('features.noIp')}</li>
+                                <li>{tPrivacy('features.location')}</li>
+                                <li>{tPrivacy('features.metadata')}</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
 
-                {error && (
-                    <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-6">
-                        {error}
-                    </div>
-                )}
+                {/* Main Form - Center */}
+                <div className="xl:col-span-6">
+                    <ReportFormMain />
+                </div>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
-                    <div>
-                        <label className="block mb-2 font-medium">Title</label>
-                        <input
-                            type="text"
-                            value={form.title}
-                            onChange={(e) => setForm(prev => ({ ...prev, title: e.target.value }))}
-                            className="w-full px-4 py-2 rounded-lg border dark:bg-gray-800 dark:border-gray-700"
-                            required
-                        />
-                    </div>
-
-                    <div>
-                        <label className="block mb-2 font-medium">Description</label>
-                        <textarea
-                            value={form.content}
-                            onChange={(e) => setForm(prev => ({ ...prev, content: e.target.value }))}
-                            className="w-full px-4 py-2 rounded-lg border dark:bg-gray-800 dark:border-gray-700 min-h-[150px]"
-                            required
-                        />
-                    </div>
-
-                    <div>
-                        <label className="block mb-2 font-medium">Category</label>
-                        <select
-                            value={form.category}
-                            onChange={(e) => setForm(prev => ({ ...prev, category: e.target.value }))}
-                            className="w-full px-4 py-2 rounded-lg border dark:bg-gray-800 dark:border-gray-700"
-                            required
-                        >
-                            <option value="">Select a category</option>
-                            {Object.values(Category).map(cat => (
-                                <option key={cat} value={cat}>{cat}</option>
+                {/* Right Sidebar */}
+                <div className="xl:col-span-3 space-y-6">
+                    {/* Recent Reports */}
+                    <div className="bg-white dark:bg-[#1E1E1E] rounded-lg shadow-dropdown p-4">
+                        <h2 className="font-semibold mb-4">{tRecentReports('title')}</h2>
+                        <div className="space-y-3">
+                            {/* Sample recent reports - replace with real data */}
+                            {[1, 2, 3].map((_, i) => (
+                                <div
+                                    key={i}
+                                    className="p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg text-sm"
+                                >
+                                    <div className="font-medium">{tRecentReports('sample')}</div>
+                                    <div className="text-xs text-gray-500 dark:text-gray-400">
+                                        {tRecentReports('timeAgo')}
+                                    </div>
+                                </div>
                             ))}
-                        </select>
-                    </div>
-
-                    <div>
-                        <label className="block mb-2 font-medium">Media</label>
-                        <div className="border-2 border-dashed rounded-lg p-4">
-                            <input
-                                type="file"
-                                multiple
-                                accept="image/*"
-                                onChange={handleMediaChange}
-                                className="hidden"
-                                id="media-upload"
-                            />
-                            <label
-                                htmlFor="media-upload"
-                                className="cursor-pointer flex flex-col items-center justify-center"
-                            >
-                                <div className="text-gray-500">
-                                    Click to upload or drag and drop
-                                </div>
-                                <div className="text-sm text-gray-400">
-                                    PNG, JPG up to 10MB each
-                                </div>
-                            </label>
-
-                            {mediaPreview.length > 0 && (
-                                <div className="mt-4 grid grid-cols-3 gap-4">
-                                    {mediaPreview.map((url, index) => (
-                                        <img
-                                            key={index}
-                                            src={url}
-                                            alt="Preview"
-                                            className="w-full h-24 object-cover rounded"
-                                        />
-                                    ))}
-                                </div>
-                            )}
                         </div>
-                    </div>
-
-                    <div>
-                        <label className="block mb-2 font-medium">Voice Recording</label>
-                        <div className="flex items-center gap-4">
-                            <button
-                                type="button"
-                                onClick={isRecording ? stopRecording : startRecording}
-                                className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
-                                    isRecording
-                                        ? 'bg-red-500 hover:bg-red-600'
-                                        : 'bg-primary hover:bg-primary/90'
-                                } text-white transition-colors`}
-                            >
-                                {isRecording ? <Square className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
-                                {isRecording ? 'Stop Recording' : 'Start Recording'}
-                            </button>
-
-                            {audioUrl && (
-                                <audio controls src={audioUrl} className="flex-1" />
-                            )}
-                        </div>
-                    </div>
-
-                    <div className="flex items-center">
-                        <input
-                            type="checkbox"
-                            id="anonymous"
-                            checked={form.isAnonymous}
-                            onChange={(e) => setForm(prev => ({ ...prev, isAnonymous: e.target.checked }))}
-                            className="rounded border-gray-300"
-                        />
-                        <label htmlFor="anonymous" className="ml-2">
-                            Submit anonymously
-                        </label>
-                    </div>
-
-                    <div>
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className={`w-full px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors
-                               ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        <Link
+                            href="/reports"
+                            className="mt-4 inline-block text-sm text-primary hover:underline"
                         >
-                            {loading ? 'Submitting...' : 'Submit Report'}
-                        </button>
+                            {tRecentReports('viewAll')}
+                        </Link>
                     </div>
-                </form>
+
+                    {/* Statistics or Additional Info */}
+                    <div className="bg-white dark:bg-[#1E1E1E] rounded-lg shadow-dropdown p-4">
+                        <h2 className="font-semibold mb-4">{tImpact('title')}</h2>
+                        <div className="space-y-2 text-sm">
+                            <div className="flex justify-between">
+                                <span>{tImpact('stats.monthly')}</span>
+                                <span className="font-medium">124</span>
+                            </div>
+                            <div className="flex justify-between">
+                                <span>{tImpact('stats.resolved')}</span>
+                                <span className="font-medium">89</span>
+                            </div>
+                            <div className="flex justify-between">
+                                <span>{tImpact('stats.response')}</span>
+                                <span className="font-medium">48h</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );

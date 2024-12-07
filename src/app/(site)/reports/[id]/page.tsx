@@ -1,11 +1,12 @@
 import React from 'react';
 import { Post, CategoryReport } from '@/types';
+import { useTranslations } from 'next-intl';
 import { ReportCard } from '@/components/shared/ReportCard';
 import { RelatedReports } from '@/components/shared/RelatedReports';
 
 const ReportDetailPage = () => {
+    const t = useTranslations('reportDetailScreen');
     const id = '0';
-
     // Mock data - replace with actual data fetching
     const report: Post = {
         id: id as string,
@@ -49,38 +50,40 @@ const ReportDetailPage = () => {
     return (
         <div className="container mx-auto px-4 py-8">
             <div className="max-w-4xl mx-auto">
-                {/*// @ts-ignore*/}
+                {/* @ts-ignore */}
                 <ReportCard report={report} />
 
                 <div className="bg-white shadow-md rounded-lg p-6 mt-6">
-                    <h2 className="text-2xl font-semibold mb-4">Report Details</h2>
+                    <h2 className="text-2xl font-semibold mb-4">{t('title')}</h2>
                     <div className="grid grid-cols-2 gap-4">
                         <div>
                             <p>
-                                <strong>Report ID:</strong> {report.id}
+                                <strong>{t('reportId')}:</strong> {report.id}
                             </p>
                             <p>
-                                <strong>Category:</strong> {report.category}
+                                <strong>{t('category')}:</strong> {report.category}
                             </p>
                             <p>
-                                <strong>Submitted:</strong> {report.timestamp.toLocaleString()}
+                                <strong>{t('submitted')}:</strong>{' '}
+                                {report.timestamp.toLocaleString()}
                             </p>
                         </div>
                         <div>
                             <p>
-                                <strong>Location:</strong>{' '}
+                                <strong>{t('location')}:</strong>{' '}
                                 {`${report.location.lat}, ${report.location.lng}`}
                             </p>
                             <p>
-                                <strong>Accuracy:</strong> {report.location.accuracy} meters
+                                <strong>{t('accuracy')}:</strong> {report.location.accuracy} meters
                             </p>
                             <p>
-                                <strong>Anonymous:</strong> {report.isAnonymous ? 'Yes' : 'No'}
+                                <strong>{t('anonymous')}:</strong>{' '}
+                                {report.isAnonymous ? t('anonymousYes') : t('anonymousNo')}
                             </p>
                         </div>
                     </div>
                     <div className="mt-4">
-                        <h3 className="text-xl font-semibold mb-2">Report Content</h3>
+                        <h3 className="text-xl font-semibold mb-2">{t('reportContent')}</h3>
                         <p>{report.content}</p>
                     </div>
                 </div>

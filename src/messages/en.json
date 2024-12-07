@@ -210,5 +210,56 @@
       "title": "Emergency?",
       "call": "Call 129"
     }
+  },
+  "reportsSingleScreen": {
+    "title": "Community Reports",
+    "submitReport": "Submit Report",
+    "filters": {
+      "allCategories": "All Categories",
+      "allStatuses": "All Statuses",
+      "sortNewest": "Newest First",
+      "sortOldest": "Oldest First"
+    },
+    "loading": "No more reports to load",
+    "noReports": "No reports found"
+  },
+  "reportDetailScreen": {
+    "title": "Report Details",
+    "reportId": "Report ID",
+    "category": "Category",
+    "submitted": "Submitted",
+    "location": "Location",
+    "accuracy": "Accuracy",
+    "anonymous": "Anonymous",
+    "anonymousYes": "Yes",
+    "anonymousNo": "No",
+    "reportContent": "Report Content",
+    "relatedReports": "Related Reports"
+  },
+  "home": {
+    "filters": {
+      "categories": {
+        "all": "All Categories"
+      },
+      "statuses": {
+        "all": "All Statuses"
+      },
+      "sort": {
+        "newest": "Newest First",
+        "oldest": "Oldest First"
+      }
+    },
+    "loading": "Loading more reports..."
+  },
+  "hero": {
+    "title": {
+      "main": "Community Issues,",
+      "highlight": "Solved Together"
+    },
+    "description": "Report local issues anonymously, track their progress, and help make your community better.",
+    "buttons": {
+      "submit": "Submit a Report",
+      "browse": "Browse Reports"
+    }
   }
 }

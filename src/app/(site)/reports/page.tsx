@@ -1,7 +1,7 @@
-// src/app/(site)/reports/page.tsx
 "use client";
 
 import { useState, useMemo } from 'react';
+import { useTranslations } from 'next-intl';
 import { Report, CategoryReport, ReportStatus } from '@/types';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import { ReportCard } from '@/components/shared/ReportCard';
@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { dummyReports } from '@/utils/dummyReports';
 
 export default function ReportsPage() {
+    const t = useTranslations('reportsSingleScreen');
     const [filter, setFilter] = useState({
         category: 'all',
         status: 'all',
@@ -30,12 +31,12 @@ export default function ReportsPage() {
     return (
         <div className="container mx-auto px-4 py-6">
             <div className="flex justify-between items-center mb-6">
-                <h1 className="text-3xl font-bold dark:text-white">Community Reports</h1>
+                <h1 className="text-3xl font-bold dark:text-white">{t('title')}</h1>
                 <Link
                     href="/reports/new"
                     className="px-4 py-2 bg-primary text-white rounded-full hover:bg-primary/90 transition-colors"
                 >
-                    Submit Report
+                    {t('submitReport')}
                 </Link>
             </div>
 
@@ -45,7 +46,7 @@ export default function ReportsPage() {
                     onChange={(e) => setFilter(f => ({...f, category: e.target.value}))}
                     className="rounded-lg border p-2 dark:bg-gray-800 dark:border-gray-700"
                 >
-                    <option value="all">All Categories</option>
+                    <option value="all">{t('filters.allCategories')}</option>
                     {Object.values(CategoryReport).map(cat => (
                         <option key={cat} value={cat}>{cat}</option>
                     ))}
@@ -56,7 +57,7 @@ export default function ReportsPage() {
                     onChange={(e) => setFilter(f => ({...f, status: e.target.value}))}
                     className="rounded-lg border p-2 dark:bg-gray-800 dark:border-gray-700"
                 >
-                    <option value="all">All Statuses</option>
+                    <option value="all">{t('filters.allStatuses')}</option>
                     {Object.values(ReportStatus).map(status => (
                         <option key={status} value={status}>{status.replace('_', ' ')}</option>
                     ))}
@@ -67,8 +68,8 @@ export default function ReportsPage() {
                     onChange={(e) => setFilter(f => ({...f, sort: e.target.value}))}
                     className="rounded-lg border p-2 dark:bg-gray-800 dark:border-gray-700"
                 >
-                    <option value="newest">Newest First</option>
-                    <option value="oldest">Oldest First</option>
+                    <option value="newest">{t('filters.sortNewest')}</option>
+                    <option value="oldest">{t('filters.sortOldest')}</option>
                 </select>
             </div>
 
@@ -86,13 +87,13 @@ export default function ReportsPage() {
 
             {!hasMore && filteredReports.length > 0 && (
                 <p className="text-center text-gray-500 dark:text-gray-400 py-8">
-                    No more reports to load
+                    {t('loading')}
                 </p>
             )}
 
             {filteredReports.length === 0 && (
                 <div className="text-center py-12">
-                    <p className="text-xl text-gray-500 dark:text-gray-400">No reports found</p>
+                    <p className="text-xl text-gray-500 dark:text-gray-400">{t('noReports')}</p>
                 </div>
             )}
         </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from 'react';
+import { useTranslations } from 'next-intl';
 import { Report, CategoryReport, ReportStatus } from '@/types';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import { ReportCard } from '@/components/shared/ReportCard';
@@ -25,6 +26,9 @@ const dummyReports = Array.from({ length: 100 }, (_, i) => ({
 }));
 
 export default function HomePage() {
+    const t = useTranslations('home');
+    const tFilters = useTranslations('home.filters');
+
     const [filter, setFilter] = useState({
         category: 'all',
         status: 'all',
@@ -53,7 +57,7 @@ export default function HomePage() {
                         onChange={(e) => setFilter(f => ({...f, category: e.target.value}))}
                         className="rounded-lg border p-2 dark:bg-gray-800 dark:border-gray-700"
                     >
-                        <option value="all">All Categories</option>
+                        <option value="all">{tFilters('categories.all')}</option>
                         {Object.values(CategoryReport).map(cat => (
                             <option key={cat} value={cat}>{cat}</option>
                         ))}
@@ -64,7 +68,7 @@ export default function HomePage() {
                         onChange={(e) => setFilter(f => ({...f, status: e.target.value}))}
                         className="rounded-lg border p-2 dark:bg-gray-800 dark:border-gray-700"
                     >
-                        <option value="all">All Statuses</option>
+                        <option value="all">{tFilters('statuses.all')}</option>
                         {Object.values(ReportStatus).map(status => (
                             <option key={status} value={status}>{status.replace('_', ' ')}</option>
                         ))}
@@ -75,8 +79,8 @@ export default function HomePage() {
                         onChange={(e) => setFilter(f => ({...f, sort: e.target.value}))}
                         className="rounded-lg border p-2 dark:bg-gray-800 dark:border-gray-700"
                     >
-                        <option value="newest">Newest First</option>
-                        <option value="oldest">Oldest First</option>
+                        <option value="newest">{tFilters('sort.newest')}</option>
+                        <option value="oldest">{tFilters('sort.oldest')}</option>
                     </select>
                 </div>
 
@@ -89,6 +93,7 @@ export default function HomePage() {
                 {loading && (
                     <div className="flex justify-center py-8">
                         <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin"></div>
+                        <span className="ml-2">{t('loading')}</span>
                     </div>
                 )}
             </div>

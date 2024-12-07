@@ -210,5 +210,56 @@
       "title": "Emergjencë?",
       "call": "Telefononi 129"
     }
+  },
+  "reportsSingleScreen": {
+    "title": "Raportet e Komunitetit",
+    "submitReport": "Dërgo Raport",
+    "filters": {
+      "allCategories": "Të Gjitha Kategoritë",
+      "allStatuses": "Të Gjitha Statuset",
+      "sortNewest": "Më të Rejat",
+      "sortOldest": "Më të Vjetrat"
+    },
+    "loading": "Nuk ka më raporte për të ngarkuar",
+    "noReports": "Nuk u gjet asnjë raport"
+  },
+  "reportDetailScreen": {
+    "title": "Detajet e Raportit",
+    "reportId": "ID e Raportit",
+    "category": "Kategoria",
+    "submitted": "Dërguar",
+    "location": "Vendndodhja",
+    "accuracy": "Saktësia",
+    "anonymous": "Anonime",
+    "anonymousYes": "Po",
+    "anonymousNo": "Jo",
+    "reportContent": "Përmbajtja e Raportit",
+    "relatedReports": "Raporte të Ngjashme"
+  },
+  "home": {
+    "filters": {
+      "categories": {
+        "all": "Të gjitha Kategoritë"
+      },
+      "statuses": {
+        "all": "Të gjitha Statuset"
+      },
+      "sort": {
+        "newest": "Më të Rinjtë Fillimisht",
+        "oldest": "Më të Vjetrit Fillimisht"
+      }
+    },
+    "loading": "Po ngarkohen me shumë raporte..."
+  },
+  "hero": {
+    "title": {
+      "main": "Çështjet e Komunitetit,",
+      "highlight": "Zgjidhur Bashkë"
+    },
+    "description": "Raporto problemet lokale në mënyrë anonime, ndiq progresin e tyre dhe ndihmo në përmirësimin e komunitetit tënd.",
+    "buttons": {
+      "submit": "Paraqit një Raport",
+      "browse": "Shfleto Raportet"
+    }
   }
 }

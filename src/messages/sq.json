@@ -225,16 +225,63 @@
   },
   "reportDetailScreen": {
     "title": "Detajet e Raportit",
-    "reportId": "ID e Raportit",
+    "reportDetailsDescription": "Informacion i detajuar për këtë raport komunitar",
     "category": "Kategoria",
-    "submitted": "Dërguar",
+    "reportContent": "Përmbajtja e Raportit",
+    "reportMetadata": "Informacioni i Raportit",
+    "evidence": "Evidenca",
+    "submitted": "Dorëzuar",
     "location": "Vendndodhja",
     "accuracy": "Saktësia",
-    "anonymous": "Anonime",
+    "anonymous": "Raport Anonim",
     "anonymousYes": "Po",
     "anonymousNo": "Jo",
-    "reportContent": "Përmbajtja e Raportit",
-    "relatedReports": "Raporte të Ngjashme"
+    "relatedReports": "Raporte të Ngjashme",
+    "reportId": "ID e Raportit",
+    "status": {
+      "title": "Statusi",
+      "timeline": "Historia e Progresit",
+      "pending": "Në Pritje",
+      "inProgress": "Në Proces",
+      "resolved": "Zgjidhur",
+      "closed": "Mbyllur"
+    },
+    "actions": {
+      "share": "Shpërnda",
+      "report": "Raporto Problem",
+      "follow": "Ndjek Përditësimet"
+    },
+    "faq": {
+      "title": "Pyetjet më të Shpeshta",
+      "description": "Pyetjet e zakonshme rreth raporteve komunitare",
+      "faq1": {
+        "question": "Si trajtohen raportet?",
+        "answer": "Raportet shqyrtohen dhe i përcillen autoriteteve përkatëse. Çdo raport merret seriozisht dhe ndiqet deri në zgjidhjen e problemit."
+      },
+      "faq2": {
+        "question": "Sa kohë duhet për të marrë një përgjigje?",
+        "answer": "Koha e përgjigjes ndryshon në varësi të ashpërsisë së çështjes. Çështjet urgjente trajtohen me prioritet të lartë."
+      },
+      "faq3": {
+        "question": "A mund ta përditësoj raportin tim?",
+        "answer": "Po, mund të shtoni informacion shtesë në raportin tuaj në çdo kohë. Thjesht identifikohuni dhe zgjidhni raportin që dëshironi të përditësoni."
+      }
+    },
+    "timelineEvents": {
+      "reportSubmitted": "Raporti u dorëzua",
+      "underReview": "Nën shqyrtim",
+      "inProgress": "Puna në proces",
+      "resolved": "Problem i zgjidhur",
+      "closed": "Rasti u mbyll"
+    },
+    "locationInfo": {
+      "coordinates": "Koordinatat",
+      "accuracyMeter": "metra"
+    },
+    "media": {
+      "noMedia": "Nuk ka media të bashkangjitur",
+      "clickToEnlarge": "Kliko për të zmadhuar"
+    }
   },
   "home": {
     "filters": {

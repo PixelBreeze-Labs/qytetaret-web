@@ -225,16 +225,43 @@
   },
   "reportDetailScreen": {
     "title": "Report Details",
-    "reportId": "Report ID",
+    "reportDetailsDescription": "Detailed information about this community report",
     "category": "Category",
+    "reportContent": "Report Content",
+    "reportMetadata": "Report Information",
+    "evidence": "Evidence",
     "submitted": "Submitted",
     "location": "Location",
     "accuracy": "Accuracy",
-    "anonymous": "Anonymous",
+    "anonymous": "Anonymous Report",
     "anonymousYes": "Yes",
     "anonymousNo": "No",
-    "reportContent": "Report Content",
-    "relatedReports": "Related Reports"
+    "relatedReports": "Similar Reports",
+    "status": {
+      "title": "Status",
+      "timeline": "Progress Timeline"
+    },
+    "actions": {
+      "share": "Share Report",
+      "report": "Report Issue",
+      "follow": "Follow Updates"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "description": "Common questions about community reports",
+      "faq1": {
+        "question": "How are reports handled?",
+        "answer": "Reports are reviewed and forwarded to relevant authorities..."
+      },
+      "faq2": {
+        "question": "How long until I get a response?",
+        "answer": "Response times vary depending on the issue severity..."
+      },
+      "faq3": {
+        "question": "Can I update my report?",
+        "answer": "Yes, you can add additional information..."
+      }
+    }
   },
   "home": {
     "filters": {

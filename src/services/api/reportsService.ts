@@ -60,7 +60,7 @@ export class ReportsService {
     // Create a new report with media upload support
     // ReportsService.ts
     static async create(formData: FormData): Promise<Report> {
-        const response = await fetch('http://localhost:3000/reports', {
+        const response = await fetch('https://v1.api.qytetaret.al/reports', {
             method: 'POST',
             // Shto content-type
             headers: {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import { useTranslations } from 'next-intl';
 import { Report, CategoryReport, ReportStatus } from '@/types';
 import { ReportCard } from '@/components/shared/ReportCard';
@@ -8,24 +8,6 @@ import { Hero } from '@/components/shared/Hero';
 import Link from 'next/link';
 import { ChevronRight, ArrowRight, CheckCircle2, MapPin, Users, BarChart3 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
-
-const featuredReports = Array.from({ length: 9 }, (_, i) => ({
-    id: `${i}`,
-    title: `Report #${i}`,
-    content: `This is a sample report about ${['roads', 'parks', 'lighting', 'trash', 'water', 'electricity', 'sidewalks', 'noise', 'pollution'][i]} that needs attention...`,
-    category: Object.values(CategoryReport)[i % 4],
-    isAnonymous: false,
-    author: `User ${i}`,
-    location: {
-        lat: 41.3275 + (Math.random() - 0.5) * 0.1,
-        lng: 19.8187 + (Math.random() - 0.5) * 0.1,
-        accuracy: 10
-    },
-    media: [`https://picsum.photos/200/200?random=${i}`],
-    createdAt: new Date(Date.now() - Math.random() * 10000000000),
-    updatedAt: new Date(),
-    status: Object.values(ReportStatus)[i % 4]
-}));
 
 const FaqItem = ({ faq, isActive, onToggle }) => {
     return (
@@ -47,6 +29,29 @@ const FaqItem = ({ faq, isActive, onToggle }) => {
 export default function HomePage() {
     const t = useTranslations('home');
     const [activeFaq, setActiveFaq] = useState(1);
+
+    const [reports, setReports] = useState([]);
+
+    useEffect(() => {
+        const generatedReports = Array.from({ length: 9 }, (_, i) => ({
+            id: `${i}`,
+            title: `Report #${i}`,
+            content: `This is a sample report about ${['roads', 'parks', 'lighting', 'trash', 'water', 'electricity', 'sidewalks', 'noise', 'pollution'][i]} that needs attention...`,
+            category: Object.values(CategoryReport)[i % 4],
+            isAnonymous: false,
+            author: `User ${i}`,
+            location: {
+                lat: 41.3275 + (Math.random() - 0.5) * 0.1,
+                lng: 19.8187 + (Math.random() - 0.5) * 0.1,
+                accuracy: 10
+            },
+            media: [`https://picsum.photos/200/200?random=${i}`],
+            createdAt: new Date(Date.now() - Math.random() * 10000000000),
+            updatedAt: new Date(),
+            status: Object.values(ReportStatus)[i % 4]
+        }));
+        setReports(generatedReports);
+    }, []); // Empty dependency array ensures this runs only on client-side
 
     const faqData = [
         {
@@ -107,7 +112,7 @@ export default function HomePage() {
 
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {featuredReports.map(report => (
+                            {reports.map(report => (
                                 <ReportCard key={report.id} report={report}/>
                             ))}
                         </div>

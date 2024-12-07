@@ -47,7 +47,7 @@ export default function ReportsPage() {
                     <h1 className="text-2xl sm:text-3xl font-bold dark:text-white">{t('title')}</h1>
                     <div className="flex gap-2">
                         <Link
-                            href="/reports/map"
+                            href="/map"
                             className="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors inline-flex items-center gap-2"
                         >
                             <Map className="w-4 h-4" />

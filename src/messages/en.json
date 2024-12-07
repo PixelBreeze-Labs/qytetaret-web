@@ -171,5 +171,44 @@
         "userNotFound": "User not found."
       }
     }
+  },
+  "map": {
+    "title": "Community Report Map",
+    "description": "Explore and track reported issues in your community",
+    "loading": "Loading maps...",
+    "viewModes": {
+      "map": "Map View",
+      "list": "List View"
+    },
+    "filters": {
+      "allCategories": "All Categories",
+      "allStatuses": "All Statuses",
+      "allTime": "All Time",
+      "today": "Today",
+      "thisWeek": "This Week",
+      "thisMonth": "This Month"
+    },
+    "statuses": {
+      "pending": "Pending",
+      "inprogress": "In Progress",
+      "resolved": "Resolved",
+      "closed": "Closed"
+    },
+    "overview": {
+      "title": "Reports Overview",
+      "totalReports": "Total Reports",
+      "active": "Active",
+      "resolved": "Resolved"
+    },
+    "selectedReport": {
+      "title": "Selected Report"
+    },
+    "legend": {
+      "title": "Map Legend"
+    },
+    "emergency": {
+      "title": "Emergency?",
+      "call": "Call 129"
+    }
   }
 }

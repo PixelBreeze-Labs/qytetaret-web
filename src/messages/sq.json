@@ -171,5 +171,44 @@
         "userNotFound": "Përdoruesi nuk u gjet."
       }
     }
+},
+  "map": {
+    "title": "Harta e Raporteve të Komunitetit",
+    "description": "Eksploroni dhe gjurmoni çështjet e raportuara në komunitetin tuaj",
+    "loading": "Duke ngarkuar hartën...",
+    "viewModes": {
+      "map": "Pamja e Hartës",
+      "list": "Pamja e Listës"
+    },
+    "filters": {
+      "allCategories": "Të Gjitha Kategoritë",
+      "allStatuses": "Të Gjitha Statuset",
+      "allTime": "Gjithë Koha",
+      "today": "Sot",
+      "thisWeek": "Këtë Javë",
+      "thisMonth": "Këtë Muaj"
+    },
+    "statuses": {
+      "pending": "Në Pritje",
+      "inprogress": "Në Proces",
+      "resolved": "E Zgjidhur",
+      "closed": "E Mbyllur"
+    },
+    "overview": {
+      "title": "Përmbledhja e Raporteve",
+      "totalReports": "Raportet Totale",
+      "active": "Aktive",
+      "resolved": "Të Zgjidhura"
+    },
+    "selectedReport": {
+      "title": "Raporti i Zgjedhur"
+    },
+    "legend": {
+      "title": "Legjenda e Hartës"
+    },
+    "emergency": {
+      "title": "Emergjencë?",
+      "call": "Telefononi 129"
+    }
   }
 }

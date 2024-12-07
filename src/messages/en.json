@@ -38,7 +38,30 @@
       },
       "submit": "Submit Report",
       "submitting": "Submitting...",
-      "error": "Failed to submit report. Please try again."
+      "error": "Failed to submit report. Please try again.",
+      "successSubmit": "Report submitted successfully",
+      "errors": {
+        "submit": "Failed to submit report",
+        "validation": {
+          "title": "Title is required",
+          "content": "Description is required",
+          "category": "Please select a category",
+          "location": "Location is required",
+          "media": {
+            "size": "Image size must be less than 5MB",
+            "type": "Only image files are allowed",
+            "count": "Maximum 5 images allowed"
+          },
+          "audio": {
+            "size": "Audio file must be less than 10MB"
+          }
+        },
+        "server": {
+          "UNAUTHORIZED": "Please sign in to submit a report",
+          "BAD_REQUEST": "Please check your input",
+          "INTERNAL_ERROR": "Something went wrong. Please try again"
+        }
+      }
     }
   },
   "emergency": {

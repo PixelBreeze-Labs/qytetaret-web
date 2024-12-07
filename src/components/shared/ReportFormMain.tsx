@@ -1,14 +1,17 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
-import { Mic, Square, Camera, X } from 'lucide-react';
+import {Mic, Square, Camera, X, Loader2, CheckCircle} from 'lucide-react';
 import { CategoryReport } from '@/types';
+import { ReportsService } from '@/services/api/reportsService';
 
 export const ReportFormMain = () => {
     const t = useTranslations('reports.form');
     const router = useRouter();
     const [loading, setLoading] = useState(false);
+    const [locationLoading, setLocationLoading] = useState(true);
+
     const [form, setForm] = useState({
         title: '',
         content: '',
@@ -28,18 +31,126 @@ export const ReportFormMain = () => {
     const [isRecording, setIsRecording] = useState(false);
     const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
     const [audioUrl, setAudioUrl] = useState<string | null>(null);
+    const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
-    const handleMediaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const files = e.target.files;
-        if (files) {
-            const newFiles = Array.from(files);
-            setForm(prev => ({ ...prev, media: [...prev.media, ...newFiles] }));
-            const newPreviews = newFiles.map(file => URL.createObjectURL(file));
-            setMediaPreview(prev => [...prev, ...newPreviews]);
+
+    useEffect(() => {
+        // Get user location on mount
+        setLocationLoading(true);
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                setForm(prev => ({
+                    ...prev,
+                    location: {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude,
+                        accuracy: position.coords.accuracy
+                    }
+                }));
+                setLocationLoading(false);
+            },
+            (error) => {
+                console.error("Error getting location:", error);
+                setError(t('errors.location'));
+                setLocationLoading(false);
+            }
+        );
+    }, []);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+        setError(null);
+
+        try {
+            // Client-side validation
+            if (!form.title.trim()) {
+                throw new Error(t('errors.validation.title'));
+            }
+            if (!form.content.trim()) {
+                throw new Error(t('errors.validation.content'));
+            }
+            if (!form.category) {
+                throw new Error(t('errors.validation.category'));
+            }
+
+            const formData = new FormData();
+            formData.append('title', form.title.trim());
+            formData.append('content', form.content.trim());
+            formData.append('category', form.category);
+            formData.append('isAnonymous', String(form.isAnonymous));
+
+            formData.append('location.lat', String(form.location.lat));
+            formData.append('location.lng', String(form.location.lng));
+            formData.append('location.accuracy', String(form.location.accuracy));
+
+            form.media.forEach((file) => {
+                formData.append('media', file);
+            });
+
+            if (form.audio) {
+                formData.append('audio', form.audio);
+            }
+
+            const createdReport = await ReportsService.create(formData);
+
+            // Show success message
+            setSuccessMessage(t('successSubmit'));
+
+            // Redirect after a short delay to allow user to see success message
+            setTimeout(() => {
+                router.push('/reports');
+            }, 2000);
+        } catch (err: any) {
+
+            // Handle backend validation errors
+            if (err.response?.statusCode === 401) {
+                // Assuming backend returns { message: string, errors: { field: string[] }[] }
+                const data = await err.response.json();
+                if (data.errors) {
+                    // Show first validation error
+                    const firstError = Object.values(data.errors)[0];
+                    setError(t(`errors.validation.${firstError}`));
+                    return;
+                }
+            }
+
+            // Handle other known errors
+            if (err.response?.status === 401) {
+                setError(t('errors.server.UNAUTHORIZED'));
+                return;
+            }
+
+            // Handle general errors
+            setError(err.message || t('errors.submit'));
+        } finally {
+            setLoading(false);
         }
     };
 
+    const handleMediaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const files = e.target.files;
+        if (!files) return;
+
+        // Validate file types and size
+        const validFiles = Array.from(files).filter(file => {
+            const isValid = file.type.startsWith('image/');
+            const isUnderLimit = file.size <= 5 * 1024 * 1024; // 5MB limit
+            return isValid && isUnderLimit;
+        });
+
+        if (validFiles.length !== files.length) {
+            setError(t('errors.invalidFiles'));
+            return;
+        }
+
+        setForm(prev => ({ ...prev, media: [...prev.media, ...validFiles] }));
+        const newPreviews = validFiles.map(file => URL.createObjectURL(file));
+        setMediaPreview(prev => [...prev, ...newPreviews]);
+    };
+
     const removeImage = (index: number) => {
+        URL.revokeObjectURL(mediaPreview[index]); // Clean up
         setMediaPreview(prev => prev.filter((_, i) => i !== index));
         setForm(prev => ({
             ...prev,
@@ -50,12 +161,18 @@ export const ReportFormMain = () => {
     const startRecording = async () => {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            const recorder = new MediaRecorder(stream);
-            const chunks: BlobPart[] = [];
+            const recorder = new MediaRecorder(stream, {
+                mimeType: 'audio/webm'
+            });
 
+            const chunks: BlobPart[] = [];
             recorder.ondataavailable = e => chunks.push(e.data);
             recorder.onstop = () => {
                 const blob = new Blob(chunks, { type: 'audio/webm' });
+                if (blob.size > 10 * 1024 * 1024) { // 10MB limit
+                    setError(t('errors.audioTooLarge'));
+                    return;
+                }
                 setForm(prev => ({ ...prev, audio: blob }));
                 setAudioUrl(URL.createObjectURL(blob));
             };
@@ -65,7 +182,7 @@ export const ReportFormMain = () => {
             setIsRecording(true);
         } catch (err) {
             console.error("Error accessing microphone:", err);
-            setError(t('error'));
+            setError(t('errors.microphone'));
         }
     };
 
@@ -74,33 +191,6 @@ export const ReportFormMain = () => {
             mediaRecorder.stop();
             mediaRecorder.stream.getTracks().forEach(track => track.stop());
             setIsRecording(false);
-        }
-    };
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setLoading(true);
-        setError(null);
-
-        const formData = new FormData();
-        formData.append('title', form.title);
-        formData.append('content', form.content);
-        formData.append('category', form.category);
-        formData.append('isAnonymous', String(form.isAnonymous));
-        form.media.forEach((file, index) => {
-            formData.append(`media_${index}`, file);
-        });
-        if (form.audio) {
-            formData.append('audio', form.audio);
-        }
-
-        try {
-            // TODO: Add API call with formData
-            router.push('/reports');
-        } catch (err) {
-            setError(t('error'));
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -239,12 +329,33 @@ export const ReportFormMain = () => {
 
                 <button
                     type="submit"
-                    disabled={loading}
-                    className={`w-full px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors
-                        ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    disabled={loading || locationLoading}
+                    className={`w-full px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors flex items-center justify-center gap-2
+                    ${(loading || locationLoading) ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
-                    {loading ? t('submitting') : t('submit')}
+                    {loading ? (
+                        <>
+                            <Loader2 className="w-5 h-5 animate-spin" />
+                            {t('submitting')}
+                        </>
+                    ) : (
+                        t('submit')
+                    )}
                 </button>
+
+                {/* Success message */}
+                {successMessage && (
+                    <div className="mx-6 mt-6 bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-200 px-4 py-3 rounded-lg flex items-center gap-2">
+                        <CheckCircle className="w-5 h-5" />
+                        {successMessage}
+                    </div>
+                )}
+
+                {error && (
+                    <div className="mt-4 p-4 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-200 rounded-lg">
+                        {error}
+                    </div>
+                )}
             </form>
         </div>
     );

@@ -118,7 +118,7 @@ export default function ReportsPage() {
                                     {t('endOfReports')}
                                 </p>
                                 <Link
-                                    href="/reports/map"
+                                    href="/map"
                                     className="inline-flex items-center gap-2 px-6 py-3 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                                 >
                                     <Map className="w-5 h-5" />

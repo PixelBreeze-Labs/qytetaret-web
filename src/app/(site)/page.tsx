@@ -6,8 +6,9 @@ import { Report, CategoryReport, ReportStatus } from '@/types';
 import { ReportCard } from '@/components/shared/ReportCard';
 import { Hero } from '@/components/shared/Hero';
 import Link from 'next/link';
-import { ChevronRight, ArrowRight, CheckCircle2, MapPin, Users, BarChart3 } from 'lucide-react';
+import {ChevronRight, ArrowRight, CheckCircle2, MapPin, Users, BarChart3, Loader2} from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { useFeaturedReports } from "@/hooks/useFeaturedReports";
 
 const FaqItem = ({ faq, isActive, onToggle }) => {
     return (
@@ -26,32 +27,77 @@ const FaqItem = ({ faq, isActive, onToggle }) => {
     );
 };
 
+const FeaturedReportsSection = () => {
+    const t = useTranslations('home');
+    const { featuredReports, loading, error } = useFeaturedReports();
+
+    console.log('feat', featuredReports);
+    if (loading) {
+        return (
+            <div className="flex justify-center py-8">
+                <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            </div>
+        );
+    }
+
+    if (error) {
+        return null;
+    }
+
+    if (featuredReports.length === 0) {
+        return null;
+    }
+
+    return (
+        <section className="py-16 bg-gray-50 dark:bg-gray-900">
+            <div className="container mx-auto px-4">
+                <div className="mb-8">
+                    <div className="flex justify-between items-center">
+                        <div>
+                            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                                {t('featured.title')}
+                            </h2>
+                            <p className="text-gray-600 dark:text-gray-400">
+                                {t('featured.subtitle')}
+                            </p>
+                        </div>
+                        <Link
+                            href="/reports"
+                            className="hidden sm:inline-flex items-center gap-1 px-4 py-2 text-sm rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
+                        >
+                            {t('featured.viewAll')}
+                            <ArrowRight className="w-4 h-4" />
+                        </Link>
+
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {featuredReports.map(report => (
+                        <ReportCard key={report.id} report={report} />
+                    ))}
+                </div>
+
+                <div className="mt-8 text-center">
+                    <Link href="/reports">
+                        <span
+                            className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
+                            {t('featured.exploreAll')}
+                            <ArrowRight className="w-4 h-4"/>
+                        </span>
+                    </Link>
+                    <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                        {t('featured.feedDescription')}
+                    </p>
+                </div>
+
+            </div>
+        </section>
+    );
+};
 export default function HomePage() {
     const t = useTranslations('home');
     const [activeFaq, setActiveFaq] = useState(1);
-
-    const [reports, setReports] = useState([]);
-
-    useEffect(() => {
-        const generatedReports = Array.from({ length: 9 }, (_, i) => ({
-            id: `${i}`,
-            title: `Report #${i}`,
-            content: `This is a sample report about ${['roads', 'parks', 'lighting', 'trash', 'water', 'electricity', 'sidewalks', 'noise', 'pollution'][i]} that needs attention...`,
-            category: Object.values(CategoryReport)[i % 4],
-            isAnonymous: false,
-            author: `User ${i}`,
-            location: {
-                lat: 41.3275 + (Math.random() - 0.5) * 0.1,
-                lng: 19.8187 + (Math.random() - 0.5) * 0.1,
-                accuracy: 10
-            },
-            media: [`https://picsum.photos/200/200?random=${i}`],
-            createdAt: new Date(Date.now() - Math.random() * 10000000000),
-            updatedAt: new Date(),
-            status: Object.values(ReportStatus)[i % 4]
-        }));
-        setReports(generatedReports);
-    }, []); // Empty dependency array ensures this runs only on client-side
 
     const faqData = [
         {
@@ -81,54 +127,7 @@ export default function HomePage() {
             <Hero />
 
             {/* Featured Reports Section */}
-            <section className="py-16 bg-gray-50 dark:bg-gray-900">
-                <div className="container mx-auto px-4">
-                    <div className="flex justify-between items-center mb-8">
-
-
-                        <div className="mb-8">
-                            {/* Header with title and description */}
-                            <div className="mb-4">
-                                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                                        {t('featured.title')}
-                                    </h2>
-                                    <p className="text-gray-600 dark:text-gray-400">
-                                        {t('featured.subtitle')}
-                                    </p>
-                            </div>
-                                {/* View All Link - On mobile appears below description, on desktop appears to the right */}
-                                <Link
-                                    href="/reports"
-                                    className="inline-flex items-center gap-1 px-4 py-2 text-sm rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 sm:absolute sm:top-0 sm:right-4"
-                                >
-                                    {t('featured.viewAll')}
-                                    <svg className="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                         fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
-                                         strokeLinejoin="round">
-                                        <path d="m9 18 6-6-6-6"/>
-                                    </svg>
-                                </Link>
-                            </div>
-
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {reports.map(report => (
-                                <ReportCard key={report.id} report={report}/>
-                            ))}
-                        </div>
-                        <div className="mt-8 text-center">
-                            <Link href="/reports" className="inline-flex items-center">
-                            <Button size="lg" className="gap-2">
-                                {t('featured.exploreAll')}
-                                <ArrowRight className="w-4 h-4"/>
-                            </Button>
-                        </Link>
-                        <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-                            {t('featured.feedDescription')}
-                        </p>
-                    </div>
-                </div>
-            </section>
+            <FeaturedReportsSection />
 
             {/* How It Works Section */}
             <section className="py-16">

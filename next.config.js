@@ -91,7 +91,13 @@ const nextConfig = {
 				protocol: "https",
 				hostname: "picsum.photos",  // Add this
 				port: "",
-			}
+			},
+			{
+				protocol: 'https',
+				hostname: 'unzkbvyeaefcpooqeenz.supabase.co',
+				port: '',
+				pathname: '/storage/v1/object/public/**'
+			},
 		],
 	},
 };

@@ -1,37 +1,64 @@
 // hooks/useReports.ts
 import { useState, useEffect } from 'react';
-// @ts-ignore
-import { getReports } from '../services/api/reportsService';
+import { Report } from '@/types';
+import ReportsService from '@/services/api/reportsService';
+import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 
 interface UseReportsResult {
     reports: Report[];
     loading: boolean;
     error: string | null;
+    hasMore: boolean;
 }
 
-const useReports = (): UseReportsResult => {
-    const [reports, setReports] = useState<Report[]>([]);
+export function useReports(filters: {
+    category: string;
+    status: string;
+    sort: string;
+}): UseReportsResult {
+    const [filteredReports, setFilteredReports] = useState<Report[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
+        let isActive = true;
+
         const fetchReports = async () => {
+            setLoading(true);
             try {
-                setLoading(true);
-                const data = await getReports();
+                const response = await ReportsService.findAll();
+
+                if (!isActive) return;
+
+                const filtered = response
+                    .filter(report => filters.category === 'all' || report.category === filters.category)
+                    // @ts-ignore
+                    .filter(report => filters.status === 'all' || report.status === filters.status)
+                    .sort((a, b) => filters.sort === 'newest'
+                        ? new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+                        : new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+                    );
+
                 // @ts-ignore
-                setReports(data);
+                setFilteredReports(filtered);
+                setLoading(false);
             } catch (err) {
-                setError('Error fetching all reports');
-            } finally {
+                if (!isActive) return;
+                setError('Error fetching reports');
                 setLoading(false);
             }
         };
 
         fetchReports();
-    }, []);
+        return () => { isActive = false; };
+    }, [filters]);
 
-    return { reports, loading, error };
-};
+    const { data, hasMore } = useInfiniteScroll(loading ? [] : filteredReports, 12);
 
-export default useReports;
+    return {
+        reports: data,
+        loading,
+        error,
+        hasMore
+    };
+}

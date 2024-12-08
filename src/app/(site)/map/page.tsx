@@ -1,15 +1,17 @@
+// AIzaSyAEe-vcJ-r8w9FQdVEskAozi1v9cWy6YAA
+
 "use client";
-import { useEffect, useState, useMemo, useCallback } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { GoogleMap, useLoadScript, MarkerF, InfoWindowF } from '@react-google-maps/api';
-import { dummyReports } from '@/utils/dummyReports';
 import { Report, CategoryReport, ReportStatus } from '@/types';
 import { ReportCard } from '@/components/shared/ReportCard';
 import { useTranslations } from 'next-intl';
-import { Filter, MapPin, Info, AlertTriangle, Map as MapIcon, List } from 'lucide-react';
+import { Filter, MapPin, Info, AlertTriangle } from 'lucide-react';
+import { useMapReports } from '@/hooks/useMapReports';
 
 const mapContainerStyle = {
     width: '100%',
-    height: 'calc(100vh - 200px)', // Taller map
+    height: 'calc(100vh - 200px)',
     borderRadius: '0.75rem'
 };
 
@@ -21,6 +23,7 @@ const markerIcons = {
     [CategoryReport.OTHER]: '/icons/marker-other.svg',
 };
 
+
 const statusColors = {
     [ReportStatus.PENDING]: 'bg-yellow-100 text-yellow-800',
     [ReportStatus.IN_PROGRESS]: 'bg-blue-100 text-blue-800',
@@ -29,7 +32,6 @@ const statusColors = {
 };
 
 const mapOptions = {
-    styles: [/* Custom map styles */],
     disableDefaultUI: true,
     zoomControl: true,
     mapTypeControl: true,
@@ -49,82 +51,55 @@ export default function MapPage() {
         libraries: ['places']
     });
 
+    const { reports, loading, error } = useMapReports();
+
     const [selectedReport, setSelectedReport] = useState<Report | null>(null);
-    const [viewMode, setViewMode] = useState<'map' | 'list'>('map');
     const [filter, setFilter] = useState({
         category: 'all',
         status: 'all',
         timeframe: 'all'
     });
 
-    const filteredReports = useMemo(() =>
-            dummyReports
-                .filter(report => filter.category === 'all' || report.category === filter.category)
-                .filter(report => filter.status === 'all' || report.status === filter.status)
-                .filter(report => {
-                    if (filter.timeframe === 'all') return true;
-                    const reportDate = new Date(report.createdAt);
-                    const now = new Date();
+    const filteredReports = useMemo(() => {
+        if (!Array.isArray(reports)) return [];
 
-                    switch (filter.timeframe) {
-                        case 'today':
-                            return reportDate.toDateString() === now.toDateString();
-                        case 'week':
-                            const oneWeekAgo = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
-                            return reportDate >= oneWeekAgo;
-                        case 'month':
-                            return reportDate.getMonth() === now.getMonth() &&
-                                reportDate.getFullYear() === now.getFullYear();
-                        default:
-                            return true;
-                    }
-                }),
-        [filter]
-    );
+        return reports
+            .filter(report => filter.category === 'all' || report.category === filter.category)
+            .filter(report => filter.status === 'all' || report.status === filter.status)
+            .filter(report => {
+                if (filter.timeframe === 'all') return true;
+                const reportDate = new Date(report.createdAt || '');
+                const now = new Date();
 
-    if (!isLoaded) return <div className="flex items-center justify-center h-[60vh]">{t('loading')}</div>;
+                switch (filter.timeframe) {
+                    case 'today':
+                        return reportDate.toDateString() === now.toDateString();
+                    case 'week':
+                        const oneWeekAgo = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
+                        return reportDate >= oneWeekAgo;
+                    case 'month':
+                        return reportDate.getMonth() === now.getMonth() &&
+                            reportDate.getFullYear() === now.getFullYear();
+                    default:
+                        return true;
+                }
+            });
+    }, [reports, filter]);
 
+    if (!isLoaded || loading) {
+        return <div className="flex items-center justify-center h-[60vh]">{t('loading')}</div>;
+    }
     return (
         <div className="container mx-auto pt-[50px] pb-[50px] px-4 py-6">
-            {/* Header Section */}
             <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
-                {/* Main Content - Left Side */}
                 <div className="xl:col-span-9">
-                    {/* Title and View Toggle */}
                     <div className="flex justify-between items-center mb-6">
                         <div>
                             <h1 className="text-3xl font-bold dark:text-white mb-2">{t('title')}</h1>
-                            <p className="text-gray-600 dark:text-gray-400">
-                                {t('description')}
-                            </p>
-                        </div>
-                        <div className="flex gap-2">
-                            {/*<button*/}
-                            {/*    onClick={() => setViewMode('map')}*/}
-                            {/*    className={`p-2 rounded-lg flex items-center gap-2 ${*/}
-                            {/*        viewMode === 'map'*/}
-                            {/*            ? 'bg-primary text-white'*/}
-                            {/*            : 'bg-gray-100 dark:bg-gray-800'*/}
-                            {/*    }`}*/}
-                            {/*>*/}
-                            {/*    <MapIcon size={20} />*/}
-                            {/*    {t('viewModes.map')}*/}
-                            {/*</button>*/}
-                            {/*<button*/}
-                            {/*    onClick={() => setViewMode('list')}*/}
-                            {/*    className={`p-2 rounded-lg flex items-center gap-2 ${*/}
-                            {/*        viewMode === 'list'*/}
-                            {/*            ? 'bg-primary text-white'*/}
-                            {/*            : 'bg-gray-100 dark:bg-gray-800'*/}
-                            {/*    }`}*/}
-                            {/*>*/}
-                            {/*    <List size={20} />*/}
-                            {/*    {t('viewModes.list')}*/}
-                            {/*</button>*/}
+                            <p className="text-gray-600 dark:text-gray-400">{t('description')}</p>
                         </div>
                     </div>
 
-                    {/* Filters Bar */}
                     <div className="bg-white dark:bg-[#1E1E1E] rounded-lg shadow-dropdown p-4 mb-6">
                         <div className="flex flex-wrap gap-4">
                             <select
@@ -164,7 +139,6 @@ export default function MapPage() {
                         </div>
                     </div>
 
-                    {/* Map Container */}
                     <div className="bg-white dark:bg-[#1E1E1E] rounded-lg shadow-dropdown p-4">
                         <GoogleMap
                             mapContainerStyle={mapContainerStyle}
@@ -173,22 +147,24 @@ export default function MapPage() {
                             options={mapOptions}
                         >
                             {filteredReports.map(report => (
-                                <MarkerF
-                                    key={report.id}
-                                    position={{
-                                        lat: report.location.lat,
-                                        lng: report.location.lng
-                                    }}
-                                    onClick={() => setSelectedReport(report)}
-                                    icon={{
-                                        url: markerIcons[report.category],
-                                        scaledSize: new google.maps.Size(30, 30)
-                                    }}
-                                    animation={google.maps.Animation.DROP}
-                                />
+                                report.location && (
+                                    <MarkerF
+                                        key={report.id}
+                                        position={{
+                                            lat: report.location.lat,
+                                            lng: report.location.lng
+                                        }}
+                                        onClick={() => setSelectedReport(report)}
+                                        icon={{
+                                            url: markerIcons[report.category.toLowerCase()],
+                                            scaledSize: new google.maps.Size(30, 30)
+                                        }}
+                                        animation={google.maps.Animation.DROP}
+                                    />
+                                )
                             ))}
 
-                            {selectedReport && (
+                            {selectedReport?.location && (
                                 <InfoWindowF
                                     position={{
                                         lat: selectedReport.location.lat,
@@ -196,16 +172,16 @@ export default function MapPage() {
                                     }}
                                     onCloseClick={() => setSelectedReport(null)}
                                 >
-                                    <ReportCard report={selectedReport} />
+                                    <div className="max-w-sm">
+                                        <ReportCard report={selectedReport} />
+                                    </div>
                                 </InfoWindowF>
                             )}
                         </GoogleMap>
                     </div>
                 </div>
 
-                {/* Sidebar - Right Side */}
                 <div className="xl:col-span-3 space-y-6">
-                    {/* Statistics Card */}
                     <div className="bg-white dark:bg-[#1E1E1E] rounded-lg shadow-dropdown p-4">
                         <h3 className="font-bold mb-4 flex items-center gap-2">
                             <Info size={20} />
@@ -213,25 +189,30 @@ export default function MapPage() {
                         </h3>
                         <div className="space-y-3">
                             <div className="flex justify-between items-center">
-                                <span className="text-gray-600 dark:text-gray-400">{t('overview.totalReports')}</span>
+                                <span className="text-gray-600 dark:text-gray-400">
+                                    {t('overview.totalReports')}
+                                </span>
                                 <span className="font-bold">{filteredReports.length}</span>
                             </div>
                             <div className="flex justify-between items-center">
-                                <span className="text-gray-600 dark:text-gray-400">{t('overview.active')}</span>
-                                <span className="font-bold">{
-                                    filteredReports.filter(r => r.status === ReportStatus.IN_PROGRESS).length
-                                }</span>
+                                <span className="text-gray-600 dark:text-gray-400">
+                                    {t('overview.active')}
+                                </span>
+                                <span className="font-bold">
+                                    {filteredReports.filter(r => r.status === ReportStatus.IN_PROGRESS).length}
+                                </span>
                             </div>
                             <div className="flex justify-between items-center">
-                                <span className="text-gray-600 dark:text-gray-400">{t('overview.resolved')}</span>
-                                <span className="font-bold">{
-                                    filteredReports.filter(r => r.status === ReportStatus.RESOLVED).length
-                                }</span>
+                                <span className="text-gray-600 dark:text-gray-400">
+                                    {t('overview.resolved')}
+                                </span>
+                                <span className="font-bold">
+                                    {filteredReports.filter(r => r.status === ReportStatus.RESOLVED).length}
+                                </span>
                             </div>
                         </div>
                     </div>
 
-                    {/* Selected Report Details */}
                     {selectedReport && (
                         <div className="bg-white dark:bg-[#1E1E1E] rounded-lg shadow-dropdown p-4">
                             <h3 className="font-bold mb-4 flex items-center gap-2">
@@ -258,7 +239,6 @@ export default function MapPage() {
                         </div>
                     </div>
 
-                    {/* Emergency Contact */}
                     <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg p-4">
                         <h3 className="font-bold mb-2 flex items-center gap-2 text-red-700 dark:text-red-300">
                             <AlertTriangle size={20} />

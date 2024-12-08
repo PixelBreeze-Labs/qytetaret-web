@@ -31,7 +31,7 @@ const FeaturedReportsSection = () => {
     const t = useTranslations('home');
     const { featuredReports, loading, error } = useFeaturedReports();
 
-    console.log('feat', featuredReports);
+
     if (loading) {
         return (
             <div className="flex justify-center py-8">

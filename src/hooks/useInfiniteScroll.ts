@@ -1,35 +1,52 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
-export function useInfiniteScroll<T>(items: T[], perPage: number) {
-    const [page, setPage] = useState(1);
-    const [data, setData] = useState<T[]>([]);
-    const [loading, setLoading] = useState(false);
-    const [hasMore, setHasMore] = useState(true);
+export function useInfiniteScroll<T>(initialData: T[], itemsPerPage: number = 12) {
+    const [data, setData] = useState<T[]>([]); // Data to display
+    const [page, setPage] = useState(1); // Current page
+    const [hasMore, setHasMore] = useState(true); // Flag for more items
 
+    // Update data when `initialData` changes
+    useEffect(() => {
+        const newData = initialData.slice(0, itemsPerPage);
+        setData(newData);
+        setPage(1);
+        setHasMore(initialData.length > itemsPerPage);
+    }, [initialData, itemsPerPage]);
+
+    // Load more items when triggered
+    const loadMore = useCallback(() => {
+        if (!hasMore) return;
+
+        const startIndex = page * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+
+        // Append next items if they exist
+        const nextItems = initialData.slice(startIndex, endIndex);
+
+        if (nextItems.length > 0) {
+            setData(prevData => [...prevData, ...nextItems]);
+            setPage(prevPage => prevPage + 1);
+        }
+
+        // Update `hasMore`
+        setHasMore(endIndex < initialData.length);
+    }, [initialData, page, itemsPerPage, hasMore]);
+
+    // Custom hook to handle scroll-based loading
     useEffect(() => {
         const handleScroll = () => {
-            if (!hasMore || loading) return;
-            if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100) {
-                setLoading(true);
-                setPage(prev => prev + 1);
+            // Check if user is near the bottom of the page
+            if (
+                window.innerHeight + document.documentElement.scrollTop
+                >= document.documentElement.offsetHeight - 100 // 100px from bottom
+            ) {
+                loadMore();
             }
         };
 
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [hasMore, loading]);
+    }, [loadMore]);
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            const end = page * perPage;
-            const newData = items.slice(0, end);
-            setData(newData);
-            setHasMore(end < items.length);
-            setLoading(false);
-        }, 500);
-
-        return () => clearTimeout(timer);
-    }, [items, page, perPage]);
-
-    return { data, loading, hasMore };
+    return { data, hasMore, loadMore };
 }

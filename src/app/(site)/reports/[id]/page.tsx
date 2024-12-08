@@ -6,9 +6,10 @@ import Link from 'next/link';
 import {
     MapPin, Calendar, Image as ImageIcon, Tags,
     Share2, Flag, Bell, Clock, CheckCircle2,
-    AlertCircle, XCircle
+    AlertCircle, XCircle, Loader2
 } from 'lucide-react';
 import { GoogleMap, useLoadScript, MarkerF } from '@react-google-maps/api';
+import {useReportDetails} from "../../../../hooks/useReportDetails";
 
 const statusColors = {
     [ReportStatus.PENDING]: 'bg-yellow-100 text-yellow-800 border-yellow-200',
@@ -30,30 +31,25 @@ const mapContainerStyle = {
     borderRadius: '0.5rem'
 };
 
-const ReportDetailPage = () => {
+export default function ReportDetailPage({ params }: { params: { id: string } }) {
     const t = useTranslations('reportDetailScreen');
+    // @ts-ignore
+    const unwrappedParams = React.use(params); // Use React.use() to unwrap the params
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "AIzaSyAEe-vcJ-r8w9FQdVEskAozi1v9cWy6YAA",
     });
+    // @ts-ignore
+    const { report, loading, error } = useReportDetails(unwrappedParams.id);
 
-    // Mock data - replace with actual data fetching
-    const report: Post = {
-        id: '1',
-        // @ts-ignore
-        title: 'Road Maintenance Issue',
-        content: 'Detailed report about a community issue that needs to be addressed...',
-        category: CategoryReport.INFRASTRUCTURE,
-        status: ReportStatus.IN_PROGRESS,
-        isAnonymous: true,
-        location: { lat: 41.3275, lng: 19.8187, accuracy: 10 },
-        timestamp: new Date(),
-        createdAt: new Date(Date.now() - Math.random() * 10000000000),
-        media: Array(3).fill(null).map((_, i) => `https://picsum.photos/400/300?random=${i}`),
-        timeline: [
-            { date: new Date(), status: ReportStatus.PENDING, note: 'Report submitted' },
-            { date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), status: ReportStatus.IN_PROGRESS, note: 'Under review by city maintenance' }
-        ]
-    };
+    if (loading) {
+        return <div className="flex justify-center py-8">
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+        </div>;
+    }
+
+    if (error || !report) {
+        return <div className="text-center py-8 text-red-500">{error || 'Report not found'}</div>;
+    }
 
     return (
         <div className="container mx-auto px-4 py-6 pt-[50px] pb-[50px]">
@@ -69,8 +65,7 @@ const ReportDetailPage = () => {
                             <div className="flex flex-wrap items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
                                 <span className="flex items-center gap-1">
                                     <Calendar className="w-4 h-4" />
-                                     {/*// @ts-ignore*/}
-                                    {report.createdAt.toLocaleDateString()}
+                                    {new Date(report.createdAt).toLocaleDateString()}
                                 </span>
                                 <span className="flex items-center gap-1">
                                     <Tags className="w-4 h-4" />
@@ -122,7 +117,7 @@ const ReportDetailPage = () => {
                                     {t('evidence')}
                                 </h3>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                    {report.media.map((url, index) => (
+                                    {report.media?.map((url, index) => (
                                         <img
                                             key={index}
                                             src={url}
@@ -141,7 +136,7 @@ const ReportDetailPage = () => {
                             </h3>
                             <div className="space-y-4">
                                 {/*// @ts-ignore*/}
-                                {report.timeline.map((event, index) => (
+                                {report.timeline?.map((event, index) => (
                                     <div key={index} className="flex items-start gap-3">
                                         <div className={`mt-1 p-1 rounded-full ${statusColors[event.status]}`}>
                                             {React.createElement(statusIcons[event.status], { className: 'w-4 h-4' })}
@@ -239,4 +234,3 @@ const ReportDetailPage = () => {
     );
 };
 
-export default ReportDetailPage;

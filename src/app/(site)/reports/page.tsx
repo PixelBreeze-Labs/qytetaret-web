@@ -1,13 +1,12 @@
 "use client";
 
-import { useState, useMemo, useCallback } from 'react';
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Report, CategoryReport, ReportStatus } from '@/types';
-import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
+import { CategoryReport, ReportStatus } from '@/types';
 import { ReportCard } from '@/components/shared/ReportCard';
 import Link from 'next/link';
-import { dummyReports } from '@/utils/dummyReports';
 import { Map, BarChart3, Loader2 } from 'lucide-react';
+import { useReports } from '@/hooks/useReports';
 
 export default function ReportsPage() {
     const t = useTranslations('reportsSingleScreen');
@@ -17,27 +16,7 @@ export default function ReportsPage() {
         sort: 'newest'
     });
 
-    const [isLoading, setIsLoading] = useState(false);
-    const loadMoreItems = useCallback(async () => {
-        if (isLoading) return;
-        setIsLoading(true);
-        // Simulate network delay
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        setIsLoading(false);
-    }, [isLoading]);
-
-    // @ts-ignore
-    const { data, loading, hasMore } = useInfiniteScroll(dummyReports, 12, loadMoreItems);
-
-    const filteredReports = useMemo(() => {
-        return data
-            .filter(report => filter.category === 'all' || report.category === filter.category)
-            .filter(report => filter.status === 'all' || report.status === filter.status)
-            .sort((a, b) => filter.sort === 'newest' ?
-                b.createdAt.getTime() - a.createdAt.getTime() :
-                a.createdAt.getTime() - b.createdAt.getTime()
-            );
-    }, [data, filter]);
+    const { reports, loading, error, hasMore } = useReports(filter);
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-[50px] pb-[50px]">
@@ -99,38 +78,20 @@ export default function ReportsPage() {
                     </div>
                 </div>
 
-                {/* Reports Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                    {filteredReports.map(report => (
-                        <ReportCard key={report.id} report={report} />
-                    ))}
-                </div>
-
-                {/* Loading State */}
-                {loading && hasMore && (
+                {/* Main Content Area */}
+                {loading && (
                     <div className="flex justify-center py-8">
                         <Loader2 className="w-8 h-8 animate-spin text-primary" />
                     </div>
                 )}
 
-                {/* End of Content States */}
-                {!hasMore && filteredReports.length > 0 && (
-                    <div className="text-center py-12">
-                        <p className="text-gray-500 dark:text-gray-400 mb-6">
-                            {t('endOfReports')}
-                        </p>
-                        <Link
-                            href="/reports/map"
-                            className="inline-flex items-center gap-2 px-6 py-3 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-                        >
-                            <Map className="w-5 h-5" />
-                            {t('exploreMap')}
-                        </Link>
+                {error && (
+                    <div className="text-center py-12 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+                        <p className="text-red-500">{error}</p>
                     </div>
                 )}
 
-                {/* No Results State */}
-                {filteredReports.length === 0 && (
+                {!loading && !error && reports.length === 0 && (
                     <div className="text-center py-12 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
                         <p className="text-xl text-gray-500 dark:text-gray-400 mb-4">{t('noReports')}</p>
                         <p className="text-gray-400 dark:text-gray-500 mb-6">{t('noReportsDescription')}</p>
@@ -141,6 +102,31 @@ export default function ReportsPage() {
                             {t('createFirstReport')}
                         </Link>
                     </div>
+                )}
+
+                {!loading && !error && reports.length > 0 && (
+                    <>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                            {reports.map(report => (
+                                <ReportCard key={report.id} report={report} />
+                            ))}
+                        </div>
+
+                        {!hasMore && (
+                            <div className="text-center py-12">
+                                <p className="text-gray-500 dark:text-gray-400 mb-6">
+                                    {t('endOfReports')}
+                                </p>
+                                <Link
+                                    href="/map"
+                                    className="inline-flex items-center gap-2 px-6 py-3 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                                >
+                                    <Map className="w-5 h-5" />
+                                    {t('exploreMap')}
+                                </Link>
+                            </div>
+                        )}
+                    </>
                 )}
             </div>
         </div>

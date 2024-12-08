@@ -1,30 +1,29 @@
-
 // hooks/useMapReports.ts
 import { useState, useEffect } from 'react';
-// @ts-ignore
-import { getMapReports } from '../services/api/reportsService';
+import { Report } from '@/types';
+import { ReportsService } from '@/services/api/reportsService';
 
 interface UseMapReportsResult {
-    mapReports: Report[];
+    reports: Report[];
     loading: boolean;
     error: string | null;
 }
 
-const useMapReports = (): UseMapReportsResult => {
-    const [mapReports, setMapReports] = useState<Report[]>([]);
+export function useMapReports(): UseMapReportsResult {
+    const [reports, setReports] = useState<Report[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+
 
     useEffect(() => {
         const fetchMapReports = async () => {
             try {
-                setLoading(true);
-                const data = await getMapReports();
+                const response = await ReportsService.getMapReports();
                 // @ts-ignore
-                setMapReports(data);
+                setReports(response);
+                setLoading(false);
             } catch (err) {
                 setError('Error fetching map reports');
-            } finally {
                 setLoading(false);
             }
         };
@@ -32,7 +31,5 @@ const useMapReports = (): UseMapReportsResult => {
         fetchMapReports();
     }, []);
 
-    return { mapReports, loading, error };
-};
-
-export default useMapReports;
+    return { reports, loading, error };
+}

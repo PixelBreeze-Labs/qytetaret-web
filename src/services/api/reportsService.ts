@@ -60,17 +60,10 @@ export class ReportsService {
     // Create a new report with media upload support
     // ReportsService.ts
     static async create(formData: FormData): Promise<Report> {
-        const response = await fetch('https://v1.api.qytetaret.al/reports', {
-            method: 'POST',
-            // Shto content-type
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            // Konverto në JSON
-            body: JSON.stringify({
+        try {
+            const data = {
                 title: formData.get('title'),
                 content: formData.get('content'),
-                description: formData.get('content'),
                 category: formData.get('category'),
                 isAnonymous: formData.get('isAnonymous') === 'true',
                 location: {
@@ -78,15 +71,18 @@ export class ReportsService {
                     lng: Number(formData.get('location.lng')),
                     accuracy: Number(formData.get('location.accuracy'))
                 }
-            })
-        });
+            };
 
-        if (!response.ok) {
-            const error = await response.json();
+            const response = await makeApiRequest<ReportResponse<Report>>('/reports', {
+                method: 'POST',
+                body: JSON.stringify(data)
+            });
+
+            return response.data;
+        } catch (error) {
+            console.error('Error creating report:', error);
             throw error;
         }
-
-        return response.json();
     }
 
     // Fetch all reports

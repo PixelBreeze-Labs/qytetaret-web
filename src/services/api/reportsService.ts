@@ -130,14 +130,15 @@ export class ReportsService {
         }
     }
 
-    // Fetch a specific report by ID
     static async findOne(id: string): Promise<Report> {
         try {
-            const response = await makeApiRequest<ReportResponse<Report>>(`/reports/${id}`, { method: 'GET' });
-            return response.data;
+            const response = await makeApiRequest<Report>(`/reports/${id}`, {
+                method: 'GET'
+            });
+            return response;
         } catch (error) {
-            console.error(`Error fetching report with ID ${id}:`, error);
-            throw new Error(`Failed to fetch report with ID ${id}`);
+            console.error('Error fetching report:', error);
+            throw error;
         }
     }
 

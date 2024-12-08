@@ -61,21 +61,9 @@ export class ReportsService {
     // ReportsService.ts
     static async create(formData: FormData): Promise<Report> {
         try {
-            const data = {
-                title: formData.get('title'),
-                content: formData.get('content'),
-                category: formData.get('category'),
-                isAnonymous: formData.get('isAnonymous') === 'true',
-                location: {
-                    lat: Number(formData.get('location.lat')),
-                    lng: Number(formData.get('location.lng')),
-                    accuracy: Number(formData.get('location.accuracy'))
-                }
-            };
-
             const response = await makeApiRequest<ReportResponse<Report>>('/reports', {
                 method: 'POST',
-                body: JSON.stringify(data)
+                body: formData,
             });
 
             return response.data;

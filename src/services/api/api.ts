@@ -2,36 +2,38 @@
 const BASE_URL = 'https://v1.api.qytetaret.al';
 // const BASE_URL = 'http://127.0.0.1:3000';
 
+
 interface ApiError {
     message: string;
     statusCode: number;
 }
 
-// Helper function to handle API requests
 export const makeApiRequest = async <T>(
     endpoint: string,
     options: RequestInit = {}
 ): Promise<T> => {
     try {
-        const response = await fetch(`${BASE_URL}${endpoint}`, {
-            ...options,
-            headers: {
+        // Don't add Content-Type for FormData
+        const headers = options.body instanceof FormData
+            ? { ...options.headers }
+            : {
                 'Content-Type': 'application/json',
                 ...options.headers,
-            },
+            };
+
+        const response = await fetch(`${BASE_URL}${endpoint}`, {
+            ...options,
+            headers,
         });
 
-        // Handle non-2xx responses as errors
         if (!response.ok) {
             const errorData: ApiError = await response.json();
-            throw new Error(errorData.message || `Error: ${response.status}`);
+            throw errorData; // Throw the entire error object
         }
 
-        const responseData: T = await response.json();
-        return responseData;
+        return response.json();
     } catch (error) {
-        // Handle network or JSON parsing errors
         console.error('API error:', error);
-        throw new Error(error instanceof Error ? error.message : 'Unknown error');
+        throw error; // Throw the original error for proper handling
     }
 };

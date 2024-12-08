@@ -50,8 +50,8 @@ export const ReportFormMain = () => {
                 setLocationLoading(false);
             },
             (error) => {
-                console.error("Error getting location:", error);
-                setError(t('errors.location'));
+                // console.error("Error getting location:", error);
+                // setError(t('errors.location'));
                 setLocationLoading(false);
             }
         );
@@ -329,9 +329,9 @@ export const ReportFormMain = () => {
 
                 <button
                     type="submit"
-                    disabled={loading || locationLoading}
+                    disabled={loading}
                     className={`w-full px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors flex items-center justify-center gap-2
-                    ${(loading || locationLoading) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
                     {loading ? (
                         <>

@@ -1,14 +1,28 @@
 "use client";
 
-import {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Report, CategoryReport, ReportStatus } from '@/types';
 import { ReportCard } from '@/components/shared/ReportCard';
 import { Hero } from '@/components/shared/Hero';
 import Link from 'next/link';
-import {ChevronRight, ArrowRight, CheckCircle2, MapPin, Users, BarChart3, Loader2} from 'lucide-react';
+import {
+    ChevronRight,
+    ArrowRight,
+    CheckCircle2,
+    MapPin,
+    Users,
+    BarChart3,
+    Loader2,
+    Search,
+    Plus
+} from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
+import { Badge } from '@/components/ui/Badge';
 import { useFeaturedReports } from "@/hooks/useFeaturedReports";
+
+
 
 const FaqItem = ({ faq, isActive, onToggle }) => {
     return (
@@ -27,10 +41,93 @@ const FaqItem = ({ faq, isActive, onToggle }) => {
     );
 };
 
+
+const CategoryFilter = ({ categories, selectedCategories, onToggle }) => {
+    return (
+        <div className="flex gap-2 flex-wrap">
+            {categories.map(category => (
+                <Badge
+                    key={category.id}
+                    variant={selectedCategories.includes(category.id) ? "default" : "outline"}
+                    className="cursor-pointer hover:bg-primary/90"
+                    onClick={() => onToggle(category.id)}
+                >
+                    {category.name}
+                </Badge>
+            ))}
+        </div>
+    );
+};
+
+const ReportGroup = ({ title, reports }) => {
+    if (!reports.length) return null;
+
+    return (
+        <div className="mb-8">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{title}</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {reports.map(report => (
+                    <ReportCard
+                        key={report.id}
+                        report={report}
+                        // showDistance
+                    />
+                ))}
+            </div>
+        </div>
+    );
+};
+
 const FeaturedReportsSection = () => {
     const t = useTranslations('home');
     const { featuredReports, loading, error } = useFeaturedReports();
+    const [searchTerm, setSearchTerm] = useState('');
+    const [selectedCategories, setSelectedCategories] = useState([]);
 
+    const categories = [
+        { id: 1, name: 'Infrastructure' },
+        { id: 2, name: 'Safety' },
+        { id: 3, name: 'Environment' },
+        { id: 4, name: 'Public Services' },
+        { id: 5, name: 'Transportation' }
+    ];
+
+    const toggleCategory = (categoryId) => {
+        setSelectedCategories(prev =>
+            prev.includes(categoryId)
+                ? prev.filter(id => id !== categoryId)
+                : [...prev, categoryId]
+        );
+    };
+
+    const filteredReports = featuredReports
+        .filter(report =>
+            (searchTerm === '' ||
+                report.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                //
+                report.content.toLowerCase().includes(searchTerm.toLowerCase())) &&
+            (selectedCategories.length === 0 ||
+                // @ts-ignore
+                selectedCategories.includes(report.categoryId))
+        );
+
+    const groupedReports = {
+        today: filteredReports.filter(report =>
+            new Date(report.createdAt).toDateString() === new Date().toDateString()
+        ),
+        thisWeek: filteredReports.filter(report => {
+            const reportDate = new Date(report.createdAt);
+            const weekAgo = new Date();
+            weekAgo.setDate(weekAgo.getDate() - 7);
+            return reportDate > weekAgo && reportDate.toDateString() !== new Date().toDateString();
+        }),
+        earlier: filteredReports.filter(report => {
+            const reportDate = new Date(report.createdAt);
+            const weekAgo = new Date();
+            weekAgo.setDate(weekAgo.getDate() - 7);
+            return reportDate <= weekAgo;
+        })
+    };
 
     if (loading) {
         return (
@@ -44,15 +141,11 @@ const FeaturedReportsSection = () => {
         return null;
     }
 
-    if (featuredReports.length === 0) {
-        return null;
-    }
-
     return (
         <section className="py-16 bg-gray-50 dark:bg-gray-900">
             <div className="container mx-auto px-4">
                 <div className="mb-8">
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between items-center mb-6">
                         <div>
                             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
                                 {t('featured.title')}
@@ -68,33 +161,56 @@ const FeaturedReportsSection = () => {
                             {t('featured.viewAll')}
                             <ArrowRight className="w-4 h-4" />
                         </Link>
+                    </div>
 
+                    {/* Search and Filters */}
+                    <div className="space-y-4">
+                        <div className="relative">
+                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                            <Input
+                                type="text"
+                                placeholder={t('search.placeholder')}
+                                className="pl-10"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
+                        </div>
+                        <CategoryFilter
+                            categories={categories}
+                            selectedCategories={selectedCategories}
+                            onToggle={toggleCategory}
+                        />
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {featuredReports.map(report => (
-                        <ReportCard key={report.id} report={report} />
-                    ))}
-                </div>
+                {/* Grouped Reports */}
+                <ReportGroup title={t('reports.today')} reports={groupedReports.today} />
+                <ReportGroup title={t('reports.thisWeek')} reports={groupedReports.thisWeek} />
+                <ReportGroup title={t('reports.earlier')} reports={groupedReports.earlier} />
 
                 <div className="mt-8 text-center">
                     <Link href="/reports">
-                        <span
-                            className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
-                            {t('featured.exploreAll')}
-                            <ArrowRight className="w-4 h-4"/>
-                        </span>
+            <span className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
+              {t('featured.exploreAll')}
+                <ArrowRight className="w-4 h-4"/>
+            </span>
                     </Link>
                     <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
                         {t('featured.feedDescription')}
                     </p>
                 </div>
-
             </div>
+
+            {/* Floating Action Button */}
+            <Link href="/reports/new">
+                <button className="fixed bottom-6 right-6 w-14 h-14 bg-primary text-white rounded-full shadow-lg hover:bg-primary/90 transition-colors flex items-center justify-center">
+                    <Plus className="w-6 h-6" />
+                </button>
+            </Link>
         </section>
     );
 };
+
 export default function HomePage() {
     const t = useTranslations('home');
     const [activeFaq, setActiveFaq] = useState(1);

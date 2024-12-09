@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { Post, CategoryReport, ReportStatus } from '@/types';
+import { Post, CategoryReport, ReportStatus, ActivityType  } from '@/types';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import {
@@ -129,30 +129,46 @@ export default function ReportDetailPage({ params }: { params: { id: string } })
                             </div>
                         )}
 
-                        {/* Timeline */}
+                        {/* Timeline/Activities */}
                         <div className="bg-white dark:bg-[#1E1E1E] rounded-lg shadow-dropdown p-4">
                             <h3 className="text-lg font-semibold mb-3">
                                 {t('status.timeline')}
                             </h3>
                             <div className="space-y-4">
-                                {/*// @ts-ignore*/}
-                                {report.timeline?.map((event, index) => (
+                                {report.activities?.map((activity, index) => (
                                     <div key={index} className="flex items-start gap-3">
-                                        <div className={`mt-1 p-1 rounded-full ${statusColors[event.status]}`}>
-                                            {React.createElement(statusIcons[event.status], { className: 'w-4 h-4' })}
+                                        <div className={`mt-1 p-1 rounded-full ${statusColors[activity.status]}`}>
+                                            {React.createElement(statusIcons[activity.status], { className: 'w-4 h-4' })}
                                         </div>
                                         <div>
                                             <p className="font-medium text-gray-900 dark:text-white">
-                                                {event.note}
+                                                {activity.type === ActivityType.CREATED
+                                                    ? 'Report Created'
+                                                    : activity.type === ActivityType.UPDATED
+                                                        ? 'Report Updated'
+                                                        : `Status changed to ${activity.status}`}
                                             </p>
                                             <span className="text-sm text-gray-500 dark:text-gray-400">
-                                                {event.date.toLocaleDateString()}
-                                            </span>
+                {new Date(activity.date).toLocaleDateString()}
+            </span>
                                         </div>
                                     </div>
                                 ))}
                             </div>
                         </div>
+
+                        {/* Audio - hidden for now */}
+                        {report.audio && (
+                            <div className="hidden bg-white dark:bg-[#1E1E1E] rounded-lg shadow-dropdown p-4">
+                                <h3 className="text-lg font-semibold mb-3">
+                                    {t('audio')}
+                                </h3>
+                                <audio controls className="w-full">
+                                    <source src={report.audio} type="audio/webm" />
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        )}
                     </div>
 
                     {/* Sidebar */}

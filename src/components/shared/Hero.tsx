@@ -1,7 +1,10 @@
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
+interface HeroProps {
+    onOpenReport: () => void;
+}
 
-export const Hero = () => {
+export const Hero: React.FC<HeroProps> = ({ onOpenReport }) => {
     const t = useTranslations('hero');
 
     return (
@@ -22,14 +25,15 @@ export const Hero = () => {
                         {t('description')}
                     </p>
                     <div className="flex justify-center gap-4">
-                        <Link
-                            href="/reports/new"
+                        <button
+                            onClick={onOpenReport}
                             className="relative px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors group"
                         >
                             {t('buttons.submit')}
                             <span
-                                className="absolute inset-0 rounded-full bg-red-600 animate-ping opacity-75 group-hover:opacity-0"></span>
-                        </Link>
+                                className="absolute inset-0 rounded-full bg-red-600 animate-ping opacity-75 group-hover:opacity-0">
+                            </span>
+                        </button>
                         <Link
                             href="/reports"
                             className="px-6 py-3 bg-white dark:bg-dark-4 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-dark-5 transition-colors"

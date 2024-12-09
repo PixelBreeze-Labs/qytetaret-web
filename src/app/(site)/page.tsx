@@ -218,6 +218,7 @@ const FeaturedReportsSection = () => {
 export default function HomePage() {
     const t = useTranslations('home');
     const [activeFaq, setActiveFaq] = useState(1);
+    const [showReportModal, setShowReportModal] = useState(false);
 
     const faqData = [
         {
@@ -242,9 +243,13 @@ export default function HomePage() {
         }
     ];
 
+    const handleOpenReport = () => {
+        setShowReportModal(true);
+    };
+
     return (
         <div className="min-h-screen bg-white dark:bg-dark-2">
-            <Hero />
+            <Hero onOpenReport={handleOpenReport} />
 
             <FeaturedReportsSection />
 
@@ -312,6 +317,14 @@ export default function HomePage() {
                     </div>
                 </div>
             </section>
+
+            {showReportModal && (
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+                    <div className="w-full max-w-2xl">
+                        <ReportChatbot onClose={() => setShowReportModal(false)} />
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Mic, Square, Camera, Loader2, SendHorizontal, X } from 'lucide-react';
+import { Mic, Square, Camera, Loader2, SendHorizontal } from 'lucide-react';
 import { CategoryReport } from '@/types';
 import { Button } from '@/components/ui/Button';
 import ChatCard from '@/components/ChatCard';
+import { useTranslations } from 'next-intl';
 
 interface ReportChatbotProps {
     onClose: () => void;
@@ -27,8 +28,10 @@ interface FormData {
 }
 
 const ReportChatbot: React.FC<ReportChatbotProps> = ({ onClose }) => {
+    const t = useTranslations('reports.form');
+
     const [messages, setMessages] = useState<Message[]>([
-        { type: 'bot', content: 'Hi! I\'ll help you submit a report. What\'s the title of your report?' }
+        { type: 'bot', content: t('description') }
     ]);
     const [userInput, setUserInput] = useState('');
     const [currentStep, setCurrentStep] = useState('title');
@@ -57,7 +60,6 @@ const ReportChatbot: React.FC<ReportChatbotProps> = ({ onClose }) => {
     }, [messages]);
 
     const handleSend = async () => {
-
         if (!userInput.trim() && currentStep !== 'media') return;
 
         const newMessages = [...messages];
@@ -71,7 +73,7 @@ const ReportChatbot: React.FC<ReportChatbotProps> = ({ onClose }) => {
                 setFormData(prev => ({ ...prev, title: userInput }));
                 newMessages.push({
                     type: 'bot',
-                    content: 'Please select a category for your report:',
+                    content: t('fields.category.label'),
                     options: Object.values(CategoryReport)
                 });
                 setCurrentStep('category');
@@ -81,7 +83,7 @@ const ReportChatbot: React.FC<ReportChatbotProps> = ({ onClose }) => {
                 setFormData(prev => ({ ...prev, category: userInput }));
                 newMessages.push({
                     type: 'bot',
-                    content: 'Please describe the issue in detail.'
+                    content: t('fields.description.placeholder')
                 });
                 setCurrentStep('content');
                 break;
@@ -90,8 +92,12 @@ const ReportChatbot: React.FC<ReportChatbotProps> = ({ onClose }) => {
                 setFormData(prev => ({ ...prev, content: userInput }));
                 newMessages.push({
                     type: 'bot',
-                    content: 'Would you like to add any photos or voice recording as evidence? You can:',
-                    options: ['Add Photos', 'Record Voice', 'Skip']
+                    content: t('fields.evidence.label'),
+                    options: [
+                        t('fields.evidence.upload.text'),
+                        t('fields.evidence.voice.start'),
+                        'Skip'
+                    ]
                 });
                 setCurrentStep('media');
                 break;
@@ -100,8 +106,8 @@ const ReportChatbot: React.FC<ReportChatbotProps> = ({ onClose }) => {
                 if (userInput === 'Skip' || !userInput) {
                     newMessages.push({
                         type: 'bot',
-                        content: 'Would you like to submit this report anonymously?',
-                        options: ['Yes', 'No']
+                        content: t('fields.anonymous'),
+                        options: [t('anonymousYes'), t('anonymousNo')]
                     });
                     setCurrentStep('anonymous');
                 }
@@ -110,25 +116,25 @@ const ReportChatbot: React.FC<ReportChatbotProps> = ({ onClose }) => {
             case 'anonymous':
                 setFormData(prev => ({
                     ...prev,
-                    isAnonymous: userInput === 'Yes'
+                    isAnonymous: userInput === t('anonymousYes')
                 }));
                 newMessages.push({
                     type: 'bot',
-                    content: 'Here\'s a summary of your report. Would you like to submit it?',
+                    content: t('description'),
                     summary: formData,
-                    options: ['Submit', 'Cancel']
+                    options: [t('submit'), t('cancel')]
                 });
                 setCurrentStep('confirm');
                 break;
 
             case 'confirm':
-                if (userInput === 'Submit') {
+                if (userInput === t('submit')) {
                     setLoading(true);
                     try {
                         // Add submission logic here
                         newMessages.push({
                             type: 'bot',
-                            content: 'Thank you! Your report has been submitted successfully.'
+                            content: t('successSubmit')
                         });
                         setCurrentStep('complete');
                         setTimeout(() => {
@@ -137,12 +143,12 @@ const ReportChatbot: React.FC<ReportChatbotProps> = ({ onClose }) => {
                     } catch (error) {
                         newMessages.push({
                             type: 'bot',
-                            content: 'Sorry, there was an error submitting your report. Please try again.'
+                            content: t('errors.submit')
                         });
                     } finally {
                         setLoading(false);
                     }
-                } else if (userInput === 'Cancel') {
+                } else if (userInput === t('cancel')) {
                     onClose();
                 }
                 break;
@@ -150,8 +156,6 @@ const ReportChatbot: React.FC<ReportChatbotProps> = ({ onClose }) => {
 
         setMessages(newMessages);
         setUserInput('');
-
-        // Ensure scroll happens after state updates
         setTimeout(scrollToBottom, 100);
     };
 
@@ -165,6 +169,14 @@ const ReportChatbot: React.FC<ReportChatbotProps> = ({ onClose }) => {
             return isValid && isUnderLimit;
         });
 
+        if (validFiles.length === 0) {
+            setMessages(prev => [...prev, {
+                type: 'bot',
+                content: t('errors.validation.media.type')
+            }]);
+            return;
+        }
+
         setFormData(prev => ({
             ...prev,
             media: [...prev.media, ...validFiles]
@@ -175,11 +187,10 @@ const ReportChatbot: React.FC<ReportChatbotProps> = ({ onClose }) => {
 
         setMessages(prev => [...prev, {
             type: 'user',
-            content: 'Photos uploaded',
+            content: t('fields.evidence.upload.text'),
             media: newPreviews
         }]);
 
-        // Add scroll after media upload
         setTimeout(scrollToBottom, 100);
     };
 
@@ -192,16 +203,23 @@ const ReportChatbot: React.FC<ReportChatbotProps> = ({ onClose }) => {
             recorder.ondataavailable = e => chunks.push(e.data);
             recorder.onstop = () => {
                 const blob = new Blob(chunks, { type: 'audio/webm' });
+                if (blob.size > 10 * 1024 * 1024) {
+                    setMessages(prev => [...prev, {
+                        type: 'bot',
+                        content: t('errors.validation.audio.size')
+                    }]);
+                    return;
+                }
+
                 setFormData(prev => ({ ...prev, audio: blob }));
                 setAudioUrl(URL.createObjectURL(blob));
 
                 setMessages(prev => [...prev, {
                     type: 'user',
-                    content: 'Voice recording added',
+                    content: t('fields.evidence.voice.start'),
                     audio: URL.createObjectURL(blob)
                 }]);
 
-                // Add scroll after recording stops
                 setTimeout(scrollToBottom, 100);
             };
 
@@ -210,6 +228,10 @@ const ReportChatbot: React.FC<ReportChatbotProps> = ({ onClose }) => {
             setIsRecording(true);
         } catch (err) {
             console.error("Error accessing microphone:", err);
+            setMessages(prev => [...prev, {
+                type: 'bot',
+                content: t('errors.server.BAD_REQUEST')
+            }]);
         }
     };
 
@@ -223,7 +245,7 @@ const ReportChatbot: React.FC<ReportChatbotProps> = ({ onClose }) => {
 
     return (
         <ChatCard
-            title="Submit a Report"
+            title={t('title')}
             messages={messages}
             onClose={onClose}
             onOptionSelect={(option) => {
@@ -244,21 +266,19 @@ const ReportChatbot: React.FC<ReportChatbotProps> = ({ onClose }) => {
                         />
                         <Button
                             variant="outline"
-                            // @ts-ignore
                             size="sm"
                             onClick={() => fileInputRef.current?.click()}
                         >
                             <Camera className="w-4 h-4 mr-2" />
-                            Add Photos
+                            {t('fields.evidence.upload.text')}
                         </Button>
                         <Button
                             variant="outline"
-                            // @ts-ignore
                             size="sm"
                             onClick={isRecording ? stopRecording : startRecording}
                         >
                             {isRecording ? <Square className="w-4 h-4 mr-2" /> : <Mic className="w-4 h-4 mr-2" />}
-                            {isRecording ? 'Stop Recording' : 'Record Voice'}
+                            {isRecording ? t('fields.evidence.voice.stop') : t('fields.evidence.voice.start')}
                         </Button>
                     </div>
                 )}
@@ -268,7 +288,7 @@ const ReportChatbot: React.FC<ReportChatbotProps> = ({ onClose }) => {
                         type="text"
                         value={userInput}
                         onChange={(e) => setUserInput(e.target.value)}
-                        placeholder="Type your message..."
+                        placeholder={t('fields.description.placeholder')}
                         className="flex-1 px-4 py-2 rounded-lg border dark:border-gray-700 dark:bg-gray-800"
                         onKeyPress={(e) => e.key === 'Enter' && handleSend()}
                         disabled={loading || currentStep === 'complete'}

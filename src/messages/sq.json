@@ -7,9 +7,6 @@
   "reports": {
     "title": "Probleme Komunitare, Zgjidhur Së Bashku",
     "description": "Raportoni çështje lokale në mënyrë anonime, ndiqni progresin e tyre dhe ndihmoni në përmirësimin e komunitetit tuaj",
-    "today": "Sot",
-    "thisWeek": "Këtë Javë",
-    "earlier": "Më herët",
     "form": {
       "title": "Dërgo Raport të Ri",
       "description": "Raporto një problem në komunitetin tënd",
@@ -29,11 +26,11 @@
         "evidence": {
           "label": "Evidenca",
           "upload": {
-            "text": "Klikoni për të ngarkuar ose tërhiqni imazhe",
+            "text": "Ngarko/tërhiq",
             "specs": "PNG, JPG deri në 10MB secila"
           },
           "voice": {
-            "start": "Fillo Regjistrimin",
+            "start": "Regjistro",
             "stop": "Ndalo Regjistrimin"
           }
         },
@@ -41,6 +38,9 @@
       },
       "submit": "Dërgo Raportin",
       "submitting": "Duke dërguar...",
+      "anonymousYes": "Po",
+      "anonymousNo": "Jo",
+      "cancel": "Anulo",
       "error": "Dërgimi i raportit dështoi. Ju lutemi provoni përsëri.",
       "errors": {
         "submit": "Dërgimi i raportit dështoi",
@@ -317,6 +317,11 @@
   "home": {
     "search": {
       "placeholder": "Kërko raportet..."
+    },
+    "reports": {
+      "today": "Sot",
+      "thisWeek": "Këtë Javë",
+      "earlier": "Më herët"
     },
     "featured": {
       "title": "Raportet e Veçanta",

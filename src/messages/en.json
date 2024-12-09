@@ -40,6 +40,9 @@
       "submitting": "Submitting...",
       "error": "Failed to submit report. Please try again.",
       "successSubmit": "Report submitted successfully",
+      "anonymousYes": "Yes",
+        "anonymousNo": "No",
+      "cancel": "Cancel",
       "errors": {
         "submit": "Failed to submit report",
         "validation": {

@@ -1,8 +1,9 @@
-import React, {useEffect, useRef} from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/Card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Bot, User, X } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { useTranslations } from 'next-intl';
 
 interface Message {
     type: 'bot' | 'user';
@@ -22,6 +23,7 @@ interface ChatCardProps {
 }
 
 const ChatMessage = ({ message, onOptionSelect }: { message: Message; onOptionSelect: (option: string) => void }) => {
+    const t = useTranslations('reports.form');
     const isBot = message.type === 'bot';
 
     return (
@@ -64,7 +66,7 @@ const ChatMessage = ({ message, onOptionSelect }: { message: Message; onOptionSe
                                 <div key={index} className="relative group">
                                     <img
                                         src={url}
-                                        alt="Uploaded content"
+                                        alt={t('fields.evidence.upload.text')}
                                         className="w-full h-16 object-cover rounded"
                                     />
                                 </div>
@@ -80,17 +82,17 @@ const ChatMessage = ({ message, onOptionSelect }: { message: Message; onOptionSe
 
                     {message.summary && (
                         <div className="mt-2 space-y-2 text-sm">
-                            <p><strong>Title:</strong> {message.summary.title}</p>
-                            <p><strong>Category:</strong> {message.summary.category}</p>
-                            <p><strong>Description:</strong> {message.summary.content}</p>
-                            <p><strong>Anonymous:</strong> {message.summary.isAnonymous ? 'Yes' : 'No'}</p>
+                            <p><strong>{t('fields.title.label')}:</strong> {message.summary.title}</p>
+                            <p><strong>{t('fields.category.label')}:</strong> {message.summary.category}</p>
+                            <p><strong>{t('fields.description.label')}:</strong> {message.summary.content}</p>
+                            <p><strong>{t('fields.anonymous')}:</strong> {message.summary.isAnonymous ? t('anonymousYes') : t('anonymousNo')}</p>
                         </div>
                     )}
                 </div>
 
                 <span className="text-xs text-gray-500 dark:text-gray-400">
-          {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-        </span>
+                    {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </span>
             </div>
 
             {!isBot && (
@@ -111,7 +113,7 @@ const ChatCard: React.FC<ChatCardProps> = ({
                                                onOptionSelect,
                                                children
                                            }) => {
-
+    const t = useTranslations('reports.form');
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
     const scrollToBottom = () => {
@@ -142,7 +144,7 @@ const ChatCard: React.FC<ChatCardProps> = ({
                 </Button>
             </CardHeader>
 
-            <CardContent className="p-4 h-96 overflow-y-auto space-y-4">
+            <CardContent className="p-4 h-96 overflow-y-auto space-y-4 scroll-pt-4">
                 {messages.map((message, index) => (
                     <ChatMessage
                         key={index}
@@ -150,11 +152,11 @@ const ChatCard: React.FC<ChatCardProps> = ({
                         onOptionSelect={onOptionSelect}
                     />
                 ))}
-                <div ref={messagesEndRef} className="h-1"/>
+                <div ref={messagesEndRef} className="h-1" />
             </CardContent>
 
             <CardFooter className="p-4 border-t">
-            {children}
+                {children}
             </CardFooter>
         </Card>
     );

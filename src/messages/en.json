@@ -293,6 +293,14 @@
     "reportId": "Report ID"
   },
   "home": {
+    "search": {
+      "placeholder": "Search reports..."
+    },
+    "reports": {
+      "today": "Today",
+      "thisWeek": "This Week",
+      "earlier": "Earlier"
+    },
     "featured": {
       "title": "Featured Reports",
       "subtitle": "Check out some of the most recent and important reports from our community",

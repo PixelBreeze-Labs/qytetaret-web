@@ -7,6 +7,9 @@
   "reports": {
     "title": "Probleme Komunitare, Zgjidhur Së Bashku",
     "description": "Raportoni çështje lokale në mënyrë anonime, ndiqni progresin e tyre dhe ndihmoni në përmirësimin e komunitetit tuaj",
+    "today": "Sot",
+    "thisWeek": "Këtë Javë",
+    "earlier": "Më herët",
     "form": {
       "title": "Dërgo Raport të Ri",
       "description": "Raporto një problem në komunitetin tënd",
@@ -312,6 +315,9 @@
     }
   },
   "home": {
+    "search": {
+      "placeholder": "Kërko raportet..."
+    },
     "featured": {
       "title": "Raportet e Veçanta",
       "subtitle": "Shikoni disa nga raportet më të fundit dhe më të rëndësishme nga komuniteti ynë",

@@ -1,40 +1,26 @@
-import React from 'react';
+const Badge = ({
+                   variant = 'default',
+                   className = '',
+                   children,
+                   ...props
+               }) => {
+    const variants = {
+        default: "bg-primary text-white",
+        secondary: "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200",
+        outline: "border border-gray-200 dark:border-gray-700",
+        success: "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-200",
+        warning: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-200",
+        error: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-200",
+        info: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-200"
+    };
 
-// Helper function to merge class names
-const cn = (...classes: (string | undefined)[]) => {
-    return classes.filter(Boolean).join(' ');
-};
-
-// Define the variant styles
-const variantStyles = {
-    default: "border-transparent bg-primary text-primary-foreground hover:bg-primary/80",
-    secondary: "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
-    destructive: "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
-    outline: "text-foreground border-gray-300 bg-white hover:bg-gray-100"
-};
-
-// Badge Props interface
-export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
-    variant?: keyof typeof variantStyles;
-}
-
-const Badge: React.FC<BadgeProps> = ({
-                                         className,
-                                         variant = 'default',
-                                         children,
-                                         ...props
-                                     }) => {
     return (
-        <div
-            className={cn(
-                "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
-                variantStyles[variant],
-                className
-            )}
+        <span
+            className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${variants[variant]} ${className}`}
             {...props}
         >
-            {children}
-        </div>
+      {children}
+    </span>
     );
 };
 

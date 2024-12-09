@@ -12,10 +12,15 @@ const Header = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 	return (
-		<header className="fixed left-0 top-0 z-999 w-full bg-white py-4 shadow dark:bg-dark">
+		<header
+			className="fixed left-0 top-0 z-999 w-full bg-white py-4 shadow dark:shadow-[0_3px_15px_rgba(255,255,255,0.15)] dark:bg-dark-3">
 			<div className="mx-auto max-w-[1170px] flex items-center justify-between px-4">
 				<Link href="/">
-					<Image src={logo} alt="Qytetaret" className="w-[60px]" />
+					<Image
+						src={logo}
+						alt="Qytetaret"
+						className="w-[60px] dark:brightness-200 dark:contrast-200 dark:border dark:border-white dark:rounded"
+					/>
 				</Link>
 
 				{/* Mobile Menu Button */}
@@ -26,11 +31,13 @@ const Header = () => {
 				>
 					{!isMenuOpen ? (
 						<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
+							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+								  d="M4 6h16M4 12h16m-7 6h7"/>
 						</svg>
 					) : (
 						<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+								  d="M6 18L18 6M6 6l12 12"/>
 						</svg>
 					)}
 				</button>
@@ -60,8 +67,8 @@ const Header = () => {
 				</nav>
 
 				<div className="hidden md:flex items-center gap-4">
-					<LocaleSwitcher />
-					<ThemeSwitcher />
+					<LocaleSwitcher/>
+					<ThemeSwitcher/>
 					<Link
 						href="/auth/signin"
 						className="px-4 py-2 rounded-full bg-body text-white hover:bg-body/90 transition-colors"
@@ -103,8 +110,8 @@ const Header = () => {
 									</Link>
 								</li>
 								<li className="flex items-center justify-between py-2">
-									<LocaleSwitcher />
-									<ThemeSwitcher />
+									<LocaleSwitcher/>
+									<ThemeSwitcher/>
 									<Link
 										href="/auth/signin"
 										className="px-4 py-2 rounded-full bg-body text-white hover:bg-body/90 transition-colors"
@@ -118,6 +125,7 @@ const Header = () => {
 					</div>
 				)}
 			</div>
+
 		</header>
 	);
 };

@@ -195,8 +195,13 @@ const FeaturedReportsSection = () => {
             </div>
 
             <Link href="/reports/new">
-                <button className="fixed bottom-6 right-6 w-14 h-14 bg-primary text-white rounded-full shadow-lg hover:bg-primary/90 transition-colors flex items-center justify-center">
+                <button className="group fixed bottom-6 right-6 w-14 h-14 bg-primary text-white rounded-full shadow-lg hover:bg-primary/90 transition-colors flex items-center justify-center">
                     <Plus className="w-6 h-6" />
+                    <span className="absolute -inset-1 rounded-full bg-primary animate-ping opacity-75 group-hover:opacity-0"></span>
+                    {/* Tooltip */}
+                    <span className="absolute right-full mr-4 px-2 py-1 bg-gray-900 dark:bg-dark-4 text-white text-sm rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+     Submit a Report
+   </span>
                 </button>
             </Link>
         </section>

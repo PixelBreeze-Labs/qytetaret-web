@@ -24,9 +24,11 @@ export const Hero = () => {
                     <div className="flex justify-center gap-4">
                         <Link
                             href="/reports/new"
-                            className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
+                            className="relative px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors group"
                         >
                             {t('buttons.submit')}
+                            <span
+                                className="absolute inset-0 rounded-full bg-red-600 animate-ping opacity-75 group-hover:opacity-0"></span>
                         </Link>
                         <Link
                             href="/reports"

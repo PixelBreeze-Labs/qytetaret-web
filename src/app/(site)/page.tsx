@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Badge } from '@/components/ui/Badge';
 import { useFeaturedReports } from "@/hooks/useFeaturedReports";
+import ReportChatbot from "../../components/ReportChatbot";
 
 const FaqItem = ({ faq, isActive, onToggle }) => {
     return (
@@ -81,6 +82,7 @@ const FeaturedReportsSection = () => {
     const { featuredReports, loading, error } = useFeaturedReports();
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategories, setSelectedCategories] = useState([]);
+    const [showReportModal, setShowReportModal] = useState(false);
 
     const categories = [
         { id: 1, name: 'Infrastructure' },
@@ -194,16 +196,21 @@ const FeaturedReportsSection = () => {
                 </div>
             </div>
 
-            <Link href="/reports/new">
-                <button className="group fixed bottom-6 right-6 w-14 h-14 bg-primary text-white rounded-full shadow-lg hover:bg-primary/90 transition-colors flex items-center justify-center">
-                    <Plus className="w-6 h-6" />
-                    <span className="absolute -inset-1 rounded-full bg-primary animate-ping opacity-75 group-hover:opacity-0"></span>
-                    {/* Tooltip */}
-                    <span className="absolute right-full mr-4 px-2 py-1 bg-gray-900 dark:bg-dark-4 text-white text-sm rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
-     Submit a Report
-   </span>
-                </button>
-            </Link>
+            <Button
+                onClick={() => setShowReportModal(true)}
+                className="group fixed bottom-6 right-6 w-14 h-14 bg-primary text-white rounded-full shadow-lg hover:bg-primary/90"
+            >
+                <Plus className="w-6 h-6" />
+                <span className="absolute -inset-1 rounded-full bg-primary animate-ping opacity-75 group-hover:opacity-0"></span>
+            </Button>
+
+            {showReportModal && (
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+                    <div className="w-full max-w-2xl">
+                        <ReportChatbot onClose={() => setShowReportModal(false)} />
+                    </div>
+                </div>
+            )}
         </section>
     );
 };

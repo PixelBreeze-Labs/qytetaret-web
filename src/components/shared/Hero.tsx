@@ -30,16 +30,11 @@ export const Hero: React.FC<HeroProps> = ({ onOpenReport }) => {
                             className="relative px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors group"
                         >
                             {t('buttons.submit')}
-                            <span
-                                className="absolute inset-0 rounded-full bg-red-600 animate-ping opacity-75 group-hover:opacity-0">
-                            </span>
+                            <div className="absolute inset-0 rounded-lg pointer-events-none">
+                                <span
+                                    className="absolute inset-0 rounded-lg bg-primary/40 animate-ping pointer-events-none"></span>
+                            </div>
                         </button>
-                        <Link
-                            href="/reports"
-                            className="px-6 py-3 bg-white dark:bg-dark-4 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-dark-5 transition-colors"
-                        >
-                            {t('buttons.browse')}
-                        </Link>
                     </div>
                 </div>
             </div>

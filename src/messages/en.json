@@ -247,7 +247,10 @@
       "allCategories": "All Categories",
       "allStatuses": "All Statuses",
       "sortNewest": "Newest First",
-      "sortOldest": "Oldest First"
+      "sortOldest": "Oldest First",
+      "sortNearest": "Nearest",
+      "sortUrgent": "Most Urgent",
+      "distance": "Distance"
     },
     "loading": "Loading more reports...",
     "endOfReports": "You've reached the end of the reports",

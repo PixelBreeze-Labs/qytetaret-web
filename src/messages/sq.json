@@ -212,7 +212,10 @@
       "allTime": "Gjithë Koha",
       "today": "Sot",
       "thisWeek": "Këtë Javë",
-      "thisMonth": "Këtë Muaj"
+      "thisMonth": "Këtë Muaj",
+      "sortNearest": "Më Afër",
+      "sortUrgent": "Më Urgjent",
+      "distance": "Distanca"
     },
     "statuses": {
       "pending": "Në Pritje",

@@ -40,6 +40,9 @@
       "submitting": "Submitting...",
       "error": "Failed to submit report. Please try again.",
       "successSubmit": "Report submitted successfully",
+      "anonymousYes": "Yes",
+        "anonymousNo": "No",
+      "cancel": "Cancel",
       "errors": {
         "submit": "Failed to submit report",
         "validation": {
@@ -244,7 +247,10 @@
       "allCategories": "All Categories",
       "allStatuses": "All Statuses",
       "sortNewest": "Newest First",
-      "sortOldest": "Oldest First"
+      "sortOldest": "Oldest First",
+      "sortNearest": "Nearest",
+      "sortUrgent": "Most Urgent",
+      "distance": "Distance"
     },
     "loading": "Loading more reports...",
     "endOfReports": "You've reached the end of the reports",
@@ -293,6 +299,14 @@
     "reportId": "Report ID"
   },
   "home": {
+    "search": {
+      "placeholder": "Search reports..."
+    },
+    "reports": {
+      "today": "Today",
+      "thisWeek": "This Week",
+      "earlier": "Earlier"
+    },
     "featured": {
       "title": "Featured Reports",
       "subtitle": "Check out some of the most recent and important reports from our community",

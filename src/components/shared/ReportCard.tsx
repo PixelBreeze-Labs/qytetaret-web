@@ -1,67 +1,115 @@
-"use client";
-
-import { Report } from '@/types';
+// ReportCard.tsx
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { MapPin, Clock } from 'lucide-react';
+import { Badge } from "../ui/Badge";
 
-interface ReportCardProps {
-    report: Report;
-}
+const ReportCard = ({ report, showDistance = true }) => {
+    const router = useRouter();
+    const [distance, setDistance] = useState(null);
+    const [locationError, setLocationError] = useState(false);
 
-export const ReportCard = ({ report }: ReportCardProps) => {
-    const statusColors = {
-        pending: 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200',
-        in_progress: 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200',
-        resolved: 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200',
-        closed: 'bg-gray-100 dark:bg-gray-800/50 text-gray-800 dark:text-gray-300'
+    const statusMap = {
+        pending: 'Pending',
+        in_progress: 'In Progress',
+        resolved: 'Resolved',
+        closed: 'Closed'
     };
 
-    const router = useRouter();
+    const statusVariants = {
+        pending: 'warning',
+        in_progress: 'info',
+        resolved: 'success',
+        closed: 'secondary'
+    };
 
-    // Display name logic - show Anonymous if no author OR isAnonymous
-    const displayName = (report.isAnonymous || !report.author) ? 'Anonymous' : report.author;
-
-    // Helper for avatar color
-    const stringToColor = (str: string) => {
-        let hash = 0;
-        for (let i = 0; i < str.length; i++) {
-            hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    useEffect(() => {
+        if (showDistance && report.location && report.location.lat !== 0 && report.location.lng !== 0) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const d = calculateDistance(
+                        position.coords.latitude,
+                        position.coords.longitude,
+                        report.location.lat,
+                        report.location.lng
+                    );
+                    setDistance(d);
+                },
+                () => setLocationError(true)
+            );
         }
-        const c = (hash & 0x00FFFFFF).toString(16).toUpperCase();
-        return '#' + '00000'.substring(0, 6 - c.length) + c;
+    }, [report.location, showDistance]);
+
+    const calculateDistance = (lat1, lon1, lat2, lon2) => {
+        const R = 6371;
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLon = (lon2 - lon1) * Math.PI / 180;
+        const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon/2) * Math.sin(dLon/2);
+        return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    };
+
+    const formatDistance = (km) => {
+        if (km < 1) return `${Math.round(km * 1000)}m`;
+        return `${km.toFixed(1)}km`;
     };
 
     return (
         <div
-            className="bg-white dark:bg-[#1E1E1E] hover:dark:bg-[#252525] cursor-pointer rounded-lg shadow-md dark:shadow-gray-900/30 p-4 hover:shadow-lg transition-all"
             onClick={() => router.push(`/reports/${report.id}`)}
+            className="bg-white hover:bg-gray-100/80 dark:bg-dark-3 dark:hover:bg-dark-2/90 rounded-lg border-[3px] border-gray-200/90 dark:border-gray-700/60 p-4 cursor-pointer"
         >
-            <div className="flex justify-between items-start mb-3">
-                <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{report.title}</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                        {displayName} • {new Date(report.createdAt).toLocaleDateString()}
-                    </p>
+            <div className="flex flex-col gap-2">
+                <div className="flex items-start justify-between">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-50 line-clamp-1 flex-1">
+                        {report.title}
+                    </h3>
+                    <Badge
+                        variant={statusVariants[report.status]}
+                        className="ml-2 flex-shrink-0"
+                    >
+                        {statusMap[report.status]}
+                    </Badge>
                 </div>
-                <span className={`px-2 py-1 rounded-full text-xs font-medium ${statusColors[report.status]}`}>
-                   {report.status?.replace('_', ' ')}
-               </span>
-            </div>
 
-            <p className="text-gray-700 dark:text-gray-300 mb-4 line-clamp-2">{report.content}</p>
+                <div className="flex flex-wrap items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+                    <span>{report.author || 'Anonymous'}</span>
+                    <span>•</span>
+                    <span className="flex items-center gap-1">
+                        <Clock className="w-4 h-4" />
+                        {new Date(report.createdAt).toLocaleDateString()}
+                    </span>
+                    {showDistance && !locationError && distance !== null &&
+                        report.location && report.location.lat !== 0 && report.location.lng !== 0 && (
+                            <>
+                                <span>•</span>
+                                <span className="flex items-center gap-1">
+                                    <MapPin className="w-4 h-4" />
+                                    {formatDistance(distance)}
+                                </span>
+                            </>
+                        )}
+                </div>
 
-            <div className="flex items-center justify-between mt-auto">
-               <span className="px-3 py-1 bg-primary/10 dark:bg-primary/20 text-primary dark:text-red-400 rounded-full text-sm">
-                   {report.category}
-               </span>
+                <p className="text-gray-700 dark:text-gray-200 line-clamp-2">
+                    {report.content}
+                </p>
 
-                {/* Simple Avatar with initials */}
-                <div
-                    className="h-8 w-8 rounded-full flex items-center justify-center text-sm text-white"
-                    style={{ backgroundColor: stringToColor(displayName) }}
-                >
-                    {displayName.slice(0, 2).toUpperCase()}
+                <div className="flex items-center justify-between mt-2">
+                    <Badge variant="outline" className="flex-shrink-0 dark:border-gray-600 dark:text-gray-200">
+                        {report.category}
+                    </Badge>
+                    {report.location && !showDistance && report.location.lat !== 0 && report.location.lng !== 0 && (
+                        <span className="text-sm text-gray-600 dark:text-gray-300 flex items-center gap-1">
+                            <MapPin className="w-4 h-4" />
+                            {report.location.address}
+                        </span>
+                    )}
                 </div>
             </div>
         </div>
     );
 };
+
+export { ReportCard };

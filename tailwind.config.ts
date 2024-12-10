@@ -45,11 +45,11 @@ const config: Config = {
 					dark: "#ff0000",
 				},
 				dark: {
-					DEFAULT: "#1A1A1A",
-					2: "#242424",
-					3: "#2A2A2A",
-					4: "#333333",
-					5: "#404040",
+					DEFAULT: "#0A0A0A", // Darker default
+					2: "#111111",      // Darker secondary
+					3: "#141414",      // Darker tertiary
+					4: "#1A1A1A",      // Card backgrounds
+					5: "#262626",      // Elevated surfaces
 				},
 				gray: {
 					DEFAULT: "#F3F5F6",
@@ -201,10 +201,11 @@ const config: Config = {
 				error: "0px 12px 34px 0px rgba(13, 10, 44, 0.05)",
 				input: "inset 0 0 0 2px #ff0000",
 				dropdown: "0px 4px 12px 0px rgba(15, 23, 42, 0.10)",
-				darkdropdown: "0px 4px 12px 0px rgba(0, 0, 0, 0.2)",
+				darkdropdown: "0px 4px 12px 0px rgba(0, 0, 0, 0.4)", // Darker shadow
 				features: "0px 8px 20px 0px rgba(113, 116, 152, 0.05)",
 				testimonial: "0px 8px 10px -6px rgba(15, 23, 42, 0.06)",
 				"testimonial-2": "0px 15px 50px -6px rgba(15, 23, 42, 0.08)",
+				dark: "0px 4px 12px 0px rgba(0, 0, 0, 0.4)", // New dark mode shadow
 			},
 		},
 	},

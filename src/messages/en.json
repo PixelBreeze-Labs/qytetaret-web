@@ -40,6 +40,9 @@
       "submitting": "Submitting...",
       "error": "Failed to submit report. Please try again.",
       "successSubmit": "Report submitted successfully",
+      "anonymousYes": "Yes",
+        "anonymousNo": "No",
+      "cancel": "Cancel",
       "errors": {
         "submit": "Failed to submit report",
         "validation": {
@@ -61,7 +64,51 @@
           "BAD_REQUEST": "Please check your input",
           "INTERNAL_ERROR": "Something went wrong. Please try again"
         }
-      }
+      },
+      "next": "Next",
+      "back": "Back",
+      "steps": {
+        "category": {
+          "label": "Select Category",
+          "description": "Choose the most appropriate category for your report"
+        },
+        "details": {
+          "label": "Report Details",
+          "titleLabel": "Report Details",
+          "description": "Provide information about the issue",
+          "titleInput": "Brief description of the issue",
+          "contentInput": "Provide detailed information about the issue",
+          "anonymousLabel": "Submit anonymously"
+        },
+        "media": {
+          "label": "Add Media",
+          "description": "Add photos or voice recording",
+          "uploadText": "Click to upload or drag images",
+          "uploadSpecs": "PNG, JPG up to 10MB each",
+          "startRecording": "Start Recording",
+          "stopRecording": "Stop Recording"
+        },
+        "location": {
+          "label": "Set Location",
+          "description": "Click on the map to set the issue location",
+          "loading": "Loading map..."
+        },
+        "review": {
+          "label": "Review Report",
+          "description": "Please review your report before submitting",
+          "category": "Category",
+          "title": "Title",
+          "media": "Media",
+          "audio": "Audio"
+        }
+      },
+      "navigation": {
+        "back": "Back",
+        "next": "Next",
+        "submit": "Submit",
+        "submitting": "Submitting..."
+      },
+      "draft": "Draft saved automatically"
     }
   },
   "emergency": {
@@ -244,7 +291,10 @@
       "allCategories": "All Categories",
       "allStatuses": "All Statuses",
       "sortNewest": "Newest First",
-      "sortOldest": "Oldest First"
+      "sortOldest": "Oldest First",
+      "sortNearest": "Nearest",
+      "sortUrgent": "Most Urgent",
+      "distance": "Distance"
     },
     "loading": "Loading more reports...",
     "endOfReports": "You've reached the end of the reports",
@@ -293,6 +343,14 @@
     "reportId": "Report ID"
   },
   "home": {
+    "search": {
+      "placeholder": "Search reports..."
+    },
+    "reports": {
+      "today": "Today",
+      "thisWeek": "This Week",
+      "earlier": "Earlier"
+    },
     "featured": {
       "title": "Featured Reports",
       "subtitle": "Check out some of the most recent and important reports from our community",

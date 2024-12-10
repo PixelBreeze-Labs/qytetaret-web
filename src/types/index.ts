@@ -19,6 +19,12 @@ export interface Post {
     media?: string[];
 }
 
+export interface Activity {
+    type: 'CREATED' | 'UPDATED';
+    date: Date;
+    status: ReportStatus;
+}
+
 export enum CategoryReport {
     INFRASTRUCTURE = 'infrastructure',
     ENVIRONMENT = 'environment',
@@ -27,6 +33,11 @@ export enum CategoryReport {
     OTHER = 'other'
 }
 
+export enum ActivityType {
+    CREATED = 'CREATED',
+    UPDATED = 'UPDATED',
+    STATUS_CHANGED = 'STATUS_CHANGED'
+}
 export interface Report {
     id: string;
     title: string;
@@ -43,4 +54,6 @@ export interface Report {
     status: ReportStatus;
     createdAt: Date;
     updatedAt: Date;
+    audio?: string;
+    activities: Activity[];
 }

@@ -69,16 +69,16 @@ export default function ReportsPage() {
     );
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-dark-2 pt-[60px] dark:to-dark-3">
+        <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-dark-2 pt-[160px] md:pt-[60px] dark:to-dark-3">
             {/* Sticky Header */}
             <div
                 className="fixed top-[82px] left-0 right-0 z-40 bg-white dark:bg-dark-2 border-b border-gray-200 dark:border-gray-800">
                 <div className="container mx-auto px-4 py-8">
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
                         <h1 className="text-2xl font-bold dark:text-white">{t('title')}</h1>
-                        <div className="flex gap-2">
+                        <div className="mt-4 flex gap-2">
                             <div
-                                className="bg-white dark:bg-dark-3 rounded-lg border border-gray-200 dark:border-gray-700 p-1">
+                                className="bg-white hidden dark:bg-dark-3 rounded-lg border border-gray-200 dark:border-gray-700 p-1">
                                 <button
                                     onClick={() => setViewMode('grid')}
                                     className={cn(

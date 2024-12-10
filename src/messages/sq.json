@@ -64,7 +64,45 @@
           "BAD_REQUEST": "Ju lutem kontrolloni të dhënat e futura",
           "INTERNAL_ERROR": "Diçka shkoi keq. Ju lutem provoni përsëri"
         }
-      }
+      },
+      "next": "Vazhdo",
+      "back": "Kthehu",
+      "steps": {
+        "category": {
+          "label": "Select Category",
+          "description": "Choose the most appropriate category for your report"
+        },
+        "details": {
+          "label": "Report Details",
+          "titleLabel": "Report Details",
+          "description": "Provide information about the issue",
+          "titleInput": "Brief description of the issue",
+          "contentInput": "Provide detailed information about the issue",
+          "anonymousLabel": "Submit anonymously"
+        },
+        "media": {
+          "label": "Add Media",
+          "description": "Add photos or voice recording",
+          "uploadText": "Click to upload or drag images",
+          "uploadSpecs": "PNG, JPG up to 10MB each",
+          "startRecording": "Start Recording",
+          "stopRecording": "Stop Recording"
+        },
+        "location": {
+          "label": "Set Location",
+          "description": "Click on the map to set the issue location",
+          "loading": "Loading map..."
+        },
+        "review": {
+          "label": "Review Report",
+          "description": "Please review your report before submitting",
+          "category": "Category",
+          "title": "Title",
+          "media": "Media",
+          "audio": "Audio"
+        }
+      },
+      "draft": "Drafti u ruajt automatikisht"
     }
   },
   "emergency": {
